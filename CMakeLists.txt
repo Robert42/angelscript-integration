@@ -8,4 +8,8 @@ else()
   set(ANGELSCRIPT_TARGET Angelscript)
 endif()
 
-target_include_directories(${ANGELSCRIPT_TARGET} PUBLIC external/sdk/angelscript/include)
+target_include_directories(${ANGELSCRIPT_TARGET} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/sdk/angelscript/include)
+target_compile_definitions(${ANGELSCRIPT_TARGET} PUBLIC AS_USE_NAMESPACE)
+
+
+add_subdirectory(integration)
