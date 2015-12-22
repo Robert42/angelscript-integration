@@ -5,29 +5,70 @@
 
 namespace AngelScriptIntegration {
 
+void handleMessage(const AngelScript::asSMessageInfo* message, void*);
+
+void init_message_callback_qt(AngelScript::asIScriptEngine* engine)
+{
+  int r = engine->SetMessageCallback(AngelScript::asFUNCTION(handleMessage), nullptr, AngelScript::asCALL_CDECL); Q_ASSERT(r >= 0);
+}
+
+
+void log_debug(const std::string& message);
+void log_info(const std::string& message);
+void log_warning(const std::string& message);
+void log_critical(const std::string& message);
+
+void init_logging_functions_qt(AngelScript::asIScriptEngine* engine)
+{
+  int r;
+  r = engine->RegisterGlobalFunction("void log_debug(const string &in)", AngelScript::asFUNCTION(log_debug), AngelScript::asCALL_CDECL); Q_ASSERT(r >= 0);
+  r = engine->RegisterGlobalFunction("void log_info(const string &in)", AngelScript::asFUNCTION(log_info), AngelScript::asCALL_CDECL); Q_ASSERT(r >= 0);
+  r = engine->RegisterGlobalFunction("void log_warning(const string &in)", AngelScript::asFUNCTION(log_warning), AngelScript::asCALL_CDECL); Q_ASSERT(r >= 0);
+  r = engine->RegisterGlobalFunction("void log_critical(const string &in)", AngelScript::asFUNCTION(log_critical), AngelScript::asCALL_CDECL); Q_ASSERT(r >= 0);
+}
+
+
+
 void handleMessage(const AngelScript::asSMessageInfo* message, void*)
 {
   std::string text = QString("Angelscript -- %0 (%1  %2):\n%3").arg(message->section).arg(message->row).arg(message->col).arg(message->message).toStdString();
   switch(message->type)
   {
   case AngelScript::asMSGTYPE_ERROR:
-    qCritical() << text.c_str();
+    log_critical(text);
     break;
   case AngelScript::asMSGTYPE_WARNING:
-    qWarning() << text.c_str();
+    log_warning(text);
     break;
   case AngelScript::asMSGTYPE_INFORMATION:
-    qDebug() << text.c_str();
+    log_info(text);
     break;
   default:
     Q_UNREACHABLE();
   }
 }
 
-void init_message_callback_qt(AngelScript::asIScriptEngine* engine)
+void log_debug(const std::string& message)
 {
-  engine->SetMessageCallback(asFUNCTION(handleMessage), nullptr, AngelScript::asCALL_CDECL);
+  qDebug() << message.c_str();
 }
+
+void log_info(const std::string& message)
+{
+  qInfo() << message.c_str();
+}
+
+void log_warning(const std::string& message)
+{
+  qWarning() << message.c_str();
+}
+
+void log_critical(const std::string& message)
+{
+  qCritical() << message.c_str();
+}
+
+
 
 } // AngelScriptIntegration
 

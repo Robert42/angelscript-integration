@@ -10,8 +10,6 @@
 
 using namespace std;
 
-BEGIN_AS_NAMESPACE
-
 // This macro is used to avoid warnings about unused variables.
 // Usually where the variables are only used in debug mode.
 #define UNUSED_VAR(x) (void)(x)
@@ -27,6 +25,8 @@ BEGIN_AS_NAMESPACE
 	#include <map>      // std::map
 	typedef map<const char *, string> map_t;
 #endif
+
+BEGIN_AS_NAMESPACE
 
 // By keeping the literal strings in a pool the application
 // performance is improved as there are less string copies created.
