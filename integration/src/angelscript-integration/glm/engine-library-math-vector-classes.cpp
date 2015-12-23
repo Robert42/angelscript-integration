@@ -844,7 +844,7 @@ void init_glm_vectors(AngelScript::asIScriptEngine* as_engine)
   // asOBJ_APP_CLASS_CONSTRUCTOR because it has a default contructor
   // asOBJ_APP_CLASS_ASSIGNMENT because it's able to assign vectors to other vectors
   // asOBJ_APP_CLASS_COPY_CONSTRUCTOR because it has a copy constructor
-  // asOBJ_APP_CLASS_ALLFLOATS because it consists only of floats
+  // FLAGS may be asOBJ_APP_CLASS_ALLFLOATS if it consists only of floats
 #define DECLARE_VECTOR_TYPE(name, FLAGS) \
   r = as_engine->RegisterObjectType(#name, \
                                     sizeof(name), \
