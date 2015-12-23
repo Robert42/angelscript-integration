@@ -26,6 +26,7 @@ void init_logging_functions_qt(AngelScript::asIScriptEngine* engine)
   r = engine->RegisterGlobalFunction("void log_critical(const string &in)", AngelScript::asFUNCTION(log_critical), AngelScript::asCALL_CDECL); Q_ASSERT(r >= 0);
 }
 
+void init_glm_vectors(AngelScript::asIScriptEngine* engine);
 
 void init_glm(AngelScript::asIScriptEngine* engine)
 {
