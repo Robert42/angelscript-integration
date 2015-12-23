@@ -32,8 +32,6 @@ T_return callScriptFunction(AngelScript::asIScriptFunction* function, const T_ar
 
   context->Prepare(function);
 
-  T_return return_value;
-
   _pass_arguments_to_angelscript(context, 0, args...);
 
   int r = context->Execute();

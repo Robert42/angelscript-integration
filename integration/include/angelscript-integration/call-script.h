@@ -20,7 +20,7 @@ AngelScript::asIScriptModule* loadAndCompileModule(AngelScript::asIScriptEngine*
 std::string getUniqueModuleName(AngelScript::asIScriptEngine* engine, const char* preferredModuleName);
 
 template<typename T_return, typename... T_args>
-T_return callScript(AngelScript::asIScriptEngine* engine, const QString& filepath, const char* functionDeclarationToCall, const char* preferredModuleName, const T_args&... args);
+T_return callScript(AngelScript::asIScriptEngine* engine, const std::string& filepath, const char* functionDeclarationToCall, const char* preferredModuleName, const T_args&... args);
 
 template<typename T_return, typename... T_args>
 T_return callScriptFunction(AngelScript::asIScriptFunction* function, const T_args&... args);
