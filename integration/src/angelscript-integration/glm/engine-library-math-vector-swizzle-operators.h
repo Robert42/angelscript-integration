@@ -1,4 +1,5 @@
-#include <dependencies.h>
+#include "include-glm.h"
+#include <angelscript.h>
 
 namespace AngelScriptIntegration {
 
@@ -167,7 +168,6 @@ swizzleType swizzle_setter4(objectType* o, const swizzleType& s)
   ALL_SWIZZLE_FOR_VEC2_ST(vec) \
   ALL_SWIZZLE_FOR_VEC3_STP(vec) \
   ALL_SWIZZLE_FOR_VEC4_STPQ(vec)
-
 
 void AngelScriptCheck(int returnCode);
 

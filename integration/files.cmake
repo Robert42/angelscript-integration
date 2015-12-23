@@ -18,4 +18,5 @@ set(SOURCE_FILES
   src/angelscript-integration/glm/engine-library-math-vector-swizzle-operators-vec-rgba.cpp
   src/angelscript-integration/glm/engine-library-math-vector-swizzle-operators-vec-stpq.cpp
   src/angelscript-integration/glm/engine-library-math-vector-swizzle-operators-vec-xyzw.cpp
+  src/angelscript-integration/glm/include-glm.h
 )

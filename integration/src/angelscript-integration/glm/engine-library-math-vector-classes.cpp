@@ -1,7 +1,10 @@
-#include <base/scripting/engine.h>
-#include <base/io/log.h>
+#include "include-glm.h"
+#include <QDebug>
+#include <angelscript.h>
 
 namespace AngelScriptIntegration {
+
+void AngelScriptCheck(int returnCode);
 
 template<typename T_target, typename T_source>
 T_target cast_vector1(const T_source* source)
@@ -27,13 +30,13 @@ T_target cast_vector4(const T_source* source)
   return T_target(source->x, source->y, source->z, source->w);
 }
 
-#define REGISTER_CAST_(source_vec, target_vec, vecLength, cast) \
-  r = as_engine->RegisterObjectBehaviour(#source_vec#vecLength, AngelScript::cast, #target_vec#vecLength" f()", AngelScript::asFUNCTIONPR(cast_vector##vecLength, (const source_vec##vecLength*), target_vec##vecLength), AngelScript::asCALL_CDECL_OBJFIRST);AngelScriptCheck(r); \
+#define REGISTER_CAST_(source_vec, target_vec, vecLength) \
+  r = as_engine->RegisterObjectMethod(#source_vec#vecLength, #target_vec#vecLength" opConv()", AngelScript::asFUNCTIONPR(cast_vector##vecLength, (const source_vec##vecLength*), target_vec##vecLength), AngelScript::asCALL_CDECL_OBJFIRST);AngelScriptCheck(r); \
  
-#define REGISTER_CAST(source_vec, target_vec, cast) \
-  REGISTER_CAST_(source_vec, target_vec, 2, cast) \
-  REGISTER_CAST_(source_vec, target_vec, 3, cast) \
-  REGISTER_CAST_(source_vec, target_vec, 4, cast)
+#define REGISTER_CAST(source_vec, target_vec) \
+  REGISTER_CAST_(source_vec, target_vec, 2) \
+  REGISTER_CAST_(source_vec, target_vec, 3) \
+  REGISTER_CAST_(source_vec, target_vec, 4)
 
 template<typename T_vec>
 inline typename T_vec::value_type getVecElement(T_vec* v, int i)
@@ -43,8 +46,8 @@ inline typename T_vec::value_type getVecElement(T_vec* v, int i)
     return (*v)[i];
   }else
   {
-    IO::Log::logWarning("?vec?::opIndex: Index %0 is outside the range [0, %1]", i, v->length());
-    return (*v)[clamp<int>(i, 0, v->length()-1)];
+    qWarning() << QString("?vec?::opIndex: Index %0 is outside the range [0, %1]").arg(i).arg(v->length());
+    return (*v)[glm::clamp<int>(i, 0, v->length()-1)];
   }
 }
 
@@ -217,7 +220,7 @@ R opMod_vec_vec(const A* a, B b)
   {
     if(b[i] == 0)
     {
-      IO::Log::logWarning("AngelScript: opMod_vec_vec: Divition by zero detected");
+      qWarning() << "AngelScript: opMod_vec_vec: Divition by zero detected";
       b[i] = 1;
     }
   }
@@ -230,7 +233,7 @@ R opMod_vec_type(const A* a, B b)
 {
   if(b == 0)
   {
-    IO::Log::logWarning("AngelScript: opMod_vec_type: Divition by zero detected");
+    qWarning() << "AngelScript: opMod_vec_type: Divition by zero detected";
     b = 1;
   }
 
@@ -246,7 +249,7 @@ R opMod_r_vec_type(const A* a_, B b)
   {
     if(a[i] == 0)
     {
-      IO::Log::logWarning("AngelScript: opMod_r_vec_type: Divition by zero detected");
+      qWarning() << "AngelScript: opMod_r_vec_type: Divition by zero detected";
       a[i] = 1;
     }
   }
@@ -264,7 +267,7 @@ R opDiv_int_vec_vec(const A* a_, B b)
   {
     if(b[i] == 0)
     {
-      IO::Log::logWarning("AngelScript: opDiv_int_vec_vec: Divition by zero detected");
+      qWarning() << "AngelScript: opDiv_int_vec_vec: Divition by zero detected";
       b[i] = std::numeric_limits<typename A::value_type>::max();
     }
   }
@@ -279,7 +282,7 @@ R opDiv_int_vec_type(const A* a_, B b)
 
   if(b == 0)
   {
-    IO::Log::logWarning("AngelScript: opDiv_int_vec_type: Divition by zero detected");
+    qWarning() << "AngelScript: opDiv_int_vec_type: Divition by zero detected";
     b = std::numeric_limits<typename A::value_type>::max();
   }
 
@@ -295,7 +298,7 @@ R opDiv_r_int_vec_type(const A* a_, B b)
   {
     if(a[i] == 0)
     {
-      IO::Log::logWarning("AngelScript: opDiv_r_int_vec_type: Divition by zero detected");
+      qWarning() << "AngelScript: opDiv_r_int_vec_type: Divition by zero detected";
       a[i] = std::numeric_limits<typename A::value_type>::max();
     }
   }
@@ -313,7 +316,7 @@ R opDivAssign_int_vec_vec(A* a_, B b)
   {
     if(b[i] == 0)
     {
-      IO::Log::logWarning("AngelScript: opDivAssign_int_vec_vec: Divition by zero detected");
+      qWarning() << "AngelScript: opDivAssign_int_vec_vec: Divition by zero detected";
       b[i] = std::numeric_limits<typename A::value_type>::max();
     }
   }
@@ -328,7 +331,7 @@ R opDivAssign_int_vec_type(A* a_, B b)
 
   if(b == 0)
   {
-    IO::Log::logWarning("AngelScript: opDivAssign_int_vec_type: Divition by zero detected");
+    qWarning() << "AngelScript: opDivAssign_int_vec_type: Divition by zero detected";
     b = std::numeric_limits<typename A::value_type>::max();
   }
 
@@ -345,7 +348,7 @@ R opModAssign_vec_vec(A* a_, B b)
   {
     if(b[i] == 0)
     {
-      IO::Log::logWarning("AngelScript: opMod_vec_vec: Divition by zero detected");
+      qWarning() << "AngelScript: opMod_vec_vec: Divition by zero detected";
       b[i] = 1;
     }
   }
@@ -360,7 +363,7 @@ R opModAssign_vec_type(A* a_, B b)
 
   if(b == 0)
   {
-    IO::Log::logWarning("AngelScript: opMod_vec_type: Divition by zero detected");
+    qWarning() << "AngelScript: opMod_vec_type: Divition by zero detected";
     b = 1;
   }
 
@@ -861,12 +864,12 @@ void initVectorLibrary_classes(AngelScript::asIScriptEngine* as_engine)
   REGISTER_VEC(i,int);
   REGISTER_VEC(u,uint);
 
-  REGISTER_CAST(ivec, uvec, asBEHAVE_IMPLICIT_VALUE_CAST);
-  REGISTER_CAST(ivec,  vec, asBEHAVE_IMPLICIT_VALUE_CAST);
-  REGISTER_CAST(uvec,  vec, asBEHAVE_IMPLICIT_VALUE_CAST);
-  REGISTER_CAST(ivec, dvec, asBEHAVE_IMPLICIT_VALUE_CAST);
-  REGISTER_CAST(uvec, dvec, asBEHAVE_IMPLICIT_VALUE_CAST);
-  REGISTER_CAST( vec, dvec, asBEHAVE_IMPLICIT_VALUE_CAST);
+  REGISTER_CAST(ivec, uvec);
+  REGISTER_CAST(ivec,  vec);
+  REGISTER_CAST(uvec,  vec);
+  REGISTER_CAST(ivec, dvec);
+  REGISTER_CAST(uvec, dvec);
+  REGISTER_CAST( vec, dvec);
 
   REGISTER_REAL_OPERATORS(, float);
   REGISTER_REAL_OPERATORS(d, double);
