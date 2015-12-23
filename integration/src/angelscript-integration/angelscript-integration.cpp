@@ -32,6 +32,7 @@ void init_glm(AngelScript::asIScriptEngine* engine)
 {
   asDWORD previousMask = engine->SetDefaultAccessMask(ACCESS_MASK_GLM);
 
+  init_glm_vectors(engine);
 
   engine->SetDefaultAccessMask(previousMask);
 }
@@ -149,7 +150,7 @@ void AngelScriptCheck(int r)
   if(returnCode >= 0)
     return;
 
-  std::string strReturnCode = AngelScriptReturnCodeAsString(returnCode);
+  const char* strReturnCode = AngelScriptReturnCodeAsString(returnCode);
 
   qCritical() << "AngelScriptCheck(): Error Code " << strReturnCode << " detected!";
 
