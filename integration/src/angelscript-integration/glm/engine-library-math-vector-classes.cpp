@@ -1,6 +1,7 @@
 #include "include-glm.h"
 #include <QDebug>
 #include <angelscript.h>
+#include <angelscript-integration/angelscript-integration.h>
 
 namespace AngelScriptIntegration {
 
@@ -833,7 +834,7 @@ void initVectorLibrary_swizzle_operators_ivec_xyzw(AngelScript::asIScriptEngine*
 void initVectorLibrary_swizzle_operators_uvec_xyzw(AngelScript::asIScriptEngine* as_engine);
 void initVectorLibrary_swizzle_operators_vec_xyzw (AngelScript::asIScriptEngine* as_engine);
 
-void init_glm_vectors(AngelScript::asIScriptEngine* as_engine)
+void init_glm_vectors(AngelScript::asIScriptEngine* as_engine, GlmFlags swizzle)
 {
   int r;
 
@@ -892,21 +893,24 @@ void init_glm_vectors(AngelScript::asIScriptEngine* as_engine)
   REGISTER_INTEGER_OPERATORS(u, uint);
   REGISTER_BASIC_OPERATORS(b, bool);
 
-  initVectorLibrary_swizzle_operators_bvec_rgba(as_engine);
-  initVectorLibrary_swizzle_operators_dvec_rgba(as_engine);
-  initVectorLibrary_swizzle_operators_ivec_rgba(as_engine);
-  initVectorLibrary_swizzle_operators_uvec_rgba(as_engine);
-  initVectorLibrary_swizzle_operators_vec_rgba (as_engine);
-  initVectorLibrary_swizzle_operators_bvec_stpq(as_engine);
-  initVectorLibrary_swizzle_operators_dvec_stpq(as_engine);
-  initVectorLibrary_swizzle_operators_ivec_stpq(as_engine);
-  initVectorLibrary_swizzle_operators_uvec_stpq(as_engine);
-  initVectorLibrary_swizzle_operators_vec_stpq (as_engine);
-  initVectorLibrary_swizzle_operators_bvec_xyzw(as_engine);
-  initVectorLibrary_swizzle_operators_dvec_xyzw(as_engine);
-  initVectorLibrary_swizzle_operators_ivec_xyzw(as_engine);
-  initVectorLibrary_swizzle_operators_uvec_xyzw(as_engine);
-  initVectorLibrary_swizzle_operators_vec_xyzw (as_engine);
+  if(swizzle == GlmFlags::ALL_SWIZZLE)
+  {
+    initVectorLibrary_swizzle_operators_bvec_rgba(as_engine);
+    initVectorLibrary_swizzle_operators_dvec_rgba(as_engine);
+    initVectorLibrary_swizzle_operators_ivec_rgba(as_engine);
+    initVectorLibrary_swizzle_operators_uvec_rgba(as_engine);
+    initVectorLibrary_swizzle_operators_vec_rgba (as_engine);
+    initVectorLibrary_swizzle_operators_bvec_stpq(as_engine);
+    initVectorLibrary_swizzle_operators_dvec_stpq(as_engine);
+    initVectorLibrary_swizzle_operators_ivec_stpq(as_engine);
+    initVectorLibrary_swizzle_operators_uvec_stpq(as_engine);
+    initVectorLibrary_swizzle_operators_vec_stpq (as_engine);
+    initVectorLibrary_swizzle_operators_bvec_xyzw(as_engine);
+    initVectorLibrary_swizzle_operators_dvec_xyzw(as_engine);
+    initVectorLibrary_swizzle_operators_ivec_xyzw(as_engine);
+    initVectorLibrary_swizzle_operators_uvec_xyzw(as_engine);
+    initVectorLibrary_swizzle_operators_vec_xyzw (as_engine);
+  }
 }
 
 } // namespace Angelscriptintegration
