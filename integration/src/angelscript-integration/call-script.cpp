@@ -7,6 +7,52 @@
 namespace AngelScriptIntegration {
 
 
+void pass_arg_to_angelscript(AngelScript::asIScriptContext* context, int i, bool value)
+{
+  static_assert(sizeof(bool) == 1, "SetArgByte expects bool to be one byte large");
+  context->SetArgByte(i, value);
+}
+
+void pass_arg_to_angelscript(AngelScript::asIScriptContext* context, int i, qint8 value)
+{
+  context->SetArgByte(i, value);
+}
+
+void pass_arg_to_angelscript(AngelScript::asIScriptContext* context, int i, quint8 value)
+{
+  context->SetArgByte(i, value);
+}
+
+void pass_arg_to_angelscript(AngelScript::asIScriptContext* context, int i, qint16 value)
+{
+  context->SetArgWord(i, value);
+}
+
+void pass_arg_to_angelscript(AngelScript::asIScriptContext* context, int i, quint16 value)
+{
+  context->SetArgWord(i, value);
+}
+
+void pass_arg_to_angelscript(AngelScript::asIScriptContext* context, int i, qint32 value)
+{
+  context->SetArgDWord(i, value);
+}
+
+void pass_arg_to_angelscript(AngelScript::asIScriptContext* context, int i, quint32 value)
+{
+  context->SetArgDWord(i, value);
+}
+
+void pass_arg_to_angelscript(AngelScript::asIScriptContext* context, int i, qint64 value)
+{
+  context->SetArgQWord(i, value);
+}
+
+void pass_arg_to_angelscript(AngelScript::asIScriptContext* context, int i, quint64 value)
+{
+  context->SetArgQWord(i, value);
+}
+
 AngelScript::asIScriptModule* loadAndCompileModule(AngelScript::asIScriptEngine* engine, const char* filepath, const char* moduleName)
 {
   int r;
