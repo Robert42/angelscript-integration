@@ -9,7 +9,7 @@ void handleMessage(const AngelScript::asSMessageInfo* message, void*);
 
 void init_message_callback_qt(AngelScript::asIScriptEngine* engine)
 {
-  int r = engine->SetMessageCallback(AngelScript::asFUNCTION(handleMessage), nullptr, AngelScript::asCALL_CDECL); Q_ASSERT(r >= 0);
+  int r = engine->SetMessageCallback(AngelScript::asFUNCTION(handleMessage), nullptr, AngelScript::asCALL_CDECL); AngelScriptCheck(r);
 }
 
 void log_debug(const std::string& message);
@@ -20,10 +20,10 @@ void log_critical(const std::string& message);
 void init_logging_functions_qt(AngelScript::asIScriptEngine* engine)
 {
   int r;
-  r = engine->RegisterGlobalFunction("void log_debug(const string &in)", AngelScript::asFUNCTION(log_debug), AngelScript::asCALL_CDECL); Q_ASSERT(r >= 0);
-  r = engine->RegisterGlobalFunction("void log_info(const string &in)", AngelScript::asFUNCTION(log_info), AngelScript::asCALL_CDECL); Q_ASSERT(r >= 0);
-  r = engine->RegisterGlobalFunction("void log_warning(const string &in)", AngelScript::asFUNCTION(log_warning), AngelScript::asCALL_CDECL); Q_ASSERT(r >= 0);
-  r = engine->RegisterGlobalFunction("void log_critical(const string &in)", AngelScript::asFUNCTION(log_critical), AngelScript::asCALL_CDECL); Q_ASSERT(r >= 0);
+  r = engine->RegisterGlobalFunction("void log_debug(const string &in)", AngelScript::asFUNCTION(log_debug), AngelScript::asCALL_CDECL); AngelScriptCheck(r);
+  r = engine->RegisterGlobalFunction("void log_info(const string &in)", AngelScript::asFUNCTION(log_info), AngelScript::asCALL_CDECL); AngelScriptCheck(r);
+  r = engine->RegisterGlobalFunction("void log_warning(const string &in)", AngelScript::asFUNCTION(log_warning), AngelScript::asCALL_CDECL); AngelScriptCheck(r);
+  r = engine->RegisterGlobalFunction("void log_critical(const string &in)", AngelScript::asFUNCTION(log_critical), AngelScript::asCALL_CDECL); AngelScriptCheck(r);
 }
 
 void init_glm_vectors(AngelScript::asIScriptEngine* engine);
@@ -102,6 +102,59 @@ void log_critical(const std::string& message)
 }
 
 
+const char* AngelScriptReturnCodeAsString(AngelScript::asERetCodes returnCode)
+{
+#define CASE(x) case AngelScript::x:return #x;
+  switch(returnCode)
+  {
+    CASE(asSUCCESS)
+	  CASE(asERROR)
+	  CASE(asCONTEXT_ACTIVE)
+	  CASE(asCONTEXT_NOT_FINISHED)
+	  CASE(asCONTEXT_NOT_PREPARED)
+	  CASE(asINVALID_ARG)
+	  CASE(asNO_FUNCTION)
+	  CASE(asNOT_SUPPORTED)
+	  CASE(asINVALID_NAME)
+	  CASE(asNAME_TAKEN)
+	  CASE(asINVALID_DECLARATION)
+	  CASE(asINVALID_OBJECT)
+	  CASE(asINVALID_TYPE)
+	  CASE(asALREADY_REGISTERED)
+	  CASE(asMULTIPLE_FUNCTIONS)
+	  CASE(asNO_MODULE)
+	  CASE(asNO_GLOBAL_VAR)
+	  CASE(asINVALID_CONFIGURATION)
+	  CASE(asINVALID_INTERFACE)
+	  CASE(asCANT_BIND_ALL_FUNCTIONS)
+	  CASE(asLOWER_ARRAY_DIMENSION_NOT_REGISTERED)
+	  CASE(asWRONG_CONFIG_GROUP)
+	  CASE(asCONFIG_GROUP_IS_IN_USE)
+	  CASE(asILLEGAL_BEHAVIOUR_FOR_TYPE)
+	  CASE(asWRONG_CALLING_CONV)
+	  CASE(asBUILD_IN_PROGRESS)
+	  CASE(asINIT_GLOBAL_VARS_FAILED)
+	  CASE(asOUT_OF_MEMORY)
+	  CASE(asMODULE_IS_IN_USE)
+  default:
+    return "Unknown AngelScript ReturnCode";
+  }
+#undef CASE
+}
+
+void AngelScriptCheck(int r)
+{
+  AngelScript::asERetCodes returnCode = static_cast<AngelScript::asERetCodes>(r);
+
+  if(returnCode >= 0)
+    return;
+
+  std::string strReturnCode = AngelScriptReturnCodeAsString(returnCode);
+
+  qCritical() << "AngelScriptCheck(): Error Code " << strReturnCode << " detected!";
+
+  Q_ASSERT(returnCode >= 0);
+}
 
 } // AngelScriptIntegration
 
