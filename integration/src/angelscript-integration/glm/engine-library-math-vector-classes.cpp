@@ -1,8 +1,7 @@
 #include <base/scripting/engine.h>
 #include <base/io/log.h>
 
-namespace Base {
-namespace Scripting {
+namespace AngelScriptIntegration {
 
 template<typename T_target, typename T_source>
 T_target cast_vector1(const T_source* source)
@@ -877,5 +876,5 @@ void initVectorLibrary_classes(AngelScript::asIScriptEngine* as_engine)
 }
 
 
-} // namespace Scripting
-} // namespace Base
+} // namespace Angelscriptintegration
+

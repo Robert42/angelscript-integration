@@ -1,7 +1,6 @@
 #include <dependencies.h>
 
-namespace Base {
-namespace Scripting {
+namespace AngelScriptIntegration {
 
 #define INDEX_0001(setterIndices) (setterIndices&0x3)
 #define INDEX_0010(setterIndices) ((setterIndices>>4)&0x3)
@@ -173,5 +172,5 @@ swizzleType swizzle_setter4(objectType* o, const swizzleType& s)
 void AngelScriptCheck(int returnCode);
 
 
-} // namespace Scripting
-} // namespace Base
+} // namespace Angelscriptintegration
+

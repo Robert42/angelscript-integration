@@ -1,7 +1,6 @@
 #include "engine-library-math-vector-swizzle-operators.h"
 
-namespace Base {
-namespace Scripting {
+namespace AngelScriptIntegration {
 
 void initVectorLibrary_swizzle_operators_dvec_rgba(AngelScript::asIScriptEngine* as_engine)
 {
@@ -10,5 +9,5 @@ void initVectorLibrary_swizzle_operators_dvec_rgba(AngelScript::asIScriptEngine*
 }
 
 
-} // namespace Scripting
-} // namespace Base
+} // namespace Angelscriptintegration
+
