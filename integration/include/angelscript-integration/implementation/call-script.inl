@@ -6,6 +6,22 @@
 namespace AngelScriptIntegration {
 namespace Implementation {
 
+class ScriptContextReleaser
+{
+  AngelScript::asIScriptContext* const context;
+public:
+
+  ScriptContextReleaser(AngelScript::asIScriptContext* context)
+    : context(context)
+  {
+  }
+
+  ~ScriptContextReleaser()
+  {
+    context->Release();
+  }
+};
+
 inline void _pass_arguments_to_angelscript(AngelScript::asIScriptContext*, int)
 {
 }
@@ -24,12 +40,14 @@ void _pass_arguments_to_angelscript(AngelScript::asIScriptContext* context, int 
 template<typename T_return, typename... T_args>
 T_return callScriptFunction(AngelScript::asIScriptFunction* function, const T_args&... args)
 {
-  static_assert(std::is_same<T_return, void>::value, "Return types other than void are currently not supported");
-
   Q_ASSERT(function != nullptr);
   AngelScript::asIScriptEngine* engine = function->GetEngine();
 
   AngelScript::asIScriptContext* context = engine->CreateContext();
+
+  // Using the destructor to release the context to allow returning the return value directly
+  Implementation::ScriptContextReleaser scriptContextReleaser(context);
+  Q_UNUSED(scriptContextReleaser);
 
   context->Prepare(function);
 
@@ -39,7 +57,7 @@ T_return callScriptFunction(AngelScript::asIScriptFunction* function, const T_ar
 
   Q_ASSERT(r == AngelScript::asEXECUTION_FINISHED);
 
-  context->Release();
+  return ResultFromAngelScript<T_return>::value(context);
 }
 
 

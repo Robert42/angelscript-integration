@@ -16,6 +16,108 @@ void pass_arg_to_angelscript(AngelScript::asIScriptContext*context, int i, quint
 void pass_arg_to_angelscript(AngelScript::asIScriptContext*context, int i, qint64 value);
 void pass_arg_to_angelscript(AngelScript::asIScriptContext*context, int i, quint64 value);
 
+template<typename T_result>
+class ResultFromAngelScript;
+
+template<>
+class ResultFromAngelScript<void>
+{
+public:
+  static void value(AngelScript::asIScriptContext*)
+  {
+  }
+};
+
+template<>
+class ResultFromAngelScript<bool>
+{
+public:
+  static bool value(AngelScript::asIScriptContext* context)
+  {
+    return context->GetReturnByte() != 0;
+  }
+};
+
+template<>
+class ResultFromAngelScript<qint8>
+{
+public:
+  static qint8 value(AngelScript::asIScriptContext* context)
+  {
+    return context->GetReturnByte();
+  }
+};
+
+template<>
+class ResultFromAngelScript<quint8>
+{
+public:
+  static quint8 value(AngelScript::asIScriptContext* context)
+  {
+    return context->GetReturnByte();
+  }
+};
+
+template<>
+class ResultFromAngelScript<qint16>
+{
+public:
+  static qint16 value(AngelScript::asIScriptContext* context)
+  {
+    return context->GetReturnWord();
+  }
+};
+
+template<>
+class ResultFromAngelScript<quint16>
+{
+public:
+  static quint16 value(AngelScript::asIScriptContext* context)
+  {
+    return context->GetReturnWord();
+  }
+};
+
+template<>
+class ResultFromAngelScript<qint32>
+{
+public:
+  static qint32 value(AngelScript::asIScriptContext* context)
+  {
+    return context->GetReturnDWord();
+  }
+};
+
+template<>
+class ResultFromAngelScript<quint32>
+{
+public:
+  static quint32 value(AngelScript::asIScriptContext* context)
+  {
+    return context->GetReturnDWord();
+  }
+};
+
+template<>
+class ResultFromAngelScript<qint64>
+{
+public:
+  static qint64 value(AngelScript::asIScriptContext* context)
+  {
+    return context->GetReturnQWord();
+  }
+};
+
+template<>
+class ResultFromAngelScript<quint64>
+{
+public:
+  static quint64 value(AngelScript::asIScriptContext* context)
+  {
+    return context->GetReturnQWord();
+  }
+};
+
 AngelScript::asIScriptModule* loadAndCompileModule(AngelScript::asIScriptEngine* engine, const char* filepath, const char* moduleName);
 std::string getUniqueModuleName(AngelScript::asIScriptEngine* engine, const char* preferredModuleName);
 
