@@ -157,5 +157,5 @@ endif()
 
 set(RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../../bin)
 
-add_subdirectory(../../../samples/game/projects/cmake/ ./game)
+#add_subdirectory(../../../samples/game/projects/cmake/ ./game)
 
