@@ -1,6 +1,6 @@
 # Angelscript-Integration
 
-A mirror of the released versions of the [AngelScript sdk](http://angelcode.com/angelscript/). Also introducing a small set of usefull add-ons.
+A mirror of the released versions of the [AngelScript sdk](http://angelcode.com/angelscript/).
 
 AngelScript is licensed using a [zlib like license](http://angelcode.com/angelscript/sdk/docs/manual/doc_license.html).
 
@@ -17,4 +17,15 @@ AngelScript is licensed using a [zlib like license](http://angelcode.com/angelsc
 > 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 >
 > 3. This notice may not be removed or altered from any source distribution.
+
+# Additional Features
+
+Additional to mirroring Angelscript, this repository also contains some additional features:
+
+- `init_message_callback_qt` registers a message handler logging to the qt debug streams like qDebug(), qWarning(), qCritical()
+- `init_logging_functions_qt` registers explicit Angelscript functions thought for logging (also logging to the qt debug streams)
+    - `void log_debug(const string &in)`
+    - `void log_info(const string &in)`
+    - `void log_warning(const string &in)`
+    - `void log_critical(const string &in)`
 
