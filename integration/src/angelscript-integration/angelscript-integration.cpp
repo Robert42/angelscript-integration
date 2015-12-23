@@ -28,6 +28,14 @@ void init_logging_functions_qt(AngelScript::asIScriptEngine* engine)
 }
 
 
+void init_glm(AngelScript::asIScriptEngine* engine)
+{
+  asDWORD previousMask = engine->SetDefaultAccessMask(ACCESS_MASK_GLM);
+
+
+  engine->SetDefaultAccessMask(previousMask);
+}
+
 
 void handleMessage(const AngelScript::asSMessageInfo* message, void*)
 {
