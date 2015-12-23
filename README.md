@@ -28,4 +28,6 @@ Additional to mirroring Angelscript, this repository also contains some addition
     - `void log_info(const string &in)`
     - `void log_warning(const string &in)`
     - `void log_critical(const string &in)`
+- `init_glm` registers a subset of the functionality provided by glm.  
+    - Based on code of a hobby-project I made years ago, the vector types and the swizzle operators are integrated.
 
