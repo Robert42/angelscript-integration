@@ -817,8 +817,23 @@ A opXor_vec(const A* a_, B b)
   REGISTER_VEC3_(prefix##vec, type) \
   REGISTER_VEC4_(prefix##vec, type)
 
+void initVectorLibrary_swizzle_operators_bvec_rgba(AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_dvec_rgba(AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_ivec_rgba(AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_uvec_rgba(AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_vec_rgba (AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_bvec_stpq(AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_dvec_stpq(AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_ivec_stpq(AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_uvec_stpq(AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_vec_stpq (AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_bvec_xyzw(AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_dvec_xyzw(AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_ivec_xyzw(AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_uvec_xyzw(AngelScript::asIScriptEngine* as_engine);
+void initVectorLibrary_swizzle_operators_vec_xyzw (AngelScript::asIScriptEngine* as_engine);
 
-void initVectorLibrary_classes(AngelScript::asIScriptEngine* as_engine)
+void init_glm_vectors(AngelScript::asIScriptEngine* as_engine)
 {
   int r;
 
@@ -876,27 +891,7 @@ void initVectorLibrary_classes(AngelScript::asIScriptEngine* as_engine)
   REGISTER_INTEGER_OPERATORS(i, int);
   REGISTER_INTEGER_OPERATORS(u, uint);
   REGISTER_BASIC_OPERATORS(b, bool);
-}
 
-
-void initVectorLibrary_swizzle_operators_bvec_rgba(AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_dvec_rgba(AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_ivec_rgba(AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_uvec_rgba(AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_vec_rgba (AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_bvec_stpq(AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_dvec_stpq(AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_ivec_stpq(AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_uvec_stpq(AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_vec_stpq (AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_bvec_xyzw(AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_dvec_xyzw(AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_ivec_xyzw(AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_uvec_xyzw(AngelScript::asIScriptEngine* as_engine);
-void initVectorLibrary_swizzle_operators_vec_xyzw (AngelScript::asIScriptEngine* as_engine);
-
-void init_glm_vectors(AngelScript::asIScriptEngine* as_engine)
-{
   initVectorLibrary_swizzle_operators_bvec_rgba(as_engine);
   initVectorLibrary_swizzle_operators_dvec_rgba(as_engine);
   initVectorLibrary_swizzle_operators_ivec_rgba(as_engine);
