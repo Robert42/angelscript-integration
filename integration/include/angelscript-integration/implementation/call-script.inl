@@ -4,7 +4,7 @@
 #include "../call-script.h"
 
 namespace AngelScriptIntegration {
-
+namespace Implementation {
 
 inline void _pass_arguments_to_angelscript(AngelScript::asIScriptContext*, int)
 {
@@ -18,6 +18,7 @@ void _pass_arguments_to_angelscript(AngelScript::asIScriptContext* context, int 
   _pass_arguments_to_angelscript(context, i+1, other_args...);
 }
 
+} // namespace Implementation
 
 
 template<typename T_return, typename... T_args>
@@ -32,7 +33,7 @@ T_return callScriptFunction(AngelScript::asIScriptFunction* function, const T_ar
 
   context->Prepare(function);
 
-  _pass_arguments_to_angelscript(context, 0, args...);
+  Implementation::_pass_arguments_to_angelscript(context, 0, args...);
 
   int r = context->Execute();
 
