@@ -1,3 +1,6 @@
+#ifndef ANGELSCRIPTINTEGRATION_H
+#define ANGELSCRIPTINTEGRATION_H
+
 #include <angelscript.h>
 #include <QString>
 
@@ -13,4 +16,6 @@ void init_glm(AngelScript::asIScriptEngine* engine);
 
 void AngelScriptCheck(int returnCode);
 
-} // AngelScriptIntegration
+} // namesapce AngelScriptIntegration
+
+#endif // ANGELSCRIPTINTEGRATION_H

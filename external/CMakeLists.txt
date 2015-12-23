@@ -14,7 +14,12 @@ set(ANGELSCRIPT_TARGET ${ANGELSCRIPT_TARGET} PARENT_SCOPE)
 add_library(angelscript-addon-stdstring
   sdk/add_on/scriptstdstring/scriptstdstring.cpp
   sdk/add_on/scriptstdstring/scriptstdstring.h
-  sdk/add_on/scriptstdstring/scriptstdstring_utils.cpp
-)
+  sdk/add_on/scriptstdstring/scriptstdstring_utils.cpp)
 target_link_libraries(angelscript-addon-stdstring ${ANGELSCRIPT_TARGET})
 target_include_directories(angelscript-addon-stdstring PUBLIC .)
+
+add_library(angelscript-addon-scriptbuilder
+  sdk/add_on/scriptbuilder/scriptbuilder.cpp
+  sdk/add_on/scriptbuilder/scriptbuilder.h)
+target_link_libraries(angelscript-addon-scriptbuilder ${ANGELSCRIPT_TARGET})
+target_include_directories(angelscript-addon-scriptbuilder PUBLIC .)

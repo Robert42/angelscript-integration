@@ -157,5 +157,5 @@ void AngelScriptCheck(int r)
   Q_ASSERT(returnCode >= 0);
 }
 
-} // AngelScriptIntegration
+} // namespace AngelScriptIntegration
 
