@@ -19,11 +19,15 @@ void log_critical(const std::string& message);
 
 void init_logging_functions_qt(AngelScript::asIScriptEngine* engine)
 {
+  asDWORD previousMask = engine->SetDefaultAccessMask(ACCESS_MASK_ALL);
+
   int r;
   r = engine->RegisterGlobalFunction("void log_debug(const string &in)", AngelScript::asFUNCTION(log_debug), AngelScript::asCALL_CDECL); AngelScriptCheck(r);
   r = engine->RegisterGlobalFunction("void log_info(const string &in)", AngelScript::asFUNCTION(log_info), AngelScript::asCALL_CDECL); AngelScriptCheck(r);
   r = engine->RegisterGlobalFunction("void log_warning(const string &in)", AngelScript::asFUNCTION(log_warning), AngelScript::asCALL_CDECL); AngelScriptCheck(r);
   r = engine->RegisterGlobalFunction("void log_critical(const string &in)", AngelScript::asFUNCTION(log_critical), AngelScript::asCALL_CDECL); AngelScriptCheck(r);
+
+  engine->SetDefaultAccessMask(previousMask);
 }
 
 void init_glm_vectors(AngelScript::asIScriptEngine* engine, GlmFlags swizzle);

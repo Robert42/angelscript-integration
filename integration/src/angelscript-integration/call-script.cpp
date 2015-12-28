@@ -53,12 +53,13 @@ void pass_arg_to_angelscript(AngelScript::asIScriptContext* context, int i, quin
   context->SetArgQWord(i, value);
 }
 
-AngelScript::asIScriptModule* loadAndCompileModule(AngelScript::asIScriptEngine* engine, const char* filepath, const char* moduleName)
+AngelScript::asIScriptModule* loadAndCompileModule(AngelScript::asIScriptEngine* engine, const char* filepath, const char* moduleName, asDWORD accessMask)
 {
   int r;
   AngelScript::CScriptBuilder builder;
 
   r = builder.StartNewModule(engine, moduleName); Q_ASSERT(r>=0);
+  builder.GetModule()->SetAccessMask(accessMask);
   r = builder.AddSectionFromFile(filepath); Q_ASSERT(r>=0);
   r = builder.BuildModule(); Q_ASSERT(r>=0);
 

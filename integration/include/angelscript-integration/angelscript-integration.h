@@ -8,7 +8,9 @@ namespace AngelScriptIntegration {
 
 using AngelScript::asDWORD;
 
+const asDWORD ACCESS_MASK_ALL = 0xffffffff;
 const asDWORD ACCESS_MASK_GLM = 1;
+const asDWORD ACCESS_MASK_USER = ACCESS_MASK_GLM<<1;
 
 enum class GlmFlags
 {

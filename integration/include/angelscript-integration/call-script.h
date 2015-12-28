@@ -1,8 +1,7 @@
 #ifndef ANGELSCRIPTINTEGRATION_CALLSCRIPT_H
 #define ANGELSCRIPTINTEGRATION_CALLSCRIPT_H
 
-#include <angelscript.h>
-#include <QString>
+#include "angelscript-integration.h"
 
 namespace AngelScriptIntegration {
 
@@ -118,11 +117,19 @@ public:
   }
 };
 
-AngelScript::asIScriptModule* loadAndCompileModule(AngelScript::asIScriptEngine* engine, const char* filepath, const char* moduleName);
+AngelScript::asIScriptModule* loadAndCompileModule(AngelScript::asIScriptEngine* engine, const char* filepath, const char* moduleName, AngelScript::asDWORD accessMask);
 std::string getUniqueModuleName(AngelScript::asIScriptEngine* engine, const char* preferredModuleName);
+
+struct ConfigCallScript
+{
+  asDWORD accessMask = 0;
+};
 
 template<typename T_return, typename... T_args>
 T_return callScript(AngelScript::asIScriptEngine* engine, const std::string& filepath, const char* functionDeclarationToCall, const char* preferredModuleName, const T_args&... args);
+
+template<typename T_return, typename... T_args>
+T_return callScriptExt(AngelScript::asIScriptEngine* engine, const std::string& filepath, const char* functionDeclarationToCall, const char* preferredModuleName, const ConfigCallScript& config, const T_args&... args);
 
 template<typename T_return, typename... T_args>
 T_return callScriptFunction(AngelScript::asIScriptFunction* function, const T_args&... args);

@@ -62,10 +62,15 @@ T_return callScriptFunction(AngelScript::asIScriptFunction* function, const T_ar
 
 
 template<typename T_return, typename... T_args>
-T_return callScript(AngelScript::asIScriptEngine* engine, const std::string& filepath, const char* functionDeclarationToCall, const char* preferredModuleName, const T_args&... args)
+T_return callScriptExt(AngelScript::asIScriptEngine* engine,
+                       const std::string& filepath,
+                       const char* functionDeclarationToCall,
+                       const char* preferredModuleName,
+                       const ConfigCallScript& config,
+                       const T_args&... args)
 {
   std::string moduleName = getUniqueModuleName(engine, preferredModuleName);
-  AngelScript::asIScriptModule* module = loadAndCompileModule(engine, filepath.c_str(), moduleName.c_str());
+  AngelScript::asIScriptModule* module = loadAndCompileModule(engine, filepath.c_str(), moduleName.c_str(), config.accessMask);
 
   AngelScript::asIScriptFunction* function = module->GetFunctionByDecl(functionDeclarationToCall);
 
@@ -73,6 +78,18 @@ T_return callScript(AngelScript::asIScriptEngine* engine, const std::string& fil
 
   return callScriptFunction<T_return>(function, args...);
 }
+
+
+template<typename T_return, typename... T_args>
+T_return callScript(AngelScript::asIScriptEngine* engine,
+                    const std::string& filepath,
+                    const char* functionDeclarationToCall,
+                    const char* preferredModuleName,
+                    const T_args&... args)
+{
+  return callScript(engine, filepath, functionDeclarationToCall, preferredModuleName, ConfigCallScript(), args...);
+}
+
 
 
 } // namespace AngelScriptIntegration
