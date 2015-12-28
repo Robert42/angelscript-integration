@@ -5,6 +5,7 @@
 
 namespace AngelScriptIntegration {
 
+void pass_arg_to_angelscript(AngelScript::asIScriptContext*context, int i, void* value) = delete;
 void pass_arg_to_angelscript(AngelScript::asIScriptContext*context, int i, bool value);
 void pass_arg_to_angelscript(AngelScript::asIScriptContext*context, int i, qint8 value);
 void pass_arg_to_angelscript(AngelScript::asIScriptContext*context, int i, quint8 value);
