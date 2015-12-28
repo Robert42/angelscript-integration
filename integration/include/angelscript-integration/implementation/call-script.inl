@@ -2,6 +2,9 @@
 #define ANGELSCRIPTINTEGRATION_CALLSCRIPT_INL
 
 #include "../call-script.h"
+#include "../change-working-dir.h"
+
+#include <QFileInfo>
 
 namespace AngelScriptIntegration {
 namespace Implementation {
@@ -69,12 +72,19 @@ T_return callScriptExt(AngelScript::asIScriptEngine* engine,
                        const ConfigCallScript& config,
                        const T_args&... args)
 {
+  QFileInfo file(QString::fromStdString(filepath));
+
+  std::string absoluteFilepath = file.absoluteFilePath().toStdString();
+
+  ChangeWorkingDir cd(file.dir());
+
   std::string moduleName = getUniqueModuleName(engine, preferredModuleName);
-  AngelScript::asIScriptModule* module = loadAndCompileModule(engine, filepath.c_str(), moduleName.c_str(), config.accessMask);
+  AngelScript::asIScriptModule* module = loadAndCompileModule(engine, absoluteFilepath.c_str(), moduleName.c_str(), config.accessMask);
 
   AngelScript::asIScriptFunction* function = module->GetFunctionByDecl(functionDeclarationToCall);
 
   Q_ASSERT(function != nullptr);
+  Q_UNUSED(cd);
 
   return callScriptFunction<T_return>(function, args...);
 }

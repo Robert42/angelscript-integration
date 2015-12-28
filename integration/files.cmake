@@ -1,9 +1,11 @@
 set(SOURCE_FILES
   include/angelscript-integration/angelscript-integration.h
   include/angelscript-integration/call-script.h
+  include/angelscript-integration/change-working-dir.h
   include/angelscript-integration/implementation/call-script.inl
   src/angelscript-integration/angelscript-integration.cpp
   src/angelscript-integration/call-script.cpp
+  src/angelscript-integration/change-working-dir.cpp
   src/angelscript-integration/glm/engine-library-math-vector-classes.cpp
   src/angelscript-integration/glm/engine-library-math-vector-swizzle-operators-bvec-rgba.cpp
   src/angelscript-integration/glm/engine-library-math-vector-swizzle-operators-bvec-stpq.cpp
