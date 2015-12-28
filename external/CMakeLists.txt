@@ -23,3 +23,10 @@ add_library(angelscript-addon-scriptbuilder
   sdk/add_on/scriptbuilder/scriptbuilder.h)
 target_link_libraries(angelscript-addon-scriptbuilder ${ANGELSCRIPT_TARGET})
 target_include_directories(angelscript-addon-scriptbuilder PUBLIC .)
+
+add_library(angelscript-addon-scriptarray
+  sdk/add_on/scriptarray/scriptarray.cpp
+  sdk/add_on/scriptarray/scriptarray.h)
+target_link_libraries(angelscript-addon-scriptarray ${ANGELSCRIPT_TARGET})
+target_include_directories(angelscript-addon-scriptarray PUBLIC .)
+
