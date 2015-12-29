@@ -39,6 +39,8 @@ void _pass_arguments_to_angelscript(AngelScript::asIScriptContext* context, int 
 
 } // namespace Implementation
 
+void CheckExecutionResult(AngelScript::asIScriptContext* context, int r);
+
 
 template<typename T_return, typename... T_args>
 T_return callScriptFunction(AngelScript::asIScriptFunction* function, const T_args&... args)
@@ -56,9 +58,9 @@ T_return callScriptFunction(AngelScript::asIScriptFunction* function, const T_ar
 
   context->Prepare(function);
 
-  int r = context->Execute();AngelScriptCheck(r);
+  int r = context->Execute();
 
-  Q_ASSERT(r == AngelScript::asEXECUTION_FINISHED);
+  CheckExecutionResult(context, r);
 
   return ResultFromAngelScript<T_return>::value(context);
 }

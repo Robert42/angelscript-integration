@@ -107,9 +107,9 @@ void log_critical(const std::string& message)
 }
 
 
+#define CASE(x) case AngelScript::x:return #x;
 const char* AngelScriptReturnCodeAsString(AngelScript::asERetCodes returnCode)
 {
-#define CASE(x) case AngelScript::x:return #x;
   switch(returnCode)
   {
     CASE(asSUCCESS)
@@ -144,8 +144,24 @@ const char* AngelScriptReturnCodeAsString(AngelScript::asERetCodes returnCode)
   default:
     return "Unknown AngelScript ReturnCode";
   }
-#undef CASE
 }
+const char* AngelScriptExecutionReturnCodeAsString(AngelScript::asEContextState returnCode)
+{
+  switch(returnCode)
+  {
+  CASE(asEXECUTION_FINISHED)
+  CASE(asEXECUTION_SUSPENDED)
+  CASE(asEXECUTION_ABORTED)
+  CASE(asEXECUTION_EXCEPTION)
+  CASE(asEXECUTION_PREPARED)
+  CASE(asEXECUTION_UNINITIALIZED)
+  CASE(asEXECUTION_ACTIVE)
+  CASE(asEXECUTION_ERROR)
+  default:
+    return "Unknown AngelScript Context State";
+  }
+}
+#undef CASE
 
 void AngelScriptCheck(int r)
 {
@@ -160,6 +176,27 @@ void AngelScriptCheck(int r)
 
   Q_ASSERT(returnCode >= 0);
 }
+
+
+void CheckExecutionResult(AngelScript::asIScriptContext* context, int r)
+{
+  if(r == AngelScript::asEXECUTION_FINISHED)
+    return;
+
+  AngelScript::asEContextState contextState = static_cast<AngelScript::asEContextState>(r);
+
+  AngelScriptCheck(r);
+
+  const char* strReturnCode = AngelScriptExecutionReturnCodeAsString(contextState);
+
+  qCritical() << "CheckExecutionResult(): ContextState " << strReturnCode << " detected!";
+
+  if(contextState == AngelScript::asEXECUTION_EXCEPTION)
+    qCritical() << "Exception detected in " << context->GetExceptionFunction()->GetDeclaration() << " in line " << context->GetExceptionLineNumber() << "\nmessage: " << context->GetExceptionString();
+
+  Q_ASSERT(contextState == AngelScript::asEXECUTION_FINISHED);
+}
+
 
 } // namespace AngelScriptIntegration
 
