@@ -9,8 +9,7 @@ namespace AngelScriptIntegration {
 
 void pass_arg_to_angelscript(AngelScript::asIScriptContext* context, int i, bool value)
 {
-  static_assert(sizeof(bool) == 1, "SetArgByte expects bool to be one byte large");
-  context->SetArgByte(i, value);
+  context->SetArgDWord(i, value);
 }
 
 void pass_arg_to_angelscript(AngelScript::asIScriptContext* context, int i, qint8 value)
