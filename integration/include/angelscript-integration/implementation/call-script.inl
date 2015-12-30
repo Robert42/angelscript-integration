@@ -54,9 +54,9 @@ T_return callScriptFunction(AngelScript::asIScriptFunction* function, const T_ar
   Implementation::ScriptContextReleaser scriptContextReleaser(context);
   Q_UNUSED(scriptContextReleaser);
 
-  Implementation::_pass_arguments_to_angelscript(context, 0, args...);
-
   context->Prepare(function);
+
+  Implementation::_pass_arguments_to_angelscript(context, 0, args...);
 
   int r = context->Execute();
 
