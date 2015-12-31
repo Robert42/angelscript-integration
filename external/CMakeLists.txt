@@ -11,22 +11,14 @@ target_compile_definitions(${ANGELSCRIPT_TARGET} PUBLIC AS_USE_NAMESPACE AS_CAN_
 target_compile_options(${ANGELSCRIPT_TARGET} PUBLIC -std=c++11)
 set(ANGELSCRIPT_TARGET ${ANGELSCRIPT_TARGET} PARENT_SCOPE)
 
-add_library(angelscript-addon-stdstring
+add_library(angelscript-addons
   sdk/add_on/scriptstdstring/scriptstdstring.cpp
   sdk/add_on/scriptstdstring/scriptstdstring.h
-  sdk/add_on/scriptstdstring/scriptstdstring_utils.cpp)
-target_link_libraries(angelscript-addon-stdstring ${ANGELSCRIPT_TARGET})
-target_include_directories(angelscript-addon-stdstring PUBLIC .)
-
-add_library(angelscript-addon-scriptbuilder
+  sdk/add_on/scriptstdstring/scriptstdstring_utils.cpp
   sdk/add_on/scriptbuilder/scriptbuilder.cpp
-  sdk/add_on/scriptbuilder/scriptbuilder.h)
-target_link_libraries(angelscript-addon-scriptbuilder ${ANGELSCRIPT_TARGET})
-target_include_directories(angelscript-addon-scriptbuilder PUBLIC .)
-
-add_library(angelscript-addon-scriptarray
+  sdk/add_on/scriptbuilder/scriptbuilder.h
   sdk/add_on/scriptarray/scriptarray.cpp
-  sdk/add_on/scriptarray/scriptarray.h)
-target_link_libraries(angelscript-addon-scriptarray ${ANGELSCRIPT_TARGET})
-target_include_directories(angelscript-addon-scriptarray PUBLIC .)
-
+  sdk/add_on/scriptarray/scriptarray.h
+)
+target_link_libraries(angelscript-addons ${ANGELSCRIPT_TARGET})
+target_include_directories(angelscript-addons PUBLIC .)
