@@ -5,7 +5,14 @@
 
 namespace AngelScriptIntegration {
 
-void pass_arg_to_angelscript(AngelScript::asIScriptContext*context, int i, void* value) = delete;
+template<class T>
+void pass_arg_to_angelscript(AngelScript::asIScriptContext*context, int i, T* value)
+{
+  static_assert(std::is_class<T>::value, "only classes accepted here");
+
+  context->SetArgObject(i, value);
+}
+
 void pass_arg_to_angelscript(AngelScript::asIScriptContext*context, int i, const void* value) = delete;
 void pass_arg_to_angelscript(AngelScript::asIScriptContext*context, int i, bool value);
 void pass_arg_to_angelscript(AngelScript::asIScriptContext*context, int i, qint8 value);
