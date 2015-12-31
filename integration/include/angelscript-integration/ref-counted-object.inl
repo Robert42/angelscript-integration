@@ -13,8 +13,8 @@ void RefCountedObject::registerAsBaseOfClass(AngelScript::asIScriptEngine* engin
 
   int r = 0;
 
-  r = engine->RegisterObjectBehaviour(className, AngelScript::asBEHAVE_ADDREF, "void f()", AngelScript::asMETHOD(T,addReference), AngelScript::asCALL_THISCALL);
-  r = engine->RegisterObjectBehaviour(className, AngelScript::asBEHAVE_RELEASE, "void f()", AngelScript::asMETHOD(T,releaseReference), AngelScript::asCALL_THISCALL);
+  r = engine->RegisterObjectBehaviour(className, AngelScript::asBEHAVE_ADDREF, "void f()", AngelScript::asMETHOD(T,addReference), AngelScript::asCALL_THISCALL); AngelScriptCheck(r);
+  r = engine->RegisterObjectBehaviour(className, AngelScript::asBEHAVE_RELEASE, "void f()", AngelScript::asMETHOD(T,releaseReference), AngelScript::asCALL_THISCALL); AngelScriptCheck(r);
 }
 
 
