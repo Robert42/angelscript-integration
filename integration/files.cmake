@@ -5,6 +5,10 @@ set(SOURCE_FILES
   include/angelscript-integration/implementation/call-script.inl
   include/angelscript-integration/ref-counted-object.h
   include/angelscript-integration/ref-counted-object.inl
+  include/angelscript-integration/ref.h
+  include/angelscript-integration/ref.inl
+  include/angelscript-integration/weakref.h
+  include/angelscript-integration/weakref.inl
   src/angelscript-integration/angelscript-integration.cpp
   src/angelscript-integration/call-script.cpp
   src/angelscript-integration/change-working-dir.cpp
