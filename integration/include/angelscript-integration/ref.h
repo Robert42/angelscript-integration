@@ -1,9 +1,12 @@
 #ifndef ANGELSCRIPTINTEGRATION_REF_H
 #define ANGELSCRIPTINTEGRATION_REF_H
 
-#include "ref-counted-object.h"
+#include <stdint.h>
+#include "angelscript-integration.h"
 
 namespace AngelScriptIntegration {
+
+class RefCountedObject;
 
 template<typename T>
 class ref final
@@ -28,6 +31,8 @@ public:
 
   bool isNull() const;
   void reset();
+
+  void swap(ref<T>& other);
 
 private:
   T* _ptr;

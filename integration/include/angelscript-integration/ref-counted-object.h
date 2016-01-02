@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "angelscript-integration.h"
+#include "ref.h"
 
 namespace AngelScriptIntegration {
 
@@ -16,6 +17,9 @@ public:
 
   void addReference();
   void releaseReference();
+
+  template<typename T>
+  ref<T> as_ref();
 
   AngelScript::asILockableSharedBool* get_weakrefFlag();
 

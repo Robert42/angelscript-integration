@@ -57,8 +57,16 @@ weakref<T>::~weakref()
 }
 
 template<typename T>
+weakref& weakref<T>::operator=(const ref<T>& ptr)
+{
+  this->swap(weakref<T>(ptr));
+  return *this;
+}
+
+template<typename T>
 weakref& weakref<T>::operator=(const weakref<T>& other)
 {
+  other.class_invariant();
   class_invariant();
 
   if(this->_is_deleted)
@@ -78,6 +86,8 @@ weakref& weakref<T>::operator=(weakref<T>&& other)
 
   std::swap(other._ptr, this->_ptr);
   std::swap(other._is_deleted, this->_is_deleted);
+
+  return *this;
 }
 
 template<typename T>
@@ -108,7 +118,13 @@ bool weakref<T>::isNull()
 
 void weakref<T>::reset()
 {
-  weakref<T>(std::move(this));
+  this->swap(weakref<T>());
+}
+
+template<typename T>
+void weakref<T>::swap(weakref<T>& other)
+{
+  *this = std::move(other);
 }
 
 } // namespace AngelScriptIntegration

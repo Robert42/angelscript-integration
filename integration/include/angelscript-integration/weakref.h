@@ -19,6 +19,7 @@ public:
   weakref(weakref<T>&& other);
   ~weakref();
 
+  weakref<T>& operator=(const ref<T>& ptr);
   weakref<T>& operator=(const weakref<T>& other);
   weakref<T>& operator=(weakref<T>&& other);
 
@@ -26,6 +27,8 @@ public:
 
   bool isNull() const;
   void reset();
+
+  void swap(weakref<T>& other);
 
 private:
   T* _ptr;

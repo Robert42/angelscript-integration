@@ -50,6 +50,7 @@ template<typename T>
 ref<T>& ref<T>::operator=(ref<T>&& other)
 {
   std::swap(other._ptr, this->_ptr);
+  return *this;
 }
 
 template<typename T>
@@ -81,7 +82,13 @@ bool ref<T>::isNull() const
 template<typename T>
 void ref<T>::reset()
 {
-  ref<T>(std::move(this));
+  this->swap(ref<T>());
+}
+
+template<typename T>
+void ref<T>::swap(ref<T>& other)
+{
+  *this = std::move(other);
 }
 
 

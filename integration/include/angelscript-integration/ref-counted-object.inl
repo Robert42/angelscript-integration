@@ -18,6 +18,18 @@ void RefCountedObject::registerAsBaseOfClass(AngelScript::asIScriptEngine* engin
   r = engine->RegisterObjectBehaviour(className, AngelScript::asBEHAVE_GET_WEAKREF_FLAG, "int& f()", AngelScript::asMETHOD(T,get_weakrefFlag), AngelScript::asCALL_THISCALL); AngelScriptCheck(r);
 }
 
+template<typename T>
+ref<T> RefCountedObject::as_ref()
+{
+  Q_ASSERT(dynamic_cast<T*>(this) != nullptr);
+
+  T* ptr = static_cast<T*>(this);
+
+  ptr->addReference();
+
+  return ref<T>(ptr);
+}
+
 
 } // namespace AngelScriptIntegration
 
