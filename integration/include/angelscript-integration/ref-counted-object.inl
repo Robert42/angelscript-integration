@@ -15,7 +15,7 @@ void RefCountedObject::registerAsBaseOfClass(AngelScript::asIScriptEngine* engin
 
   r = engine->RegisterObjectBehaviour(className, AngelScript::asBEHAVE_ADDREF, "void f()", AngelScript::asMETHOD(T,addReference), AngelScript::asCALL_THISCALL); AngelScriptCheck(r);
   r = engine->RegisterObjectBehaviour(className, AngelScript::asBEHAVE_RELEASE, "void f()", AngelScript::asMETHOD(T,releaseReference), AngelScript::asCALL_THISCALL); AngelScriptCheck(r);
-  r = engine->RegisterObjectBehaviour(className, AngelScript::asBEHAVE_GET_WEAKREF_FLAG, "int& f()", AngelScript::asMETHOD(T,get_weakReferenceFlag), AngelScript::asCALL_THISCALL); AngelScriptCheck(r);
+  r = engine->RegisterObjectBehaviour(className, AngelScript::asBEHAVE_GET_WEAKREF_FLAG, "int& f()", AngelScript::asMETHOD(T,get_weakrefFlag), AngelScript::asCALL_THISCALL); AngelScriptCheck(r);
 }
 
 
