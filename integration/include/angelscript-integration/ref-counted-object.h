@@ -17,6 +17,8 @@ public:
   void addReference();
   void releaseReference();
 
+  AngelScript::asILockableSharedBool* get_weakReferenceFlag();
+
 protected:
   RefCountedObject();
   virtual ~RefCountedObject();
@@ -26,7 +28,9 @@ protected:
 
 private:
   uint32_t referenceCount = 1;
+  AngelScript::asILockableSharedBool* weakRefFlag = nullptr;
 };
+
 
 } // namespace AngelScriptIntegration
 

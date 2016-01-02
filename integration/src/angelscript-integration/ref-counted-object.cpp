@@ -23,6 +23,21 @@ void RefCountedObject::releaseReference()
     delete this;
 }
 
+AngelScript::asILockableSharedBool* RefCountedObject::get_weakReferenceFlag()
+{
+  if(!weakRefFlag)
+  {
+    AngelScript::asAcquireExclusiveLock();
+
+    if(!weakRefFlag)
+      weakRefFlag = AngelScript::asCreateLockableSharedBool();
+
+    AngelScript::asReleaseExclusiveLock();
+  }
+
+  return weakRefFlag;
+}
+
 
 } // namespace AngelScriptIntegration
 
