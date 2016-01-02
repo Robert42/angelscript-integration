@@ -16,13 +16,16 @@ public:
   typedef T_return(T_class::*function_ptr)(T_args...);
 
   template<function_ptr function>
-  struct FOO
+  struct BindFunction
   {
-    static T_return call(T_class* instance, T_args...);
+    static T_return call(T_class* instance, T_args... arg)
+    {
+      return (instance->*function)(arg...);
+    }
   };
 };
 
-#define asMETHOD_WITH_REF(CLASS, METHOD) AngelScript::asFUNCTION(AngelScriptIntegration::impl::WrapMethodWithReferences<decltype(&CLASS::METHOD)>::FOO<&CLASS::METHOD>::call)
+#define asMETHOD_WITH_REF(CLASS, METHOD) AngelScript::asFUNCTION(AngelScriptIntegration::impl::WrapMethodWithReferences<decltype(&CLASS::METHOD)>::BindFunction<&CLASS::METHOD>::call)
 
 } // impl
 } // AngelScriptIntegration
