@@ -145,6 +145,6 @@ T_return callScriptFunction(AngelScript::asIScriptFunction* function, const T_ar
 
 } // namespace AngelScriptIntegration
 
-#include "implementation/call-script.inl"
+#include "call-script.inl"
 
 #endif // ANGELSCRIPTINTEGRATION_CALLSCRIPT_H

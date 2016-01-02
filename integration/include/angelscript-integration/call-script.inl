@@ -1,8 +1,8 @@
 #ifndef ANGELSCRIPTINTEGRATION_CALLSCRIPT_INL
 #define ANGELSCRIPTINTEGRATION_CALLSCRIPT_INL
 
-#include "../call-script.h"
-#include "../change-working-dir.h"
+#include "call-script.h"
+#include "change-working-dir.h"
 
 #include <QFileInfo>
 
