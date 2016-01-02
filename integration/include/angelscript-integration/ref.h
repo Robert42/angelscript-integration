@@ -43,5 +43,6 @@ private:
 
 
 #include "ref.inl"
+#include "implementation/function-wrapper.h"
 
 #endif // ANGELSCRIPTINTEGRATION_REF_H
