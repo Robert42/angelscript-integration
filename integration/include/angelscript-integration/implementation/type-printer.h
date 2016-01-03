@@ -1,11 +1,11 @@
 #ifndef ANGELSCRIPT_IMPLEMENTATION_TYPEPRINTER_H
 #define ANGELSCRIPT_IMPLEMENTATION_TYPEPRINTER_H
 
-#ifdef __GXX_ABI_VERSION
+#include <QDebug>
+
+#ifdef Q_CC_GNU
 #include <cxxabi.h>
 #endif
-
-#include <QDebug>
 
 namespace AngelScript {
 namespace impl {
@@ -28,7 +28,7 @@ struct TypePrinter<T, T_rest...>
   {
     const char* name = typeid(T).name();
 
-#ifdef __GXX_ABI_VERSION
+#ifdef Q_CC_GNU
     char temp[1024];
 
     size_t length = 1024;
