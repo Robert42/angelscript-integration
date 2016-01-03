@@ -78,6 +78,8 @@ weakref<T>& weakref<T>::operator=(const weakref<T>& other)
 
   if(this->_is_deleted)
     this->_is_deleted->AddRef();
+
+  return *this;
 }
 
 template<typename T>
