@@ -3,14 +3,8 @@ set(SOURCE_FILES
   include/angelscript-integration/call-script.h
   include/angelscript-integration/call-script.inl
   include/angelscript-integration/change-working-dir.h
-  include/angelscript-integration/implementation/function-wrapper.h
-  include/angelscript-integration/implementation/type-printer.h
   include/angelscript-integration/ref-counted-object.h
   include/angelscript-integration/ref-counted-object.inl
-  include/angelscript-integration/ref.h
-  include/angelscript-integration/ref.inl
-  include/angelscript-integration/weakref.h
-  include/angelscript-integration/weakref.inl
   src/angelscript-integration/angelscript-integration.cpp
   src/angelscript-integration/call-script.cpp
   src/angelscript-integration/change-working-dir.cpp
