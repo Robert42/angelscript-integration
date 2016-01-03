@@ -25,7 +25,7 @@ public:
   ref<T>& operator=(ref<T>&& other);
 
   T* addReference();
-  T* ptr();
+  T* ptr() const;
 
   T* operator->();
 

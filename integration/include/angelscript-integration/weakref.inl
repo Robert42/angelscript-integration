@@ -1,5 +1,5 @@
-#ifndef ANGELSCRIPTINTEGRATION_REF_INL
-#define ANGELSCRIPTINTEGRATION_REF_INL
+#ifndef ANGELSCRIPTINTEGRATION_WEAKREF_INL
+#define ANGELSCRIPTINTEGRATION_WEAKREF_INL
 
 #include "weakref.h"
 
@@ -7,7 +7,7 @@ namespace AngelScriptIntegration {
 
 
 template<typename T>
-inline void weakref<T>::class_invariant()
+inline void weakref<T>::class_invariant() const
 {
   Q_ASSERT((_ptr==nullptr) == (_is_deleted==nullptr));
 }
@@ -15,7 +15,7 @@ inline void weakref<T>::class_invariant()
 template<typename T>
 weakref<T>::weakref()
   : _ptr(nullptr),
-    _isvalid(nullptr)
+    _is_deleted(nullptr)
 {
 }
 
@@ -28,18 +28,18 @@ weakref<T>::weakref(const ref<T>& ptr)
 }
 
 template<typename T>
-weakref::weakref(const weakref<T>& other)
+weakref<T>::weakref(const weakref<T>& other)
   : _ptr(other._ptr),
     _is_deleted(other._is_deleted)
 {
   if(_is_deleted)
-    _is_deleted->addReference();
+    _is_deleted->AddRef();
 
   class_invariant();
 }
 
 template<typename T>
-weakref::weakref(weakref<T>&& other)
+weakref<T>::weakref(weakref<T>&& other)
   : _ptr(other._ptr),
     _is_deleted(other._is_deleted)
 {
@@ -53,34 +53,35 @@ weakref<T>::~weakref()
   class_invariant();
 
   if(this->_is_deleted)
-    this->_is_deleted->releaseReference();
+    this->_is_deleted->Release();
 }
 
 template<typename T>
-weakref& weakref<T>::operator=(const ref<T>& ptr)
+weakref<T>& weakref<T>::operator=(const ref<T>& ptr)
 {
-  this->swap(weakref<T>(ptr));
+  weakref<T> temp(ptr);
+  this->swap(temp);
   return *this;
 }
 
 template<typename T>
-weakref& weakref<T>::operator=(const weakref<T>& other)
+weakref<T>& weakref<T>::operator=(const weakref<T>& other)
 {
   other.class_invariant();
   class_invariant();
 
   if(this->_is_deleted)
-    this->_is_deleted->releaseReference();
+    this->_is_deleted->Release();
 
   this->_ptr = other._ptr;
   this->_is_deleted = other._is_deleted;
 
   if(this->_is_deleted)
-    this->_is_deleted->addReference();
+    this->_is_deleted->AddRef();
 }
 
 template<typename T>
-weakref& weakref<T>::operator=(weakref<T>&& other)
+weakref<T>& weakref<T>::operator=(weakref<T>&& other)
 {
   class_invariant();
 
@@ -91,7 +92,7 @@ weakref& weakref<T>::operator=(weakref<T>&& other)
 }
 
 template<typename T>
-ref<T> weakref<T>::lock()
+ref<T> weakref<T>::lock() const
 {
   class_invariant();
 
@@ -110,12 +111,13 @@ ref<T> weakref<T>::lock()
 }
 
 template<typename T>
-bool weakref<T>::isNull()
+bool weakref<T>::isNull() const
 {
   class_invariant();
   return _is_deleted==nullptr || _is_deleted->Get();
 }
 
+template<typename T>
 void weakref<T>::reset()
 {
   this->swap(weakref<T>());
@@ -129,4 +131,4 @@ void weakref<T>::swap(weakref<T>& other)
 
 } // namespace AngelScriptIntegration
 
-#endif // ANGELSCRIPTINTEGRATION_REF_INL
+#endif // ANGELSCRIPTINTEGRATION_WEAKREF_INL

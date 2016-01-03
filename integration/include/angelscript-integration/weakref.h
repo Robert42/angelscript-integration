@@ -23,7 +23,7 @@ public:
   weakref<T>& operator=(const weakref<T>& other);
   weakref<T>& operator=(weakref<T>&& other);
 
-  ref<T> lock();
+  ref<T> lock() const;
 
   bool isNull() const;
   void reset();
@@ -34,7 +34,7 @@ private:
   T* _ptr;
   AngelScript::asILockableSharedBool* _is_deleted;
 
-  void class_invariant();
+  void class_invariant() const;
 };
 
 

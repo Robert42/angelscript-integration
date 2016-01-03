@@ -62,7 +62,7 @@ T* ref<T>::addReference()
 }
 
 template<typename T>
-T* ref<T>::ptr()
+T* ref<T>::ptr() const
 {
   return _ptr;
 }
