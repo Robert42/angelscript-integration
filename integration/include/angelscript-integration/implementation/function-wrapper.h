@@ -11,11 +11,6 @@ namespace impl {
 // see also http://www.angelcode.com/angelscript/sdk/docs/manual/doc_obj_handle.html
 // see also http://www.angelcode.com/angelscript/sdk/docs/manual/doc_generic.html
 
-template<typename T_function>
-class WrapMethodWithReferences;
-
-
-
 
 template<typename T>
 inline void result_updateRefCount(const T&){}
@@ -31,6 +26,11 @@ inline void result_updateRefCount(ref<T> t)
 {
   t.ptr()->addReference();
 }
+
+
+
+template<typename T_function>
+class WrapMethodWithReferences;
 
 template<typename T_class, typename T_return, typename... T_args>
 struct WrapMethodWithReferences<T_return(T_class::*)(T_args...)>
