@@ -30,6 +30,12 @@ ref<T> RefCountedObject::as_ref()
   return ref<T>(ptr);
 }
 
+template<typename T>
+weakref<T> RefCountedObject::as_weakref()
+{
+  return weakref<T>(this->as_ref<T>());
+}
+
 
 } // namespace AngelScriptIntegration
 

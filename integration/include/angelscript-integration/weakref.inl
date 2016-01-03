@@ -111,6 +111,42 @@ ref<T> weakref<T>::lock() const
 }
 
 template<typename T>
+bool weakref<T>::operator==(const weakref<T>& other) const
+{
+  return (this->isNull() && other.isNull()) || this->_ptr == other._ptr;
+}
+
+template<typename T>
+bool weakref<T>::operator!=(const weakref<T>& other) const
+{
+  return !this->operator ==(other);
+}
+
+template<typename T>
+bool weakref<T>::operator==(const ref<T>& other) const
+{
+  return this->operator ==(other.ptr());
+}
+
+template<typename T>
+bool weakref<T>::operator!=(const ref<T>& other) const
+{
+  return !this->operator ==(other);
+}
+
+template<typename T>
+bool weakref<T>::operator==(T* other) const
+{
+  return (this->isNull() && other==nullptr) || this->_ptr == other;
+}
+
+template<typename T>
+bool weakref<T>::operator!=(T* other) const
+{
+  return !this->operator ==(other);
+}
+
+template<typename T>
 bool weakref<T>::isNull() const
 {
   class_invariant();

@@ -25,6 +25,17 @@ public:
 
   ref<T> lock() const;
 
+  bool operator==(const weakref<T>& other) const;
+  bool operator!=(const weakref<T>& other) const;
+  bool operator==(T* other) const;
+  bool operator!=(T* other) const;
+  friend bool operator==(T* a, const weakref<T>& b){return b == a;}
+  friend bool operator!=(T* a, const weakref<T>& b){return b != a;}
+  bool operator==(const ref<T>& other) const;
+  bool operator!=(const ref<T>& other) const;
+  friend bool operator==(const ref<T>& a, const weakref<T>& b){return b == a;}
+  friend bool operator!=(const ref<T>& a, const weakref<T>& b){return b != a;}
+
   bool isNull() const;
   void reset();
 

@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "angelscript-integration.h"
 #include "ref.h"
+#include "weakref.h"
 
 namespace AngelScriptIntegration {
 
@@ -20,6 +21,8 @@ public:
 
   template<typename T>
   ref<T> as_ref();
+  template<typename T>
+  weakref<T> as_weakref();
 
   AngelScript::asILockableSharedBool* get_weakrefFlag();
 

@@ -44,6 +44,8 @@ ref<T>& ref<T>::operator=(const ref<T>& other)
 
   if(this->_ptr)
     this->_ptr->addReference();
+
+  return *this;
 }
 
 template<typename T>
@@ -68,9 +70,33 @@ T* ref<T>::ptr() const
 }
 
 template<typename T>
-T* ref<T>::operator->()
+T* ref<T>::operator->() const
 {
   return _ptr;
+}
+
+template<typename T>
+bool ref<T>::operator==(const ref<T>& other) const
+{
+  return this->_ptr == other._ptr;
+}
+
+template<typename T>
+bool ref<T>::operator!=(const ref<T>& other) const
+{
+  return this->_ptr != other._ptr;
+}
+
+template<typename T>
+bool ref<T>::operator==(T* other) const
+{
+  return this->_ptr == other;
+}
+
+template<typename T>
+bool ref<T>::operator!=(T* other) const
+{
+  return this->_ptr != other;
 }
 
 template<typename T>

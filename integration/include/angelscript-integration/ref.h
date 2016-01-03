@@ -23,7 +23,14 @@ public:
   T* addReference();
   T* ptr() const;
 
-  T* operator->();
+  T* operator->() const;
+
+  bool operator==(const ref<T>& other) const;
+  bool operator!=(const ref<T>& other) const;
+  bool operator==(T* other) const;
+  bool operator!=(T* other) const;
+  friend bool operator==(T* a, const ref<T>& b){return b == a;}
+  friend bool operator!=(T* a, const ref<T>& b){return b != a;}
 
   bool isNull() const;
   void reset();
