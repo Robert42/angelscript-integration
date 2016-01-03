@@ -11,10 +11,6 @@ class RefCountedObject;
 template<typename T>
 class ref final
 {
-  static_assert(std::is_base_of<RefCountedObject, T>::value ||
-                std::is_same<RefCountedObject, T>::value,
-                "T must inherit from RefCountedObject");
-
 public:
   explicit ref(T* ptr=nullptr);
   ref(const ref<T>& other);
