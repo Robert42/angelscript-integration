@@ -99,7 +99,7 @@ T_return callScript(AngelScript::asIScriptEngine* engine,
                     const char* preferredModuleName,
                     const T_args&... args)
 {
-  return callScript(engine, filepath, functionDeclarationToCall, preferredModuleName, ConfigCallScript(), args...);
+  return callScriptExt<T_return>(engine, filepath, functionDeclarationToCall, preferredModuleName, ConfigCallScript(), args...);
 }
 
 
