@@ -13,19 +13,27 @@ namespace impl {
 
 
 template<typename T>
-inline void result_updateRefCount(const T&){}
+inline T result_updateRefCount(T t){return t;}
 
 template<typename T>
-inline void result_updateRefCount(ref<T>& t) = delete;
-
-template<typename T>
-inline void result_updateRefCount(const ref<T>& t) = delete;
-
-template<typename T>
-inline void result_updateRefCount(ref<T> t)
+inline T* result_updateRefCount(const ref<T>& t)
 {
   t.ptr()->addReference();
+  return t.ptr();
 }
+
+
+template <typename T>
+struct ReturnType
+{
+  typedef  T type;
+};
+
+template <typename T>
+struct ReturnType<ref<T>>
+{
+  typedef T* type;
+};
 
 
 
@@ -38,23 +46,45 @@ struct WrapMethodWithReferences<T_return(T_class::*)(T_args...)>
 public:
   typedef T_return(T_class::*function_ptr)(T_args...);
 
+  typedef typename ReturnType<T_return>::type T_return_filtered;
+
   template<function_ptr function>
   struct BindFunction
   {
-    T_return call(T_args... arg)
+    T_return_filtered call(T_args... arg)
     {
       T_class* instance = static_cast<T_class>(this);
 
-      T_return result = (instance->*function)(arg...);
+      return result_updateRefCount((instance->*function)(arg...));
+    }
+  };
+};
 
-      result_updateRefCount(result);
 
-      return result;
+
+template<typename T_function>
+class WrapFunctionWithReferences;
+
+template<typename T_return, typename... T_args>
+struct WrapFunctionWithReferences<T_return(T_args...)>
+{
+public:
+  typedef T_return(function_ptr)(T_args...);
+
+  typedef typename ReturnType<T_return>::type T_return_filtered;
+
+  template<function_ptr function>
+  struct BindFunction
+  {
+    static T_return_filtered call(T_args... arg)
+    {
+      return result_updateRefCount(function(arg...));
     }
   };
 };
 
 #define asMETHOD_WITH_REF(CLASS, METHOD) AngelScript::asMETHOD(AngelScriptIntegration::impl::WrapMethodWithReferences<decltype(&CLASS::METHOD)>::BindFunction<&CLASS::METHOD>, call)
+#define asFUNCTION_WITH_REF(FUNCTION) AngelScript::asFUNCTION(AngelScriptIntegration::impl::WrapFunctionWithReferences<decltype(FUNCTION)>::BindFunction<FUNCTION>::call)
 
 } // impl
 } // AngelScriptIntegration
