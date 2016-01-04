@@ -19,6 +19,8 @@ add_library(angelscript-addons
   sdk/add_on/scriptbuilder/scriptbuilder.h
   sdk/add_on/scriptarray/scriptarray.cpp
   sdk/add_on/scriptarray/scriptarray.h
+  sdk/add_on/scriptdictionary/scriptdictionary.cpp
+  sdk/add_on/scriptdictionary/scriptdictionary.h
 )
 target_link_libraries(angelscript-addons ${ANGELSCRIPT_TARGET})
 target_include_directories(angelscript-addons PUBLIC .)
