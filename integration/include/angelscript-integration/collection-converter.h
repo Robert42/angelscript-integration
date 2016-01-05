@@ -5,6 +5,7 @@
 #include <sdk/add_on/scriptdictionary/scriptdictionary.h>
 
 #include <QSet>
+#include <QVector>
 
 namespace AngelScriptIntegration {
 
@@ -21,7 +22,7 @@ QSet<T> scriptArrayToSet(AngelScript::CScriptArray* array)
   return set;
 }
 
-QSet<QString> scriptArrayToStringSet(AngelScript::CScriptArray* array)
+inline QSet<QString> scriptArrayToStringSet(AngelScript::CScriptArray* array)
 {
   QSet<QString> set;
 
@@ -31,6 +32,35 @@ QSet<QString> scriptArrayToStringSet(AngelScript::CScriptArray* array)
     set.insert(QString::fromStdString(*reinterpret_cast<std::string*>(array->At(i))));
 
   return set;
+}
+
+template<typename T>
+AngelScript::CScriptArray* scriptArrayFromVector(const QVector<T>& vector, AngelScript::asIScriptEngine* engine, const std::string& innerType)
+{
+  AngelScript::asIObjectType* arrayType = engine->GetObjectTypeByDecl(("array<"+innerType+">").c_str());
+
+  Q_ASSERT(arrayType != nullptr);
+
+  AngelScript::CScriptArray* array = AngelScript::CScriptArray::Create(arrayType, vector.length());
+
+  for(int i=0; i<vector.length(); ++i)
+  {
+    T copy = vector[i];
+    array->SetValue(i, &copy);
+  }
+
+  return array;
+}
+
+inline AngelScript::CScriptArray* scriptArrayFromStringSet(QSet<QString> set, AngelScript::asIScriptEngine* engine)
+{
+  QVector<std::string> convertedSet;
+  convertedSet.reserve(set.size());
+
+  for(const QString& s : set)
+    convertedSet.append(s.toStdString());
+
+  return scriptArrayFromVector<std::string>(convertedSet, engine, "string");
 }
 
 template<typename T>
@@ -51,6 +81,21 @@ QHash<QString, T> scriptDictionaryToHash(AngelScript::CScriptDictionary* dict, c
   }
 
   return hash;
+}
+
+template<typename T>
+AngelScript::CScriptDictionary* scriptDictionaryFromHash(const QHash<QString, T>& hash, int typeId, AngelScript::asIScriptEngine* engine)
+{
+  AngelScript::CScriptDictionary* dict = AngelScript::CScriptDictionary::Create(engine);
+
+  for(auto i = hash.begin(); i!=hash.end(); ++i)
+  {
+    std::string key = i.key().toStdString();
+    T value = i.value();
+    dict->Set(key, &value, typeId);
+  }
+
+  return dict;
 }
 
 } // namespace AngelScriptIntegration
