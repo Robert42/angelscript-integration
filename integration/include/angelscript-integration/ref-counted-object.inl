@@ -19,6 +19,32 @@ void RefCountedObject::registerAsBaseOfClass(AngelScript::asIScriptEngine* engin
 }
 
 
+template<typename T>
+void WrapWithRefCounter<T>::registerClass(AngelScript::asIScriptEngine* engine, const char* className, bool registerDefaultConstructor, bool registerType)
+{
+  int r = 0;
+
+  if(registerType)
+  {
+    r = engine->RegisterObjectType(className, 0, AngelScript::asOBJ_REF);
+    AngelScriptCheck(r);
+  }
+  if(registerDefaultConstructor)
+  {
+    r = engine->RegisterObjectBehaviour(className, AngelScript::asBEHAVE_FACTORY, (std::string(className)+"@ f()").c_str(), AngelScript::asFUNCTION(create), AngelScript::asCALL_CDECL);
+    AngelScriptCheck(r);
+  }
+
+  RefCountedObject::registerAsBaseOfClass<wrapper_type>(engine, className);
+}
+
+template<typename T>
+WrapWithRefCounter<T>* WrapWithRefCounter<T>::create()
+{
+  return new WrapWithRefCounter<T>;
+}
+
+
 } // namespace AngelScriptIntegration
 
 #endif // ANGELSCRIPTINTEGRATION_REFCOUNTEDOBJECT_INL

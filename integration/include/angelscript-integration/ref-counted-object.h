@@ -31,6 +31,19 @@ private:
   AngelScript::asILockableSharedBool* weakRefFlag = nullptr;
 };
 
+template<typename T>
+class WrapWithRefCounter : public RefCountedObject
+{
+public:
+  typedef WrapWithRefCounter<T> wrapper_type;
+  T value;
+
+  static void registerClass(AngelScript::asIScriptEngine* engine, const char* className, bool registerDefaultConstructor=true, bool registerType=true);
+
+private:
+  static wrapper_type* create();
+};
+
 
 } // namespace AngelScriptIntegration
 
