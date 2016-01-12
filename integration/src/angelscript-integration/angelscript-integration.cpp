@@ -31,12 +31,14 @@ void init_logging_functions_qt(AngelScript::asIScriptEngine* engine)
 }
 
 void init_glm_vectors(AngelScript::asIScriptEngine* engine, GlmFlags swizzle);
+void init_glm_quat(AngelScript::asIScriptEngine* engine);
 
 void init_glm(AngelScript::asIScriptEngine* engine, GlmFlags swizzle)
 {
   asDWORD previousMask = engine->SetDefaultAccessMask(ACCESS_MASK_GLM);
 
   init_glm_vectors(engine, swizzle);
+  init_glm_quat(engine);
 
   engine->SetDefaultAccessMask(previousMask);
 }

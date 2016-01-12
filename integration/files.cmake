@@ -9,6 +9,7 @@ set(SOURCE_FILES
   src/angelscript-integration/angelscript-integration.cpp
   src/angelscript-integration/call-script.cpp
   src/angelscript-integration/change-working-dir.cpp
+  src/angelscript-integration/glm/engine-library-math-quat-classes.cpp
   src/angelscript-integration/glm/engine-library-math-vector-classes.cpp
   src/angelscript-integration/glm/engine-library-math-vector-swizzle-operators-bvec-rgba.cpp
   src/angelscript-integration/glm/engine-library-math-vector-swizzle-operators-bvec-stpq.cpp
