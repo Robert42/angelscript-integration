@@ -24,6 +24,9 @@ void init_glm(AngelScript::asIScriptEngine* engine, GlmFlags swizzle);
 
 void AngelScriptCheck(int returnCode);
 
+template<class T_from, class T_to>
+inline T_to* wrap_static_cast(T_from* from){return static_cast<T_to*>(from);}
+
 } // namesapce AngelScriptIntegration
 
 #endif // ANGELSCRIPTINTEGRATION_H
