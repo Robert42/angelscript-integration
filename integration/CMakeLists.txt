@@ -1,4 +1,4 @@
-find_package(Qt5Core REQUIRED)
+find_package(Qt5Core 5.5 REQUIRED)
 
 include(files.cmake)
 
