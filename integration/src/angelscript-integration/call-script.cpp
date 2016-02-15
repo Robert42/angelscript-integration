@@ -3,6 +3,7 @@
 
 #include <QMutex>
 #include <QMutexLocker>
+#include <QDebug>
 
 namespace AngelScriptIntegration {
 
@@ -52,13 +53,43 @@ void pass_arg_to_angelscript(AngelScript::asIScriptContext* context, int i, quin
   context->SetArgQWord(i, value);
 }
 
-AngelScript::asIScriptModule* loadAndCompileModule(AngelScript::asIScriptEngine* engine, const char* filepath, const char* moduleName, asDWORD accessMask)
+int handle_include_file(const char* c_include, const char* c_from, AngelScript::CScriptBuilder* builder, void* userParam)
+{
+  const QVector<QDir>& includeDirectories = *reinterpret_cast<QVector<QDir>*>(userParam);
+  QString include = QString::fromStdString(c_include);
+  QString from = QString::fromStdString(c_from);
+  QDir currentDir = QFileInfo(from).dir();
+
+  QFileInfo includedFile = currentDir.absoluteFilePath(include);
+
+  for(const QDir& dir : includeDirectories)
+  {
+    if(includedFile.exists())
+      break;
+
+    includedFile = dir.absoluteFilePath(include);
+  }
+
+  if(!includedFile.exists())
+  {
+    qWarning() << "Couldn't find the inluding file" << include << "from the file" << from;
+    return -1;
+  }
+
+  std::string foundFile = includedFile.absoluteFilePath().toStdString();
+  return builder->AddSectionFromFile(foundFile.c_str());
+}
+
+AngelScript::asIScriptModule* loadAndCompileModule(AngelScript::asIScriptEngine* engine, const char* filepath, const char* moduleName, const ConfigCallScript& config)
 {
   int r;
   AngelScript::CScriptBuilder builder;
 
+  QVector<QDir> includeDirectories = config.includeDirectories;
+
   r = builder.StartNewModule(engine, moduleName); Q_ASSERT(r>=0);
-  builder.GetModule()->SetAccessMask(accessMask);
+  builder.SetIncludeCallback(handle_include_file, &includeDirectories);
+  builder.GetModule()->SetAccessMask(config.accessMask);
   r = builder.AddSectionFromFile(filepath); Q_ASSERT(r>=0);
   r = builder.BuildModule(); Q_ASSERT(r>=0);
 

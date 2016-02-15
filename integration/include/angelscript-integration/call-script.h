@@ -3,6 +3,9 @@
 
 #include "angelscript-integration.h"
 
+#include <QDir>
+#include <QVector>
+
 namespace AngelScriptIntegration {
 
 template<class T>
@@ -126,13 +129,14 @@ public:
   }
 };
 
-AngelScript::asIScriptModule* loadAndCompileModule(AngelScript::asIScriptEngine* engine, const char* filepath, const char* moduleName, AngelScript::asDWORD accessMask);
-std::string getUniqueModuleName(AngelScript::asIScriptEngine* engine, const char* preferredModuleName);
-
 struct ConfigCallScript
 {
   asDWORD accessMask = 0;
+  QVector<QDir> includeDirectories;
 };
+
+AngelScript::asIScriptModule* loadAndCompileModule(AngelScript::asIScriptEngine* engine, const char* filepath, const char* moduleName, const ConfigCallScript& config);
+std::string getUniqueModuleName(AngelScript::asIScriptEngine* engine, const char* preferredModuleName);
 
 template<typename T_return, typename... T_args>
 T_return callScript(AngelScript::asIScriptEngine* engine, const std::string& filepath, const char* functionDeclarationToCall, const char* preferredModuleName, const T_args&... args);

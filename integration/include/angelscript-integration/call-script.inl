@@ -81,7 +81,7 @@ T_return callScriptExt(AngelScript::asIScriptEngine* engine,
   ChangeWorkingDir cd(file.dir());
 
   std::string moduleName = getUniqueModuleName(engine, preferredModuleName);
-  AngelScript::asIScriptModule* module = loadAndCompileModule(engine, absoluteFilepath.c_str(), moduleName.c_str(), config.accessMask);
+  AngelScript::asIScriptModule* module = loadAndCompileModule(engine, absoluteFilepath.c_str(), moduleName.c_str(), config);
 
   AngelScript::asIScriptFunction* function = module->GetFunctionByDecl(functionDeclarationToCall);
 
