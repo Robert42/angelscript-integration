@@ -29,6 +29,9 @@ void AngelScriptCheck(int returnCode);
 template<class T_from, class T_to>
 inline T_to* wrap_static_cast(T_from* from){return static_cast<T_to*>(from);}
 
+template<class T_struct, typename... T_args>
+inline void wrap_constructor(T_struct* s, const T_args&... args){*s = T_struct(args...);}
+
 } // namesapce AngelScriptIntegration
 
 #endif // ANGELSCRIPTINTEGRATION_H
