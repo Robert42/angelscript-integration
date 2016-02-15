@@ -5,6 +5,8 @@
 
 namespace AngelScriptIntegration {
 
+int errorCount = 0;
+
 void handleMessage(const AngelScript::asSMessageInfo* message, void*);
 
 void init_message_callback_qt(AngelScript::asIScriptEngine* engine)
@@ -172,6 +174,8 @@ void AngelScriptCheck(int r)
   if(returnCode >= 0)
     return;
 
+  errorCount++;
+
   const char* strReturnCode = AngelScriptReturnCodeAsString(returnCode);
 
   qCritical() << "AngelScriptCheck(): Error Code " << strReturnCode << " detected!";
@@ -184,6 +188,8 @@ void CheckExecutionResult(AngelScript::asIScriptContext* context, int r)
 {
   if(r == AngelScript::asEXECUTION_FINISHED)
     return;
+
+  errorCount++;
 
   AngelScript::asEContextState contextState = static_cast<AngelScript::asEContextState>(r);
 
