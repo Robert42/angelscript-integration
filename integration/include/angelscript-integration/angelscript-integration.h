@@ -35,6 +35,9 @@ inline void wrap_constructor(T_struct* s, const T_args&... args){new(s) T_struct
 template<class T_struct, typename... T_args>
 inline void wrap_destructor(T_struct* s){s->~T_struct();}
 
+template<class T_struct, typename... T_args>
+inline void wrap_assign_operator(T_struct* a, T_struct* b){*a = *b;}
+
 } // namesapce AngelScriptIntegration
 
 #endif // ANGELSCRIPTINTEGRATION_H
