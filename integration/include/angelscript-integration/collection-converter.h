@@ -6,6 +6,7 @@
 
 #include <QSet>
 #include <QVector>
+#include <QDebug>
 
 namespace AngelScriptIntegration {
 
@@ -64,20 +65,46 @@ inline AngelScript::CScriptArray* scriptArrayFromStringSet(QSet<QString> set, An
 }
 
 template<typename T>
-QHash<QString, T> scriptDictionaryToHash(AngelScript::CScriptDictionary* dict, const QSet<int>& typeIds)
+QHash<QString, T> scriptDictionaryToHash(AngelScript::CScriptDictionary* dict, const QSet<int>& typeIds, AngelScript::asIScriptEngine* engine=nullptr)
 {
   QHash<QString, T> hash;
 
   for(AngelScript::CScriptDictionary::CIterator i=dict->begin(); i!=dict->end(); ++i)
   {
     QString key = QString::fromStdString(i.GetKey());
-    if(typeIds.contains(i.GetTypeId()))
+
+    int i_type = i.GetTypeId();
+    if(typeIds.contains(i_type))
     {
       T v;
-      if(!i.GetValue(&v, i.GetTypeId()))
+      if(!i.GetValue(&v, i_type))
+      {
         Q_UNREACHABLE();
+      }
       hash[key] = v;
+    }else
+    {
+      if(engine)
+        qWarning() << "scriptDictionaryToHash: Unexpected type: " << engine->GetTypeDeclaration(i_type, true);
+      Q_UNREACHABLE();
     }
+  }
+
+  return hash;
+}
+
+template<typename T>
+QHash<QString, T> scriptDictionaryToFloatHash(AngelScript::CScriptDictionary* dict)
+{
+  QHash<QString, T> hash;
+
+  for(AngelScript::CScriptDictionary::CIterator i=dict->begin(); i!=dict->end(); ++i)
+  {
+    QString key = QString::fromStdString(i.GetKey());
+
+    double doubleValue;
+    i.GetValue(doubleValue);
+    hash[key] = doubleValue;
   }
 
   return hash;
