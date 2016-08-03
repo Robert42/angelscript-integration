@@ -62,7 +62,7 @@ asIScriptObject *ScriptObjectFactory(const asCObjectType *objType, asCScriptEngi
 		ctx = engine->RequestContext();
 		if( ctx == 0 )
 		{
-			// TODO: How to best report this failure?
+			// _TODO: How to best report this failure?
 			return 0;
 		}
 	}
@@ -97,7 +97,7 @@ asIScriptObject *ScriptObjectFactory(const asCObjectType *objType, asCScriptEngi
 			// then we should forward that to the outer execution.
 			if( r == asEXECUTION_EXCEPTION )
 			{
-				// TODO: How to improve this exception
+				// _TODO: How to improve this exception
 				ctx->SetException(TXT_EXCEPTION_IN_NESTED_CALL);
 			}
 			else if( r == asEXECUTION_ABORTED )
@@ -351,7 +351,7 @@ asCScriptObject::~asCScriptObject()
 	// In most cases the members are initialized in the order they have been declared, 
 	// so it's safer to uninitialize them from last to first. The order may be different
 	// depending on the use of inheritance and or initialization in the declaration.
-	// TODO: Should the order of initialization be stored by the compiler so that the 
+	// _TODO: Should the order of initialization be stored by the compiler so that the 
 	//       reverse order can be guaranteed during the destruction?
 	for( int n = (int)objType->properties.GetLength()-1; n >= 0; n-- )
 	{
@@ -400,7 +400,7 @@ asILockableSharedBool *asCScriptObject::GetWeakRefFlag() const
 
 	// Lock globally so no other thread can attempt
 	// to create a shared bool at the same time.
-	// TODO: runtime optimize: Instead of locking globally, it would be possible to have 
+	// _TODO: runtime optimize: Instead of locking globally, it would be possible to have 
 	//                         a critical section per object type. This would reduce the 
 	//                         chances of two threads lock on the same critical section.
 	asAcquireExclusiveLock();
@@ -424,7 +424,7 @@ void *asCScriptObject::GetUserData(asPWORD type) const
 
 	// There may be multiple threads reading, but when
 	// setting the user data nobody must be reading.
-	// TODO: runtime optimize: Would it be worth it to have a rwlock per object type?
+	// _TODO: runtime optimize: Would it be worth it to have a rwlock per object type?
 	asAcquireSharedLock();
 
 	for( asUINT n = 0; n < extra->userData.GetLength(); n += 2 )
@@ -446,7 +446,7 @@ void *asCScriptObject::SetUserData(void *data, asPWORD type)
 {
 	// Lock globally so no other thread can attempt
 	// to manipulate the extra data at the same time.
-	// TODO: runtime optimize: Instead of locking globally, it would be possible to have 
+	// _TODO: runtime optimize: Instead of locking globally, it would be possible to have 
 	//                         a critical section per object type. This would reduce the 
 	//                         chances of two threads lock on the same critical section.
 	asAcquireExclusiveLock();
@@ -594,7 +594,7 @@ void asCScriptObject::CallDestructor()
 					ctx = objType->engine->RequestContext();
 					if( ctx == 0 )
 					{
-						// TODO: How to best report this failure?
+						// _TODO: How to best report this failure?
 						return;
 					}
 				}
@@ -717,7 +717,7 @@ void asCScriptObject::EnumReferences(asIScriptEngine *engine)
 		asCObjectProperty *prop = objType->properties[n];
 		if( prop->type.IsObject() )
 		{
-			// TODO: gc: The members of the value type needs to be enumerated
+			// _TODO: gc: The members of the value type needs to be enumerated
 			//           too, since the value type may be holding a reference.
 			void *ptr;
 			if( prop->type.IsReference() || (prop->type.GetObjectType()->flags & asOBJ_REF) )
@@ -737,7 +737,7 @@ void asCScriptObject::ReleaseAllHandles(asIScriptEngine *engine)
 	{
 		asCObjectProperty *prop = objType->properties[n];
 
-		// TODO: gc: The members of the members needs to be released
+		// _TODO: gc: The members of the members needs to be released
 		//           too, since they may be holding a reference. Even
 		//           if the member is a value type.
 		if( prop->type.IsObject() && prop->type.IsObjectHandle() )
@@ -825,7 +825,7 @@ asCScriptObject &asCScriptObject::operator=(const asCScriptObject &other)
 				ctx = engine->RequestContext();
 				if( ctx == 0 )
 				{
-					// TODO: How to best report this failure?
+					// _TODO: How to best report this failure?
 					return *this;
 				}
 			}
@@ -837,7 +837,7 @@ asCScriptObject &asCScriptObject::operator=(const asCScriptObject &other)
 					ctx->PopState();
 				else
 					engine->ReturnContext(ctx);
-				// TODO: How to best report this failure?
+				// _TODO: How to best report this failure?
 				return *this;
 			}
 
@@ -866,7 +866,7 @@ asCScriptObject &asCScriptObject::operator=(const asCScriptObject &other)
 					// then we should forward that to the outer execution.
 					if( r == asEXECUTION_EXCEPTION )
 					{
-						// TODO: How to improve this exception
+						// _TODO: How to improve this exception
 						ctx->SetException(TXT_EXCEPTION_IN_NESTED_CALL);
 					}
 					else if( r == asEXECUTION_ABORTED )
@@ -983,7 +983,7 @@ void asCScriptObject::CopyHandle(asPWORD *src, asPWORD *dst, asCObjectType *objT
 		engine->CallObjectMethod(*(void**)dst, objType->beh.addref);
 }
 
-// TODO: weak: Should move to its own file
+// _TODO: weak: Should move to its own file
 asCLockableSharedBool::asCLockableSharedBool() : value(false) 
 {
 	refCount.set(1);

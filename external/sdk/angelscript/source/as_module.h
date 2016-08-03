@@ -50,7 +50,7 @@
 
 BEGIN_AS_NAMESPACE
 
-// TODO: import: Remove this when the imported functions are removed
+// _TODO: import: Remove this when the imported functions are removed
 const int FUNC_IMPORTED = 0x40000000;
 
 class asCScriptEngine;
@@ -74,17 +74,17 @@ struct sObjectTypePair
 };
 
 
-// TODO: import: Remove function imports. When I have implemented function 
+// _TODO: import: Remove function imports. When I have implemented function 
 //               pointers the function imports should be deprecated.
 
-// TODO: Need a separate interface for compiling scripts. The asIScriptCompiler
+// _TODO: Need a separate interface for compiling scripts. The asIScriptCompiler
 //       will have a target module, and will allow the compilation of an entire
 //       script or just individual functions within the scope of the module
 // 
 //       With this separation it will be possible to compile the library without
 //       the compiler, thus giving a much smaller binary executable.
 
-// TODO: There should be an special compile option that will let the application
+// _TODO: There should be an special compile option that will let the application
 //       recompile an already compiled script. The compiler should check if no
 //       destructive changes have been made (changing function signatures, etc)
 //       then it should simply replace the bytecode within the functions without
@@ -118,7 +118,7 @@ public:
 	virtual int                RemoveFunction(asIScriptFunction *func);
 
 	// Script global variables
-	// TODO: interface: Should be called InitGlobalVars, and should have a bool to reset in case already initialized
+	// _TODO: interface: Should be called InitGlobalVars, and should have a bool to reset in case already initialized
 	virtual int         ResetGlobalVars(asIScriptContext *ctx);
 	virtual asUINT      GetGlobalVarCount() const;
 	virtual int         GetGlobalVarIndexByName(const char *name) const;

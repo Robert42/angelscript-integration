@@ -126,7 +126,7 @@
 #define TXT_IDENTIFIER_s_NOT_DATA_TYPE_IN_NS_s     "Identifier '%s' is not a data type in namespace '%s' or parent"
 #define TXT_IF_WITH_EMPTY_STATEMENT                "If with empty statement"
 #define TXT_ILLEGAL_MEMBER_TYPE                    "Illegal member type"
-// TODO: Should be TXT_ILLEGAL_OPERATION_ON_s
+// _TODO: Should be TXT_ILLEGAL_OPERATION_ON_s
 #define TXT_ILLEGAL_OPERATION                      "Illegal operation on this datatype"
 #define TXT_ILLEGAL_OPERATION_ON_s                 "Illegal operation on '%s'"
 #define TXT_ILLEGAL_TARGET_TYPE_FOR_REF_CAST       "Illegal target type for reference cast"
@@ -294,9 +294,9 @@
 #define TXT_NON_POD_REQUIRE_CONSTR_DESTR_BEHAVIOUR       "A non-pod value type must have the default constructor and destructor behaviours"
 #define TXT_CANNOT_PASS_TYPE_s_BY_VAL                    "Can't pass type '%s' by value unless the application type is informed in the registration"
 #define TXT_CANNOT_RET_TYPE_s_BY_VAL                     "Can't return type '%s' by value unless the application type is informed in the registration"
-// TODO: Should be something like "This platform requires that AngelScript knows the exact content of the type '%s' in order to pass by value to application in native calling convention"
+// _TODO: Should be something like "This platform requires that AngelScript knows the exact content of the type '%s' in order to pass by value to application in native calling convention"
 #define TXT_DONT_SUPPORT_TYPE_s_BY_VAL                   "Don't support passing type '%s' by value to application in native calling convention on this platform"
-// TODO: Should be something like "This platform requires that AngelScript knows the exact content of the type '%s' in order to return by value from application in native calling convention"
+// _TODO: Should be something like "This platform requires that AngelScript knows the exact content of the type '%s' in order to return by value from application in native calling convention"
 #define TXT_DONT_SUPPORT_RET_TYPE_s_BY_VAL               "Don't support returning type '%s' by value from application in native calling convention on this platform"
 #define TXT_d_GC_CANNOT_FREE_OBJ_OF_TYPE_s               "Object {%d}. GC cannot destroy an object of type '%s' as it doesn't know how many references to there are."
 #define TXT_d_GC_CANNOT_FREE_OBJ_OF_TYPE_s_REF_COUNT_d   "Object {%d}. GC cannot destroy an object of type '%s' as it can't see all references. Current ref count is %d."

@@ -593,7 +593,7 @@ int CallSystemFunction(int id, asCContext *context)
 		}
 	}
 #else
-	// TODO: clean-up: CallSystemFunctionNative should have two arguments for object pointers
+	// _TODO: clean-up: CallSystemFunctionNative should have two arguments for object pointers
 	//                 objForThiscall is the object pointer that should be used for the thiscall
 	//                 objForArg is the object pointer that should be passed as argument when using OBJFIRST or OBJLAST
 
@@ -827,12 +827,12 @@ int CallSystemFunction(int id, asCContext *context)
 		args = context->m_regs.stackPointer;
 
 		// Skip the hidden argument for the return pointer
-		// TODO: runtime optimize: This check and increment should have been done in PrepareSystemFunction
+		// _TODO: runtime optimize: This check and increment should have been done in PrepareSystemFunction
 		if( descr->DoesReturnOnStack() )
 			args += AS_PTR_SIZE;
 
 		// Skip the object pointer on the stack
-		// TODO: runtime optimize: This check and increment should have been done in PrepareSystemFunction
+		// _TODO: runtime optimize: This check and increment should have been done in PrepareSystemFunction
 		if( callConv >= ICC_THISCALL && sysFunc->objForThiscall == 0 )
 			args += AS_PTR_SIZE;
 

@@ -12,7 +12,7 @@
 #define AS_PROCESS_METADATA 1
 #endif
 
-// TODO: Implement flags for turning on/off include directives and conditional programming
+// _TODO: Implement flags for turning on/off include directives and conditional programming
 
 
 
@@ -169,7 +169,7 @@ protected:
 	// ref: https://msdn.microsoft.com/en-us/library/windows/desktop/dd317761(v=vs.85).aspx
 	// ref: http://site.icu-project.org/
 
-	// TODO: Strings by default are treated as UTF8 encoded. If the application choses to
+	// _TODO: Strings by default are treated as UTF8 encoded. If the application choses to
 	//       use a different encoding, the comparison algorithm should be adjusted as well
 
 	struct ci_less

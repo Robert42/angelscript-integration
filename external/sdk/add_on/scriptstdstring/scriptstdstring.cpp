@@ -715,7 +715,7 @@ void RegisterStdString_Native(asIScriptEngine *engine)
 	r = engine->RegisterObjectMethod("string", "int rfind(const string &in, int start = -1) const", asFUNCTION(StringFindLast), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 #endif
 
-	// TODO: Implement the following
+	// _TODO: Implement the following
 	// findFirstOf
 	// findLastOf
 	// findFirstNotOf

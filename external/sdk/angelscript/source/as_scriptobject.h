@@ -48,9 +48,9 @@ BEGIN_AS_NAMESPACE
 
 class asCObjectType;
 
-// TODO: Add const overload for GetAddressOfProperty
+// _TODO: Add const overload for GetAddressOfProperty
 
-// TODO: weak: Should move to its own file
+// _TODO: weak: Should move to its own file
 class asCLockableSharedBool : public asILockableSharedBool
 {
 public:

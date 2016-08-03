@@ -130,7 +130,7 @@ void asCConfigGroup::RemoveConfiguration(asCScriptEngine *engine, bool notUsed)
 		{
 			globalProps[n]->Release();
 
-			// TODO: global: Should compact the registeredGlobalProps array
+			// _TODO: global: Should compact the registeredGlobalProps array
 			engine->registeredGlobalProps.Erase(index);
 		}
 	}

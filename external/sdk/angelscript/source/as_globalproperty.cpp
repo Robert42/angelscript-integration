@@ -96,7 +96,7 @@ void asCGlobalProperty::AllocateMemory()
 #ifndef WIP_16BYTE_ALIGNED
 		memory = asNEWARRAY(asDWORD, type.GetSizeOnStackDWords()); 
 #else
-		// TODO: Avoid aligned allocation if not needed to reduce the waste of memory for the alignment
+		// _TODO: Avoid aligned allocation if not needed to reduce the waste of memory for the alignment
 		memory = asNEWARRAYALIGNED(asDWORD, type.GetSizeOnStackDWords(), type.GetAlignment()); 
 #endif
 		memoryAllocated = true; 

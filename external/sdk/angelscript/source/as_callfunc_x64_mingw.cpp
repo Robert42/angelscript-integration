@@ -72,7 +72,7 @@ static asQWORD __attribute__((noinline)) CallX64(const asQWORD *args, const asQW
 
 		"# Make sure the stack pointer is 16byte aligned so the\n"
 		"# whole program optimizations will work properly\n"
-		"# TODO: runtime optimize: Can this be optimized with fewer instructions?\n"
+		"# _TODO: runtime optimize: Can this be optimized with fewer instructions?\n"
 		"mov %%rsp,%%rsi\n"
 		"sub %%rdi,%%rsi\n"
 		"and $0x8,%%rsi\n"

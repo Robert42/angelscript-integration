@@ -852,7 +852,7 @@ void asCParser::SetPos(size_t pos)
 
 void asCParser::RewindTo(const sToken *token)
 {
-	// TODO: optimize: Perhaps we can optimize this further by having the parser 
+	// _TODO: optimize: Perhaps we can optimize this further by having the parser 
 	//                 set an explicit return point, after which each token will 
 	//                 be stored. That way not just one token will be reused but
 	//                 no token will have to be tokenized more than once.
@@ -1577,7 +1577,7 @@ asCScriptNode *asCParser::ParseArgList(bool withParenthesis)
 			// This avoids confusion when the argument has the same name as a local variable, i.e. var = expr
 			// It also avoids conflict with expressions to that creates anonymous objects initialized with lists, i.e. type = {...}
 			// The alternate syntax: arg = expr, is supported to provide backwards compatibility with 2.29.0
-			// TODO: 3.0.0: Remove the alternate syntax
+			// _TODO: 3.0.0: Remove the alternate syntax
 			if( tl.type == ttIdentifier && (t2.type == ttColon || (engine->ep.alterSyntaxNamedArgs && t2.type == ttAssignment)) )
 			{
 				asCScriptNode *named = CreateNode(snNamedArgument);
@@ -2023,7 +2023,7 @@ int asCParser::ParseScript(asCScriptCode *script)
 	if( errorWhileParsing )
 		return -1;
 
-	// TODO: Should allow application to request this warning to be generated. 
+	// _TODO: Should allow application to request this warning to be generated. 
 	//       It should be off by default, since pre-processor may remove all
 	//       code from a section while still being meant as valid code
 /*
@@ -2229,7 +2229,7 @@ asCScriptNode *asCParser::ParseNamespace()
 		Error(InsteadFound(t1), &t1);
 	}
 
-	// TODO: namespace: Allow declaration of multiple nested namespace with namespace A::B::C { }
+	// _TODO: namespace: Allow declaration of multiple nested namespace with namespace A::B::C { }
 	node->AddChildLast(ParseIdentifier());
 	if( isSyntaxError ) return node;
 
@@ -2866,7 +2866,7 @@ asCScriptNode *asCParser::ParseFunction(bool isMethod)
 		if( t1.type == ttConst )
 			node->AddChildLast(ParseToken(ttConst));
 
-		// TODO: Should support abstract methods, in which case no statement block should be provided
+		// _TODO: Should support abstract methods, in which case no statement block should be provided
 		ParseMethodOverrideBehaviors(node);
 		if( isSyntaxError ) return node;
 	}
@@ -4229,7 +4229,7 @@ asCScriptNode *asCParser::ParseContinue()
 	return node;
 }
 
-// TODO: typedef: Typedefs should accept complex types as well
+// _TODO: typedef: Typedefs should accept complex types as well
 // BNF: TYPEDEF ::= 'typedef' PRIMTYPE IDENTIFIER ';'
 asCScriptNode *asCParser::ParseTypedef()
 {

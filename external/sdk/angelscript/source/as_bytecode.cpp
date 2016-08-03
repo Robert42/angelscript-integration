@@ -400,9 +400,9 @@ bool asCByteCode::RemoveUnusedValue(asCByteInstruction *curr, asCByteInstruction
 	if( next == 0 )
 		next = &dummy;
 
-	// TODO: runtime optimize: Should work for 64bit types as well
+	// _TODO: runtime optimize: Should work for 64bit types as well
 
-	// TODO: runtime optimize: Need a asBCTYPE_rwW_ARG to cover the instructions that read
+	// _TODO: runtime optimize: Need a asBCTYPE_rwW_ARG to cover the instructions that read
 	//                         and write to the same variable. Currently they are considered
 	//                         as readers only, so they are not optimized away. This includes
 	//                         NOT, BNOT, IncV, DecV, NEG, iTOf (and all other type casts)
@@ -606,17 +606,17 @@ void asCByteCode::OptimizeLocally(const asCArray<int> &tempVariableOffsets)
 
 	temporaryVariables = &tempVariableOffsets;
 
-	// TODO: runtime optimize: VAR + GET... should be optimized if the only instructions between them are trivial, i.e. no
+	// _TODO: runtime optimize: VAR + GET... should be optimized if the only instructions between them are trivial, i.e. no
 	//                         function calls that can suspend the execution.
 
-	// TODO: runtime optimize: Remove temporary copies of handles, when the temp is just copied to yet another location
+	// _TODO: runtime optimize: Remove temporary copies of handles, when the temp is just copied to yet another location
 
-	// TODO: runtime optimize: A single bytecode for incrementing a variable, comparing, and jumping can probably improve
+	// _TODO: runtime optimize: A single bytecode for incrementing a variable, comparing, and jumping can probably improve
 	//                         loops a lot. How often do these loops really occur?
 
-	// TODO: runtime optimize: Need a bytecode BC_AddRef so that BC_CALLSYS doesn't have to be used for this trivial call
+	// _TODO: runtime optimize: Need a bytecode BC_AddRef so that BC_CALLSYS doesn't have to be used for this trivial call
 
-	// TODO: optimize: Should possibly do two loops. Some of the checks are best doing by iterating from
+	// _TODO: optimize: Should possibly do two loops. Some of the checks are best doing by iterating from
 	//                 the end to beginning, e.g. the removal of unused values. Other checks are best
 	//                 doing by iterating from the beginning to end, e.g. replacement of sequences with
 	//                 shorter ones. By doing this, we should be able to avoid backtracking with every
@@ -852,7 +852,7 @@ void asCByteCode::OptimizeLocally(const asCArray<int> &tempVariableOffsets)
 				curr->size = i->size;
 
 				// Change arg of the FREE to x
-				// TODO: runtime optimize: The FREE instruction shouldn't be necessary. STOREOBJ should free the previous value by itself
+				// _TODO: runtime optimize: The FREE instruction shouldn't be necessary. STOREOBJ should free the previous value by itself
 				instr->wArg[0] = x;
 
 				// Delete all other instructions
@@ -909,7 +909,7 @@ void asCByteCode::OptimizeLocally(const asCArray<int> &tempVariableOffsets)
 				ChangeFirstDeleteNext(instr, asBC_LoadThisR);
 				instr = GoForward(instr);
 			}
-			// TODO: runtime optimize: PshVPtr x, PopRPtr -> LoadRObjR x, 0
+			// _TODO: runtime optimize: PshVPtr x, PopRPtr -> LoadRObjR x, 0
 			// PshVPtr x, ADDSi, PopRPtr -> LoadRObjR
 			else if( instr && instr->op == asBC_ADDSi &&
 					 instr->prev && instr->prev->op == asBC_PshVPtr &&
@@ -1055,7 +1055,7 @@ void asCByteCode::OptimizeLocally(const asCArray<int> &tempVariableOffsets)
 		}
 
 		// If there is any non-trivial cleanups, e.g. call to destructors, then we skip this optimizations
-		// TODO: runtime optimize: Do we need to skip it? Is there really a chance the local variable
+		// _TODO: runtime optimize: Do we need to skip it? Is there really a chance the local variable
 		//                         will be invalidated while the destructor, or any other function for
 		//                         that matter, is being called?
 		if( instr && instr->op == asBC_Block )
@@ -1101,7 +1101,7 @@ void asCByteCode::Optimize()
 	if( !engine->ep.optimizeByteCode )
 		return;
 
-	// TODO: runtime optimize: The optimizer should be able to inline function calls.
+	// _TODO: runtime optimize: The optimizer should be able to inline function calls.
 	//                         If the called function has only a few instructions, the function call should be inlined.
 	//                         This is especially useful with the factory stubs used for template types and script classes.
 
@@ -1877,7 +1877,7 @@ void asCByteCode::Output(asDWORD *array)
 {
 	TimeIt("asCByteCode::Output");
 
-	// TODO: Receive a script function pointer instead of the bytecode array
+	// _TODO: Receive a script function pointer instead of the bytecode array
 
 	asDWORD *ap = array;
 

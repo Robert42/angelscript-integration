@@ -215,7 +215,7 @@ const char *asCModule::GetDefaultNamespace() const
 // interface
 int asCModule::SetDefaultNamespace(const char *nameSpace)
 {
-	// TODO: cleanup: This function is similar to asCScriptEngine::SetDefaultNamespace. Can we reuse the code?
+	// _TODO: cleanup: This function is similar to asCScriptEngine::SetDefaultNamespace. Can we reuse the code?
 	if( nameSpace == 0 )
 		return asINVALID_ARG;
 
@@ -289,7 +289,7 @@ int asCModule::Build()
 
 	// Don't allow the module to be rebuilt if there are still 
 	// external references that will need the previous code
-	// TODO: interface: The asIScriptModule must have a method for querying if the module is used
+	// _TODO: interface: The asIScriptModule must have a method for querying if the module is used
 	if( HasExternalReferences(false) )
 	{
 		engine->WriteMessage("", 0, 0, asMSGTYPE_ERROR, TXT_MODULE_IS_IN_USE);
@@ -297,7 +297,7 @@ int asCModule::Build()
 	}
 
 	// Only one thread may build at one time
-	// TODO: It should be possible to have multiple threads perform compilations
+	// _TODO: It should be possible to have multiple threads perform compilations
 	int r = engine->RequestBuild();
 	if( r < 0 )
 		return r;
@@ -785,7 +785,7 @@ int asCModule::GetImportedFunctionIndexByDecl(const char *decl) const
 	asCScriptFunction func(engine, const_cast<asCModule*>(this), asFUNC_DUMMY);
 	bld.ParseFunctionDeclaration(0, decl, &func, false, 0, 0, defaultNamespace);
 
-	// TODO: optimize: Improve linear search
+	// _TODO: optimize: Improve linear search
 	// Search script functions for matching interface
 	int id = -1;
 	for( asUINT n = 0; n < bindInformations.GetLength(); ++n )
@@ -838,7 +838,7 @@ asIScriptFunction *asCModule::GetFunctionByDecl(const char *decl) const
 	if( r < 0 )
 	{
 		// Invalid declaration
-		// TODO: Write error to message stream
+		// _TODO: Write error to message stream
 		return 0;
 	}
 
@@ -1161,7 +1161,7 @@ const char *asCModule::GetTypedefByIndex(asUINT index, int *typeId, const char *
 // internal
 int asCModule::GetNextImportedFunctionId()
 {
-	// TODO: multithread: This will break if one thread if freeing a module, while another is being compiled
+	// _TODO: multithread: This will break if one thread if freeing a module, while another is being compiled
 	if( engine->freeImportedFunctionIdxs.GetLength() )
 		return FUNC_IMPORTED | (asUINT)engine->freeImportedFunctionIdxs[engine->freeImportedFunctionIdxs.GetLength()-1];
 
@@ -1459,7 +1459,7 @@ asCObjectType *asCModule::GetObjectType(const char *type, asSNameSpace *ns)
 {
 	asUINT n;
 
-	// TODO: optimize: Improve linear search
+	// _TODO: optimize: Improve linear search
 	for( n = 0; n < classTypes.GetLength(); n++ )
 		if( classTypes[n]->name == type &&
 			classTypes[n]->nameSpace == ns )
@@ -1547,7 +1547,7 @@ int asCModule::LoadByteCode(asIBinaryStream *in, bool *wasDebugInfoStripped)
 	}
 
 	// Only permit loading bytecode if no other thread is currently compiling
-	// TODO: It should be possible to have multiple threads perform compilations
+	// _TODO: It should be possible to have multiple threads perform compilations
 	int r = engine->RequestBuild();
 	if( r < 0 )
 		return r;
@@ -1586,7 +1586,7 @@ int asCModule::CompileGlobalVar(const char *sectionName, const char *code, int l
 		return asINVALID_ARG;
 
 	// Only one thread may build at one time
-	// TODO: It should be possible to have multiple threads perform compilations
+	// _TODO: It should be possible to have multiple threads perform compilations
 	int r = engine->RequestBuild();
 	if( r < 0 )
 		return r;
@@ -1658,7 +1658,7 @@ int asCModule::CompileFunction(const char *sectionName, const char *code, int li
 		return asINVALID_ARG;
 
 	// Only one thread may build at one time
-	// TODO: It should be possible to have multiple threads perform compilations
+	// _TODO: It should be possible to have multiple threads perform compilations
 	int r = engine->RequestBuild();
 	if( r < 0 )
 		return r;

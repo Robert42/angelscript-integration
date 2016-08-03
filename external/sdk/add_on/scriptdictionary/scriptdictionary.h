@@ -27,7 +27,7 @@ END_AS_NAMESPACE
 // C++11 introduced the std::unordered_map which is a hash map which is
 // is generally more performatic for lookups than the std::map which is a 
 // binary tree.
-// TODO: memory: The map allocator should use the asAllocMem and asFreeMem
+// _TODO: memory: The map allocator should use the asAllocMem and asFreeMem
 #if AS_CAN_USE_CPP11
 #include <unordered_map>
 typedef std::unordered_map<dictKey_t, AS_NAMESPACE_QUALIFIER CScriptDictValue> dictMap_t;

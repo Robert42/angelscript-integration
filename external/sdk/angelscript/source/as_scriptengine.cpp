@@ -527,7 +527,7 @@ asCScriptEngine::asCScriptEngine()
 		ep.useCharacterLiterals          = false;
 		ep.allowMultilineStrings         = false;
 		ep.allowImplicitHandleTypes      = false;
-		// TODO: optimize: Maybe this should be turned off by default? If a debugger is not used
+		// _TODO: optimize: Maybe this should be turned off by default? If a debugger is not used
 		//                 then this is just slowing down the execution.
 		ep.buildWithoutLineCues          = false;
 		ep.initGlobalVarsAfterBuild      = true;
@@ -541,7 +541,7 @@ asCScriptEngine::asCScriptEngine()
 		ep.disallowGlobalVars            = false;
 		ep.alwaysImplDefaultConstruct    = false;
 		ep.compilerWarnings              = 1;         // 0 = no warnings, 1 = warning, 2 = treat as error
-		// TODO: 3.0.0: disallowValueAssignForRefType should be true by default
+		// _TODO: 3.0.0: disallowValueAssignForRefType should be true by default
 		ep.disallowValueAssignForRefType = false;
 		ep.alterSyntaxNamedArgs          = 0;         // 0 = no alternate syntax, 1 = accept alternate syntax but warn, 2 = accept without warning
 		ep.disableIntegerDivision        = false;
@@ -612,7 +612,7 @@ asCScriptEngine::asCScriptEngine()
 
 void asCScriptEngine::DeleteDiscardedModules()
 {
-	// TODO: redesign: Prevent more than one thread from entering this function at the same time. 
+	// _TODO: redesign: Prevent more than one thread from entering this function at the same time. 
 	//                 If a thread is already doing the work for the clean-up the other thread should
 	//                 simply return, as the first thread will continue.
 
@@ -650,7 +650,7 @@ void asCScriptEngine::DeleteDiscardedModules()
 
 asCScriptEngine::~asCScriptEngine()
 {
-	// TODO: clean-up: Clean up redundant code
+	// _TODO: clean-up: Clean up redundant code
 
 	asUINT n = 0;
 	inDestructor = true;
@@ -855,7 +855,7 @@ asCModule *asCScriptEngine::FindNewOwnerForSharedType(asCObjectType *type, asCMo
 
 	for( asUINT n = 0; n < scriptModules.GetLength(); n++ )
 	{
-		// TODO: optimize: If the modules already stored the shared types separately, this would be quicker
+		// _TODO: optimize: If the modules already stored the shared types separately, this would be quicker
 		int foundIdx = -1;
 		asCModule *mod = scriptModules[n];
 		if( mod == type->module ) continue;
@@ -886,7 +886,7 @@ asCModule *asCScriptEngine::FindNewOwnerForSharedFunc(asCScriptFunction *func, a
 
 	for( asUINT n = 0; n < scriptModules.GetLength(); n++ )
 	{
-		// TODO: optimize: If the modules already stored the shared types separately, this would be quicker
+		// _TODO: optimize: If the modules already stored the shared types separately, this would be quicker
 		int foundIdx = -1;
 		asCModule *mod = scriptModules[n];
 		if( mod == func->module ) continue;
@@ -1006,7 +1006,7 @@ asSNameSpace *asCScriptEngine::AddNameSpace(const char *name)
 // internal
 asSNameSpace *asCScriptEngine::FindNameSpace(const char *name) const
 {
-	// TODO: optimize: Improve linear search
+	// _TODO: optimize: Improve linear search
 	for( asUINT n = 0; n < nameSpaces.GetLength(); n++ )
 		if( nameSpaces[n]->name == name )
 			return nameSpaces[n];
@@ -1433,7 +1433,7 @@ int asCScriptEngine::RegisterObjectProperty(const char *obj, const char *declara
 		return ConfigError(asINVALID_OBJECT, "RegisterObjectProperty", obj, declaration);
 
 	// The VM currently only supports 16bit offsets
-	// TODO: The VM needs to have support for 32bit offsets. Probably with a second ADDSi instruction
+	// _TODO: The VM needs to have support for 32bit offsets. Probably with a second ADDSi instruction
 	//       However, when implementing this it is necessary for the bytecode serialization to support
 	//       the switch between the instructions upon loading bytecode as the offset may not be the
 	//       same on all platforms
@@ -1709,7 +1709,7 @@ int asCScriptEngine::RegisterObjectType(const char *name, int byteSize, asDWORD 
 		type->nameSpace  = defaultNamespace;
 		type->size       = byteSize;
 #ifdef WIP_16BYTE_ALIGN
-		// TODO: Types smaller than 4 don't need to be aligned to 4 byte boundaries
+		// _TODO: Types smaller than 4 don't need to be aligned to 4 byte boundaries
 		type->alignment  = (flags & asOBJ_APP_ALIGN16) ? 16 : 4;
 #endif
 		type->flags      = flags;
@@ -1761,7 +1761,7 @@ int asCScriptEngine::RegisterObjectType(const char *name, int byteSize, asDWORD 
 			// This is not an irrepairable error, as it may just be that the same type is registered twice
 			return asALREADY_REGISTERED;
 
-		// TODO: clean up: Is it really necessary to check here?
+		// _TODO: clean up: Is it really necessary to check here?
 		for( asUINT n = 0; n < templateInstanceTypes.GetLength(); n++ )
 		{
 			if( templateInstanceTypes[n] &&
@@ -1809,7 +1809,7 @@ int asCScriptEngine::RegisterObjectType(const char *name, int byteSize, asDWORD 
 			type->nameSpace  = defaultNamespace;
 			type->size       = byteSize;
 #ifdef WIP_16BYTE_ALIGN
-			// TODO: Types smaller than 4 don't need to be aligned to 4 byte boundaries
+			// _TODO: Types smaller than 4 don't need to be aligned to 4 byte boundaries
 			type->alignment  = (flags & asOBJ_APP_ALIGN16) ? 16 : 4;
 #endif
 			type->flags      = flags;
@@ -1825,7 +1825,7 @@ int asCScriptEngine::RegisterObjectType(const char *name, int byteSize, asDWORD 
 			// The application is registering a template specialization so we
 			// need to replace the template instance type with the new type.
 
-			// TODO: Template: We don't require the lower dimensions to be registered first for registered template types
+			// _TODO: Template: We don't require the lower dimensions to be registered first for registered template types
 			// int[][] must not be allowed to be registered
 			// if int[] hasn't been registered first
 			if( dt.GetSubType().IsTemplate() )
@@ -1850,7 +1850,7 @@ int asCScriptEngine::RegisterObjectType(const char *name, int byteSize, asDWORD 
 			if( !generatedTemplateTypes.Exists(dt.GetObjectType()) )
 				return ConfigError(asALREADY_REGISTERED, "RegisterObjectType", name, 0);
 
-			// TODO: Add this again. The type is used by the factory stubs so we need to discount that
+			// _TODO: Add this again. The type is used by the factory stubs so we need to discount that
 			// Is the template instance type already being used?
 //			if( dt.GetObjectType()->GetRefCount() > 1 )
 //				return ConfigError(asNOT_SUPPORTED, "RegisterObjectType", name, 0);
@@ -1869,7 +1869,7 @@ int asCScriptEngine::RegisterObjectType(const char *name, int byteSize, asDWORD 
 					type->templateSubTypes[s].GetObjectType()->AddRefInternal();
 			type->size       = byteSize;
 #ifdef WIP_16BYTE_ALIGN
-			// TODO: Types smaller than 4 don't need to be aligned to 4 byte boundaries
+			// _TODO: Types smaller than 4 don't need to be aligned to 4 byte boundaries
 			type->alignment  = (flags & asOBJ_APP_ALIGN16) ? 16 : 4;
 #endif
 			type->flags      = flags;
@@ -1940,7 +1940,7 @@ int asCScriptEngine::RegisterBehaviourToObjectType(asCObjectType *objectType, as
 	if( r < 0 )
 		return ConfigError(r, "RegisterObjectBehaviour", objectType->name.AddressOf(), decl);
 
-	// TODO: cleanup: This is identical to what is in RegisterMethodToObjectType
+	// _TODO: cleanup: This is identical to what is in RegisterMethodToObjectType
 	// If the object type is a template, make sure there are no generated instances already
 	if( objectType->flags & asOBJ_TEMPLATE )
 	{
@@ -1984,7 +1984,7 @@ int asCScriptEngine::RegisterBehaviourToObjectType(asCObjectType *objectType, as
 		func.objectType->AddRefInternal();
 	}
 
-	// TODO: cleanup: This is identical to what is in RegisterMethodToObjectType
+	// _TODO: cleanup: This is identical to what is in RegisterMethodToObjectType
 	// Check if the method restricts that use of the template to value types or reference types
 	if( objectType->flags & asOBJ_TEMPLATE )
 	{
@@ -2006,7 +2006,7 @@ int asCScriptEngine::RegisterBehaviourToObjectType(asCObjectType *objectType, as
 			{
 				if( func.parameterTypes[n].GetObjectType() == objectType->templateSubTypes[subTypeIdx].GetObjectType() )
 				{
-					// TODO: If unsafe references are allowed, then inout references allow value types
+					// _TODO: If unsafe references are allowed, then inout references allow value types
 					if( func.parameterTypes[n].IsObjectHandle() || (func.parameterTypes[n].IsReference() && func.inOutFlags[n] == asTM_INOUTREF) )
 						objectType->acceptValueSubType = false;
 					else if( !func.parameterTypes[n].IsReference() )
@@ -2056,7 +2056,7 @@ int asCScriptEngine::RegisterBehaviourToObjectType(asCObjectType *objectType, as
 				return ConfigError(asINVALID_DECLARATION, "RegisterObjectBehaviour", objectType->name.AddressOf(), decl);
 			}
 
-			// TODO: Verify that the same constructor hasn't been registered already
+			// _TODO: Verify that the same constructor hasn't been registered already
 
 			// Store all constructors in a list
 			func.id = AddBehaviourFunction(func, internal);
@@ -2214,7 +2214,7 @@ int asCScriptEngine::RegisterBehaviourToObjectType(asCObjectType *objectType, as
 			}
 		}
 
-		// TODO: Verify that the same factory function hasn't been registered already
+		// _TODO: Verify that the same factory function hasn't been registered already
 
 		// Don't accept duplicates
 		if( behaviour == asBEHAVE_LIST_FACTORY && beh->listFactory )
@@ -2628,7 +2628,7 @@ asUINT asCScriptEngine::GetGlobalPropertyCount() const
 }
 
 // interface
-// TODO: If the typeId ever encodes the const flag, then the isConst parameter should be removed
+// _TODO: If the typeId ever encodes the const flag, then the isConst parameter should be removed
 int asCScriptEngine::GetGlobalPropertyByIndex(asUINT index, const char **name, const char **nameSpace, int *typeId, bool *isConst, const char **configGroup, void **pointer, asDWORD *accessMask) const
 {
 	const asCGlobalProperty *prop = registeredGlobalProps.Get(index);
@@ -2743,7 +2743,7 @@ int asCScriptEngine::RegisterMethodToObjectType(asCObjectType *objectType, const
 	if( r < 0 )
 		return ConfigError(r, "RegisterObjectMethod", objectType->name.AddressOf(), declaration);
 
-	// TODO: cleanup: This is identical to what is in RegisterMethodToObjectType
+	// _TODO: cleanup: This is identical to what is in RegisterMethodToObjectType
 	// If the object type is a template, make sure there are no generated instances already
 	if( objectType->flags & asOBJ_TEMPLATE )
 	{
@@ -2860,7 +2860,7 @@ int asCScriptEngine::RegisterMethodToObjectType(asCObjectType *objectType, const
 			{
 				if( func->parameterTypes[n].GetObjectType() == func->objectType->templateSubTypes[subTypeIdx].GetObjectType() )
 				{
-					// TODO: If unsafe references are allowed, then inout references allow value types
+					// _TODO: If unsafe references are allowed, then inout references allow value types
 					if( func->parameterTypes[n].IsObjectHandle() || (func->parameterTypes[n].IsReference() && func->inOutFlags[n] == asTM_INOUTREF) )
 						func->objectType->acceptValueSubType = false;
 					else if( !func->parameterTypes[n].IsReference() )
@@ -2874,7 +2874,7 @@ int asCScriptEngine::RegisterMethodToObjectType(asCObjectType *objectType, const
 		}
 	}
 
-	// TODO: beh.copy member will be removed, so this is not necessary
+	// _TODO: beh.copy member will be removed, so this is not necessary
 	// Is this the default copy behaviour?
 	if( func->name == "opAssign" && func->parameterTypes.GetLength() == 1 && func->isReadOnly == false &&
 		((objectType->flags & asOBJ_SCRIPT_OBJECT) || func->parameterTypes[0].IsEqualExceptRefAndConst(asCDataType::CreateObject(func->objectType, false))) )
@@ -2929,7 +2929,7 @@ int asCScriptEngine::RegisterGlobalFunction(const char *declaration, const asSFu
 		return ConfigError(asINVALID_DECLARATION, "RegisterGlobalFunction", declaration, 0);
 	}
 
-	// TODO: namespace: What if the declaration defined an explicit namespace?
+	// _TODO: namespace: What if the declaration defined an explicit namespace?
 	func->nameSpace = defaultNamespace;
 
 	// Check name conflicts
@@ -3289,7 +3289,7 @@ asCModule *asCScriptEngine::GetModule(const char *name, bool create)
 		retModule = lastModule;
 	else
 	{
-		// TODO: optimize: Improve linear search
+		// _TODO: optimize: Improve linear search
 		for( asUINT n = 0; n < scriptModules.GetLength(); ++n )
 			if( scriptModules[n] && scriptModules[n]->name == name )
 			{
@@ -3936,7 +3936,7 @@ bool asCScriptEngine::GenerateNewTemplateFunction(asCObjectType *templateType, a
 	for( asUINT p = 0; p < func->parameterTypes.GetLength(); p++ )
 		func2->parameterTypes[p] = DetermineTypeForTemplate(func->parameterTypes[p], templateType, ot);
 
-	// TODO: template: Must be careful when instantiating templates for garbage collected types
+	// _TODO: template: Must be careful when instantiating templates for garbage collected types
 	//                 If the template hasn't been registered with the behaviours, it shouldn't
 	//                 permit instantiation of garbage collected types that in turn may refer to
 	//                 this instance.
@@ -4467,7 +4467,7 @@ bool asCScriptEngine::CallGlobalFunctionRetBool(void *param1, void *param2, asSS
 	}
 	else
 	{
-		// TODO: When simulating a 64bit environment by defining AS_64BIT_PTR on a 32bit platform this code
+		// _TODO: When simulating a 64bit environment by defining AS_64BIT_PTR on a 32bit platform this code
 		//       fails, because the stack given to asCGeneric is not prepared with two 64bit arguments.
 
 		// We must guarantee the order of the arguments which is why we copy them to this
@@ -4599,7 +4599,7 @@ int asCScriptEngine::GetTypeIdFromDataType(const asCDataType &dtIn) const
 				typeId = typeIdSeqNbr++;
 				if( ot->flags & asOBJ_SCRIPT_OBJECT ) typeId |= asTYPEID_SCRIPTOBJECT;
 				else if( ot->flags & asOBJ_TEMPLATE ) typeId |= asTYPEID_TEMPLATE;
-				else if( ot->flags & asOBJ_ENUM ) {} // TODO: Should we have a specific bit for this?
+				else if( ot->flags & asOBJ_ENUM ) {} // _TODO: Should we have a specific bit for this?
 				else typeId |= asTYPEID_APPOBJECT;
 
 				ot->typeId = typeId;
@@ -4613,7 +4613,7 @@ int asCScriptEngine::GetTypeIdFromDataType(const asCDataType &dtIn) const
 	{
 		// This a funcdef, so we'll need to look in the map for the funcdef
 
-		// TODO: optimize: It shouldn't be necessary to exclusive lock when the typeId already exists
+		// _TODO: optimize: It shouldn't be necessary to exclusive lock when the typeId already exists
 		ACQUIREEXCLUSIVE(engineRWLock);
 
 		// Find the existing type id
@@ -4841,7 +4841,7 @@ int asCScriptEngine::RefCastObject(void *obj, asIObjectType *fromType, asIObject
 	// One last chance if the object has a void opCast(?&out) behaviour
 	if( universalCastFunc )
 	{
-		// TODO: Add proper error handling
+		// _TODO: Add proper error handling
 		asIScriptContext *ctx = RequestContext();
 		ctx->Prepare(universalCastFunc);
 		ctx->SetObject(obj);
@@ -5026,7 +5026,7 @@ void *asCScriptEngine::CreateScriptObjectCopy(void *origObj, const asIObjectType
 	void *newObj = 0;
 
 	const asCObjectType *ot = reinterpret_cast<const asCObjectType*>(type);
-	// TODO: runtime optimize: Should call copy factory for ref types too
+	// _TODO: runtime optimize: Should call copy factory for ref types too
 	if( ot->beh.copyconstruct )
 	{
 		// Manually allocate the memory, then call the copy constructor
@@ -5089,8 +5089,8 @@ void asCScriptEngine::ConstructScriptObjectCopy(void *mem, void *obj, asCObjectT
 // interface
 int asCScriptEngine::AssignScriptObject(void *dstObj, void *srcObj, const asIObjectType *type)
 {
-	// TODO: Warn about invalid call in message stream
-	// TODO: Should a script exception be set in case a context is active?
+	// _TODO: Warn about invalid call in message stream
+	// _TODO: Should a script exception be set in case a context is active?
 	if( type == 0 || dstObj == 0 || srcObj == 0 ) return asINVALID_ARG;
 
 	const asCObjectType *objType = reinterpret_cast<const asCObjectType*>(type);
@@ -5511,13 +5511,13 @@ asIScriptFunction *asCScriptEngine::GetFuncdefByIndex(asUINT index) const
 }
 
 // interface
-// TODO: typedef: Accept complex types for the typedefs
+// _TODO: typedef: Accept complex types for the typedefs
 int asCScriptEngine::RegisterTypedef(const char *type, const char *decl)
 {
 	if( type == 0 ) return ConfigError(asINVALID_NAME, "RegisterTypedef", type, decl);
 
 	// Verify if the name has been registered as a type already
-	// TODO: Must check against registered funcdefs too
+	// _TODO: Must check against registered funcdefs too
 	if( GetRegisteredObjectType(type, defaultNamespace) )
 		// Let the application recover from this error, for example if the same typedef is registered twice
 		return asALREADY_REGISTERED;
@@ -5766,7 +5766,7 @@ int asCScriptEngine::GetEnumValueCount(int enumTypeId) const
 // interface
 const char *asCScriptEngine::GetEnumValueByIndex(int enumTypeId, asUINT index, int *outValue) const
 {
-	// TODO: This same function is implemented in as_module.cpp as well. Perhaps it should be moved to asCObjectType?
+	// _TODO: This same function is implemented in as_module.cpp as well. Perhaps it should be moved to asCObjectType?
 	asCDataType dt = GetDataTypeFromTypeId(enumTypeId);
 	asCObjectType *t = dt.GetObjectType();
 	if( t == 0 || !(t->GetFlags() & asOBJ_ENUM) )
@@ -5909,7 +5909,7 @@ int asCScriptEngine::GetScriptSectionNameIndex(const char *name)
 {
 	ACQUIREEXCLUSIVE(engineRWLock);
 
-	// TODO: These names are only released when the engine is freed. The assumption is that
+	// _TODO: These names are only released when the engine is freed. The assumption is that
 	//       the same script section names will be reused instead of there always being new
 	//       names. Is this assumption valid? Do we need to add reference counting?
 
@@ -6097,8 +6097,8 @@ void asCScriptEngine::DestroyList(asBYTE *buffer, const asCObjectType *listPatte
 	asASSERT( listPatternType && (listPatternType->flags & asOBJ_LIST_PATTERN) );
 
 	// Get the list pattern from the listFactory function
-	// TODO: runtime optimize: Store the used list factory in the listPatternType itself
-	// TODO: runtime optimize: Keep a flag to indicate if there is really a need to free anything
+	// _TODO: runtime optimize: Store the used list factory in the listPatternType itself
+	// _TODO: runtime optimize: Keep a flag to indicate if there is really a need to free anything
 	asCObjectType *ot = listPatternType->templateSubTypes[0].GetObjectType();
 	asCScriptFunction *listFactory = scriptFunctions[ot->beh.listFactory];
 	asASSERT( listFactory );
@@ -6188,7 +6188,7 @@ void asCScriptEngine::DestroySubList(asBYTE *&buffer, asSListPatternNode *&node)
 							// Only call the destructor if the object has been created
 							// We'll assume the object has been created if any byte in
 							// the memory is different from 0.
-							// TODO: This is not really correct, as bytes may have been
+							// _TODO: This is not really correct, as bytes may have been
 							//       modified by the constructor, but then an exception
 							//       thrown aborting the initialization. The engine
 							//       really should be keeping track of which objects has

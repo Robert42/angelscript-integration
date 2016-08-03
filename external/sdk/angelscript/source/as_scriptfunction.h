@@ -105,7 +105,7 @@ struct asSObjectVariableInfo
 
 struct asSSystemFunctionInterface;
 
-// TODO: Might be interesting to allow enumeration of accessed global variables, and 
+// _TODO: Might be interesting to allow enumeration of accessed global variables, and 
 //       also functions/methods that are being called. This could be used to build a 
 //       code database with call graphs, etc.
 
@@ -186,10 +186,10 @@ public:
 
 	void     DestroyHalfCreated();
 
-	// TODO: operator==
-	// TODO: The asIScriptFunction should provide operator== and operator!= that should do a
+	// _TODO: operator==
+	// _TODO: The asIScriptFunction should provide operator== and operator!= that should do a
 	//       a value comparison. Two delegate objects that point to the same object and class method should compare as equal
-	// TODO: The operator== should also be provided in script as opEquals to allow the same comparison in script
+	// _TODO: The operator== should also be provided in script as opEquals to allow the same comparison in script
 	//       To do this we'll need some way to adapt the argtype for opEquals for each funcdef, preferrably without instantiating lots of different methods
 	//       Perhaps reusing 'auto' to mean the same type as the object
 	//bool      operator==(const asCScriptFunction &other) const;

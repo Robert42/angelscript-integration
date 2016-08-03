@@ -50,7 +50,7 @@ extern asFREEFUNC_t  userFree;
 
 #ifdef WIP_16BYTE_ALIGN
 
-// TODO: This declaration should be in angelscript.h
+// _TODO: This declaration should be in angelscript.h
 //       when the application can register it's own
 //       aligned memory routines
 typedef void *(*asALLOCALIGNEDFUNC_t)(size_t, size_t);
@@ -93,7 +93,7 @@ bool isAligned(const void* const pointer, asUINT alignment);
 	#define asDELETEARRAY(ptr) userFree(ptr)
 
 #ifdef WIP_16BYTE_ALIGN
-	//TODO: Equivalent of debug allocation function with alignment?
+	//_TODO: Equivalent of debug allocation function with alignment?
 	#define asNEWARRAYALIGNED(x,cnt, alignment)  (x*)userAllocAligned(sizeof(x)*cnt, alignment)
 	#define asDELETEARRAYALIGNED(ptr) userFreeAligned(ptr)
 #endif

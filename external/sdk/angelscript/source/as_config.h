@@ -857,7 +857,7 @@
 		#elif (defined(__ARMEL__) || defined(__arm__)) && !(defined(__ARM_ARCH_4__) || defined(__ARM_ARCH_4T__))
 			#define AS_ARM
 
-			// TODO: The stack unwind on exceptions currently fails due to the assembler code in as_callfunc_arm_gcc.S
+			// _TODO: The stack unwind on exceptions currently fails due to the assembler code in as_callfunc_arm_gcc.S
 			#define AS_NO_EXCEPTIONS
 
 			#undef STDCALL
@@ -1011,7 +1011,7 @@
 		#if (defined(_ARM_) || defined(__arm__))
 			// Android ARM
 
-			// TODO: The stack unwind on exceptions currently fails due to the assembler code in as_callfunc_arm_gcc.S
+			// _TODO: The stack unwind on exceptions currently fails due to the assembler code in as_callfunc_arm_gcc.S
 			#define AS_NO_EXCEPTIONS
 
 			#undef THISCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE

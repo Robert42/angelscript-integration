@@ -66,7 +66,7 @@ struct asSDeferredParam
 	asSExprContext *origExpr;
 };
 
-// TODO: refactor: asSExprContext should have indicators to inform where the value is, 
+// _TODO: refactor: asSExprContext should have indicators to inform where the value is, 
 //                 i.e. if the reference to an object is pushed on the stack or not, etc
 
 struct asSExprContext
@@ -178,7 +178,7 @@ struct asSExprContext
 	asCArray<asSDeferredParam> deferredParams;
 	asCScriptNode  *exprNode;
 	asSExprContext *origExpr;
-	// TODO: cleanup: use ambiguousName and an enum to say if it is a method, global func, or enum value
+	// _TODO: cleanup: use ambiguousName and an enum to say if it is a method, global func, or enum value
 	asCString methodName;
 	asCString enumValue;
 };

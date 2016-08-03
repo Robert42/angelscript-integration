@@ -293,7 +293,7 @@ static void RegisterScriptArray_Native(asIScriptEngine *engine)
 	r = engine->RegisterObjectMethod("array<T>", "void removeAt(uint)", asMETHOD(CScriptArray, RemoveAt), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("array<T>", "void insertLast(const T&in)", asMETHOD(CScriptArray, InsertLast), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("array<T>", "void removeLast()", asMETHOD(CScriptArray, RemoveLast), asCALL_THISCALL); assert( r >= 0 );
-	// TODO: Should length() and resize() be deprecated as the property accessors do the same thing?
+	// _TODO: Should length() and resize() be deprecated as the property accessors do the same thing?
 	r = engine->RegisterObjectMethod("array<T>", "uint length() const", asMETHOD(CScriptArray, GetSize), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("array<T>", "void reserve(uint)", asMETHOD(CScriptArray, Reserve), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("array<T>", "void resize(uint)", asMETHODPR(CScriptArray, Resize, (asUINT), void), asCALL_THISCALL); assert( r >= 0 );
@@ -423,9 +423,9 @@ CScriptArray::CScriptArray(asIObjectType *ot, void *buf)
 	}
 	else
 	{
-		// TODO: Optimize by calling the copy constructor of the object instead of
+		// _TODO: Optimize by calling the copy constructor of the object instead of
 		//       constructing with the default constructor and then assigning the value
-		// TODO: With C++11 ideally we should be calling the move constructor, instead
+		// _TODO: With C++11 ideally we should be calling the move constructor, instead
 		//       of the copy constructor as the engine will just discard the objects in the
 		//       buffer afterwards.
 		CreateBuffer(&buffer, length);
@@ -615,7 +615,7 @@ void CScriptArray::Reserve(asUINT maxElements)
 		return;
 	}
 
-	// TODO: memcpy assumes the objects in the array doesn't hold pointers to themselves
+	// _TODO: memcpy assumes the objects in the array doesn't hold pointers to themselves
 	//       This should really be using the objects copy/move constructor to copy each object
 	//       to the new location. It would most likely be a hit on the performance though.
 	memcpy(newBuffer->data, buffer->data, buffer->numElements*elementSize);
@@ -674,7 +674,7 @@ void CScriptArray::Resize(int delta, asUINT at)
 			return;
 		}
 
-		// TODO: memcpy assumes the objects in the array doesn't hold pointers to themselves
+		// _TODO: memcpy assumes the objects in the array doesn't hold pointers to themselves
 		//       This should really be using the objects copy/move constructor to copy each object
 		//       to the new location. It would most likely be a hit on the performance though.
 		memcpy(newBuffer->data, buffer->data, at*elementSize);
@@ -692,7 +692,7 @@ void CScriptArray::Resize(int delta, asUINT at)
 	else if( delta < 0 )
 	{
 		Destruct(buffer, at, at-delta);
-		// TODO: memmove assumes the objects in the array doesn't hold pointers to themselves
+		// _TODO: memmove assumes the objects in the array doesn't hold pointers to themselves
 		//       This should really be using the objects copy/move constructor to copy each object
 		//       to the new location. It would most likely be a hit on the performance though.
 		memmove(buffer->data + at*elementSize, buffer->data + (at-delta)*elementSize, (buffer->numElements - (at-delta))*elementSize);
@@ -700,7 +700,7 @@ void CScriptArray::Resize(int delta, asUINT at)
 	}
 	else
 	{
-		// TODO: memmove assumes the objects in the array doesn't hold pointers to themselves
+		// _TODO: memmove assumes the objects in the array doesn't hold pointers to themselves
 		//       This should really be using the objects copy/move constructor to copy each object
 		//       to the new location. It would most likely be a hit on the performance though.
 		memmove(buffer->data + (at+delta)*elementSize, buffer->data + at*elementSize, (buffer->numElements - at)*elementSize);
@@ -945,7 +945,7 @@ bool CScriptArray::Less(const void *a, const void *b, bool asc, asIScriptContext
 		// Execute object opCmp
 		if( cache && cache->cmpFunc )
 		{
-			// TODO: Add proper error handling
+			// _TODO: Add proper error handling
 			r = ctx->Prepare(cache->cmpFunc); assert(r >= 0);
 
 			if( subTypeId & asTYPEID_OBJHANDLE )
@@ -1012,7 +1012,7 @@ bool CScriptArray::operator==(const CScriptArray &other) const
 		}
 		if( cmpContext == 0 )
 		{
-			// TODO: Ideally this context would be retrieved from a pool, so we don't have to
+			// _TODO: Ideally this context would be retrieved from a pool, so we don't have to
 			//       create a new one everytime. We could keep a context with the array object
 			//       but that would consume a lot of resources as each context is quite heavy.
 			cmpContext = objType->GetEngine()->CreateContext();
@@ -1080,7 +1080,7 @@ bool CScriptArray::Equals(const void *a, const void *b, asIScriptContext *ctx, S
 		// Execute object opEquals if available
 		if( cache && cache->eqFunc )
 		{
-			// TODO: Add proper error handling
+			// _TODO: Add proper error handling
 			r = ctx->Prepare(cache->eqFunc); assert(r >= 0);
 
 			if( subTypeId & asTYPEID_OBJHANDLE )
@@ -1105,7 +1105,7 @@ bool CScriptArray::Equals(const void *a, const void *b, asIScriptContext *ctx, S
 		// Execute object opCmp if available
 		if( cache && cache->cmpFunc )
 		{
-			// TODO: Add proper error handling
+			// _TODO: Add proper error handling
 			r = ctx->Prepare(cache->cmpFunc); assert(r >= 0);
 
 			if( subTypeId & asTYPEID_OBJHANDLE )
@@ -1171,7 +1171,7 @@ int CScriptArray::Find(void *value) const
 int CScriptArray::Find(asUINT startAt, void *value) const
 {
 	// Check if the subtype really supports find()
-	// TODO: Can't this be done at compile time too by the template callback
+	// _TODO: Can't this be done at compile time too by the template callback
 	SArrayCache *cache = 0;
 	if( subTypeId & ~asTYPEID_MASK_SEQNBR )
 	{
@@ -1221,7 +1221,7 @@ int CScriptArray::Find(asUINT startAt, void *value) const
 		}
 		if( cmpContext == 0 )
 		{
-			// TODO: Ideally this context would be retrieved from a pool, so we don't have to
+			// _TODO: Ideally this context would be retrieved from a pool, so we don't have to
 			//       create a new one everytime. We could keep a context with the array object
 			//       but that would consume a lot of resources as each context is quite heavy.
 			cmpContext = objType->GetEngine()->CreateContext();
@@ -1394,7 +1394,7 @@ void CScriptArray::Sort(asUINT startAt, asUINT count, bool asc)
 		}
 		if( cmpContext == 0 )
 		{
-			// TODO: Ideally this context would be retrieved from a pool, so we don't have to
+			// _TODO: Ideally this context would be retrieved from a pool, so we don't have to
 			//       create a new one everytime. We could keep a context with the array object
 			//       but that would consume a lot of resources as each context is quite heavy.
 			cmpContext = objType->GetEngine()->CreateContext();
@@ -1605,7 +1605,7 @@ void CScriptArray::Precache()
 // GC behaviour
 void CScriptArray::EnumReferences(asIScriptEngine *engine)
 {
-	// TODO: If garbage collection can be done from a separate thread, then this method must be
+	// _TODO: If garbage collection can be done from a separate thread, then this method must be
 	//       protected so that it doesn't get lost during the iteration if the array is modified
 
 	// If the array is holding handles, then we need to notify the GC of them

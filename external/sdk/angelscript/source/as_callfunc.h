@@ -106,7 +106,7 @@ struct asSSystemFunctionInterface
 	int                  hostReturnSize;
 	int                  paramSize;
 	bool                 takesObjByVal;
-	asCArray<bool>       paramAutoHandles; // TODO: Should be able to remove this array. Perhaps the flags can be stored together with the inOutFlags in asCScriptFunction?
+	asCArray<bool>       paramAutoHandles; // _TODO: Should be able to remove this array. Perhaps the flags can be stored together with the inOutFlags in asCScriptFunction?
 	bool                 returnAutoHandle;
 	void                *objForThiscall;
 

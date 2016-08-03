@@ -267,7 +267,7 @@ int asCReader::ReadInner()
 			module->funcDefs.PushLast(func);
 			engine->funcDefs.PushLast(func);
 
-			// TODO: clean up: This is also done by the builder. It should probably be moved to a method in the module
+			// _TODO: clean up: This is also done by the builder. It should probably be moved to a method in the module
 			// Check if there is another identical funcdef from another module and if so reuse that instead
 			if( func->isShared )
 			{
@@ -650,9 +650,9 @@ void asCReader::ReadUsedFunctions()
 				}
 				else
 				{
-					// TODO: optimize: Global functions should be searched for in module->globalFunctions
-					// TODO: optimize: funcdefs should be searched for in module->funcDefs
-					// TODO: optimize: object methods should be searched for directly in the object type
+					// _TODO: optimize: Global functions should be searched for in module->globalFunctions
+					// _TODO: optimize: funcdefs should be searched for in module->funcDefs
+					// _TODO: optimize: object methods should be searched for directly in the object type
 					for( asUINT i = 0; i < module->scriptFunctions.GetLength(); i++ )
 					{
 						asCScriptFunction *f = module->scriptFunctions[i];
@@ -785,7 +785,7 @@ void asCReader::ReadUsedFunctions()
 				else if( func.objectType )
 				{
 					// It is a class member, so we can search directly in the object type's members
-					// TODO: virtual function is different that implemented method
+					// _TODO: virtual function is different that implemented method
 					for( asUINT i = 0; i < func.objectType->methods.GetLength(); i++ )
 					{
 						asCScriptFunction *f = engine->scriptFunctions[func.objectType->methods[i]];
@@ -800,7 +800,7 @@ void asCReader::ReadUsedFunctions()
 
 				if( usedFunctions[n] == 0 )
 				{
-					// TODO: clean up: This part of the code should never happen. All functions should 
+					// _TODO: clean up: This part of the code should never happen. All functions should 
 					//                 be found in the above logic. The only valid reason to come here 
 					//                 is if the bytecode is wrong and the function doesn't exist anyway.
 					//                 This loop is kept temporarily until we can be certain all scenarios 
@@ -1203,7 +1203,7 @@ void asCReader::ReadObjectTypeDeclaration(asCObjectType *ot, int phase)
 		engine->scriptFunctions[ot->beh.gcReleaseAllReferences]->AddRefInternal();
 		engine->scriptFunctions[ot->beh.gcSetFlag]->AddRefInternal();
 		engine->scriptFunctions[ot->beh.copy]->AddRefInternal();
-		// TODO: weak: Should not do this if the class has been declared with 'noweak'
+		// _TODO: weak: Should not do this if the class has been declared with 'noweak'
 		engine->scriptFunctions[ot->beh.getWeakRefFlag]->AddRefInternal();
 	}
 	else if( phase == 2 )
@@ -1225,7 +1225,7 @@ void asCReader::ReadObjectTypeDeclaration(asCObjectType *ot, int phase)
 						return;
 					}
 					ReadString(&e->name);
-					ReadData(&e->value, 4); // TODO: Should be encoded
+					ReadData(&e->value, 4); // _TODO: Should be encoded
 					ot->enumValues.PushLast(e);
 				}
 			}
@@ -1237,7 +1237,7 @@ void asCReader::ReadObjectTypeDeclaration(asCObjectType *ot, int phase)
 				for( int n = 0; n < count; n++ )
 				{
 					ReadString(&name);
-					ReadData(&value, 4); // TODO: Should be encoded
+					ReadData(&value, 4); // _TODO: Should be encoded
 					bool found = false;
 					for( asUINT e = 0; e < ot->enumValues.GetLength(); e++ )
 					{
@@ -1764,7 +1764,7 @@ void asCReader::ReadObjectProperty(asCObjectType *ot)
 	bool isProtected = (flags & 2) ? true : false;
 	bool isInherited = (flags & 4) ? true : false;
 
-	// TODO: shared: If the type is shared and pre-existing, we should just 
+	// _TODO: shared: If the type is shared and pre-existing, we should just 
 	//               validate that the loaded methods match the original 
 	if( !existingShared.MoveTo(0, ot) )
 		ot->AddPropertyToClass(name, dt, isPrivate, isProtected, isInherited);
@@ -1811,7 +1811,7 @@ void asCReader::ReadDataType(asCDataType *dt)
 		if( error ) return;
 		for( asUINT n = 0; n < engine->registeredFuncDefs.GetLength(); n++ )
 		{
-			// TODO: access: Only return the definitions that the module has access to
+			// _TODO: access: Only return the definitions that the module has access to
 			if( engine->registeredFuncDefs[n]->name == func.name &&
 				engine->registeredFuncDefs[n]->nameSpace == func.nameSpace )
 			{
@@ -2730,7 +2730,7 @@ void asCReader::TranslateFunction(asCScriptFunction *func)
 	// Adjust the get offsets. This must be done in the second iteration because
 	// it relies on the function ids and variable position already being correct in the 
 	// bytecodes that come after the GET instructions.
-	// TODO: optimize: Instead of doing a full extra loop. We can push the GET instructions
+	// _TODO: optimize: Instead of doing a full extra loop. We can push the GET instructions
 	//                 on a stack, and then when a call instruction is found update all of them.
 	//                 This will also make the AdjustGetOffset() function quicker as it can 
 	//                 receive the called function directly instead of having to search for it.
@@ -3265,7 +3265,7 @@ asCScriptFunction *asCReader::GetCalledFunction(asCScriptFunction *func, asDWORD
 
 int asCReader::AdjustGetOffset(int offset, asCScriptFunction *func, asDWORD programPos)
 {
-	// TODO: optimize: multiple instructions for the same function doesn't need to look for the function everytime
+	// _TODO: optimize: multiple instructions for the same function doesn't need to look for the function everytime
 	//                 the function can remember where it found the function and check if the programPos is still valid
 
 	// Get offset 0 doesn't need adjustment
@@ -3418,9 +3418,9 @@ int asCWriter::Write()
 
 	// Store everything in the same order that the builder parses scripts
 
-	// TODO: Should be possible to skip saving the enum values. They are usually not needed after the script is compiled anyway
-	// TODO: Should be possible to skip saving the typedefs. They are usually not needed after the script is compiled anyway
-	// TODO: Should be possible to skip saving constants. They are usually not needed after the script is compiled anyway
+	// _TODO: Should be possible to skip saving the enum values. They are usually not needed after the script is compiled anyway
+	// _TODO: Should be possible to skip saving the typedefs. They are usually not needed after the script is compiled anyway
+	// _TODO: Should be possible to skip saving constants. They are usually not needed after the script is compiled anyway
 	WriteData(&stripDebugInfo, sizeof(stripDebugInfo));
 
 	// Store enums
@@ -3744,7 +3744,7 @@ void asCWriter::WriteFunction(asCScriptFunction* func)
 		for( i = 0; i < count; ++i )
 		{
 			WriteObjectType(func->scriptData->objVariableTypes[i]);
-			// TODO: Only write this if the object type is the builtin function type
+			// _TODO: Only write this if the object type is the builtin function type
 			WriteEncodedInt64(FindFunctionIndex(func->scriptData->funcVariableTypes[i]));
 			WriteEncodedInt64(AdjustStackPosition(func->scriptData->objVariablePos[i]));
 		}
@@ -3838,7 +3838,7 @@ void asCWriter::WriteFunction(asCScriptFunction* func)
 	}
 	else if( func->funcType == asFUNC_VIRTUAL || func->funcType == asFUNC_INTERFACE )
 	{
-		// TODO: Do we really need to store this? It can probably be reconstructed by the reader
+		// _TODO: Do we really need to store this? It can probably be reconstructed by the reader
 		WriteEncodedInt64(func->vfTableIdx);
 	}
 	else if( func->funcType == asFUNC_FUNCDEF )
@@ -3859,7 +3859,7 @@ void asCWriter::WriteObjectTypeDeclaration(asCObjectType *ot, int phase)
 		WriteData(&ot->flags, 4);
 
 		// size
-		// TODO: Do we really need to store this? The reader should be able to 
+		// _TODO: Do we really need to store this? The reader should be able to 
 		//       determine the correct size from the object type's flags
 		if( (ot->flags & asOBJ_SCRIPT_OBJECT) && ot->size > 0 )
 		{
@@ -3913,7 +3913,7 @@ void asCWriter::WriteObjectTypeDeclaration(asCObjectType *ot, int phase)
 			}
 
 			// behaviours
-			// TODO: Default behaviours should just be stored as a indicator  
+			// _TODO: Default behaviours should just be stored as a indicator  
 			//       to avoid storing the actual function object
 			if( !ot->IsInterface() && ot->flags != asOBJ_TYPEDEF && ot->flags != asOBJ_ENUM )
 			{
@@ -3928,7 +3928,7 @@ void asCWriter::WriteObjectTypeDeclaration(asCObjectType *ot, int phase)
 			}
 
 			// methods[]
-			// TODO: Avoid storing inherited methods in interfaces, as the reader
+			// _TODO: Avoid storing inherited methods in interfaces, as the reader
 			//       can add those directly from the base interface
 			size = (int)ot->methods.GetLength();
 			WriteEncodedInt64(size);
@@ -3938,7 +3938,7 @@ void asCWriter::WriteObjectTypeDeclaration(asCObjectType *ot, int phase)
 			}
 
 			// virtualFunctionTable[]
-			// TODO: Is it really necessary to store this? Can't it be easily rebuilt by the reader
+			// _TODO: Is it really necessary to store this? Can't it be easily rebuilt by the reader
 			size = (int)ot->virtualFunctionTable.GetLength();
 			WriteEncodedInt64(size);
 			for( n = 0; n < (asUINT)size; n++ )
@@ -4056,7 +4056,7 @@ void asCWriter::WriteString(asCString* str)
 
 void asCWriter::WriteGlobalProperty(asCGlobalProperty* prop) 
 {
-	// TODO: We might be able to avoid storing the name and type of the global 
+	// _TODO: We might be able to avoid storing the name and type of the global 
 	//       properties twice if we merge this with the WriteUsedGlobalProperties. 
 	WriteString(&prop->name);
 	WriteString(&prop->nameSpace->name);
@@ -4309,7 +4309,7 @@ int asCWriter::AdjustStackPosition(int pos)
 
 int asCWriter::AdjustGetOffset(int offset, asCScriptFunction *func, asDWORD programPos)
 {
-	// TODO: optimize: multiple instructions for the same function doesn't need to look for the function everytime
+	// _TODO: optimize: multiple instructions for the same function doesn't need to look for the function everytime
 	//                 the function can remember where it found the function and check if the programPos is still valid
 
 	// Get offset 0 doesn't need adjustment
@@ -4513,7 +4513,7 @@ void asCWriter::WriteByteCode(asCScriptFunction *func)
 			else
 			{
 				// Translate property offsets into indices
-				// TODO: optimize: Pass the object type directly to the method instead of the type id
+				// _TODO: optimize: Pass the object type directly to the method instead of the type id
 				*(((short*)tmp)+2) = (short)FindObjectPropIndex(*(((short*)tmp)+2), *(int*)(tmp+2));
 			}
 
@@ -4696,7 +4696,7 @@ void asCWriter::WriteByteCode(asCScriptFunction *func)
 			break;
 		}
 
-		// TODO: bytecode: Must make sure that floats and doubles are always stored the same way regardless of platform. 
+		// _TODO: bytecode: Must make sure that floats and doubles are always stored the same way regardless of platform. 
 		//                 Some platforms may not use the IEEE 754 standard, in which case it is necessary to encode the values
 		
 		// Now store the instruction in the smallest possible way
@@ -4905,7 +4905,7 @@ asCWriter::SListAdjuster::SListAdjuster(asCObjectType *ot) : patternType(ot), re
 
 int asCWriter::SListAdjuster::AdjustOffset(int offset, asCObjectType *listPatternType)
 {
-	// TODO: cleanup: The listPatternType parameter is not needed
+	// _TODO: cleanup: The listPatternType parameter is not needed
 	asASSERT( patternType == listPatternType );
 	UNUSED_VAR(listPatternType);
 	

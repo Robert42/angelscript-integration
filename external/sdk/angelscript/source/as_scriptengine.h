@@ -58,7 +58,7 @@ BEGIN_AS_NAMESPACE
 class asCBuilder;
 class asCContext;
 
-// TODO: import: Remove this when import is removed
+// _TODO: import: Remove this when import is removed
 struct sBindInfo;
 
 class asCScriptEngine : public asIScriptEngine
@@ -132,7 +132,7 @@ public:
 	virtual asIScriptFunction *GetFuncdefByIndex(asUINT index) const;
 
 	// Typedefs
-	// TODO: interface: Should perhaps rename this to Alias, since it doesn't really create a new type
+	// _TODO: interface: Should perhaps rename this to Alias, since it doesn't really create a new type
 	virtual int         RegisterTypedef(const char *type, const char *decl);
 	virtual asUINT      GetTypedefCount() const;
 	virtual const char *GetTypedefByIndex(asUINT index, int *typeId, const char **nameSpace, const char **configGroup = 0, asDWORD *accessMask = 0) const;
@@ -303,7 +303,7 @@ public:
 	asCModule         *FindNewOwnerForSharedFunc(asCScriptFunction *func, asCModule *mod);
 
 	// String constants
-	// TODO: Must free unused string constants, thus the ref count for each must be tracked
+	// _TODO: Must free unused string constants, thus the ref count for each must be tracked
 	int              AddConstantString(const char *str, size_t length);
 	const asCString &GetConstantString(int id);
 
@@ -333,7 +333,7 @@ public:
 	asCArray<asCObjectType *>         registeredObjTypes;
 	asCArray<asCObjectType *>         registeredTypeDefs;
 	asCArray<asCObjectType *>         registeredEnums;
-	asCSymbolTable<asCGlobalProperty> registeredGlobalProps; // increases ref count // TODO: memory savings: Since there can be only one property with the same name a simpler symbol table should be used
+	asCSymbolTable<asCGlobalProperty> registeredGlobalProps; // increases ref count // _TODO: memory savings: Since there can be only one property with the same name a simpler symbol table should be used
 	asCSymbolTable<asCScriptFunction> registeredGlobalFuncs;
 	asCArray<asCScriptFunction *>     registeredFuncDefs;
 	asCArray<asCObjectType *>         registeredTemplateTypes;
@@ -401,7 +401,7 @@ public:
 	// This array stores the template instances types that have been automatically generated from template types
 	asCArray<asCObjectType *> generatedTemplateTypes;
 	// Stores the funcdefs
-	// TODO: redesign: Only shared funcdefs should be stored here
+	// _TODO: redesign: Only shared funcdefs should be stored here
 	//                 a funcdef becomes shared if all arguments and the return type are shared (or application registered)
 	asCArray<asCScriptFunction *> funcDefs; // doesn't increase ref count
 
@@ -498,11 +498,11 @@ public:
 		bool   alwaysImplDefaultConstruct;
 		int    compilerWarnings;
 		bool   disallowValueAssignForRefType;
-		// TODO: 3.0.0: Remove the alterSyntaxNamedArgs
+		// _TODO: 3.0.0: Remove the alterSyntaxNamedArgs
 		int    alterSyntaxNamedArgs;
 		bool   disableIntegerDivision;
 		bool   disallowEmptyListElements;
-		// TODO: 3.0.0: Remove the privatePropAsProtected
+		// _TODO: 3.0.0: Remove the privatePropAsProtected
 		bool   privatePropAsProtected;
 	} ep;
 

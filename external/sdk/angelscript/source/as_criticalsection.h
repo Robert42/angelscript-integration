@@ -167,7 +167,7 @@ protected:
 
 	// http://doc.qt.nokia.com/qq/qq11-mutex.html
 
-	// TODO: Allow use of SRWLOCK through configuration in as_config.h
+	// _TODO: Allow use of SRWLOCK through configuration in as_config.h
 
 	CRITICAL_SECTION    writeLock;
 	HANDLE              readLocks;

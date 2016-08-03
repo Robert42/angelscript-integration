@@ -426,7 +426,7 @@ bool asCDataType::IsObjectConst() const
 	return IsReadOnly();
 }
 
-// TODO: 3.0.0: This should be removed
+// _TODO: 3.0.0: This should be removed
 bool asCDataType::IsArrayType() const
 {
 	// This is only true if the type used is the default array type, i.e. the one used for the [] syntax form
@@ -650,7 +650,7 @@ int  asCDataType::GetAlignment() const
 {
 	if( objectType == NULL )
 	{
-		// TODO: Small primitives should not be aligned to 4 byte boundaries
+		// _TODO: Small primitives should not be aligned to 4 byte boundaries
 		return 4; //Default alignment
 	}
 

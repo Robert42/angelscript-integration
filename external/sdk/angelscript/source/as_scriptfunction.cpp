@@ -105,7 +105,7 @@ static void ScriptFunction_CreateDelegate_Generic(asIScriptGeneric *gen)
 	gen->SetReturnAddress(CreateDelegate(func, obj));
 }
 
-// TODO: operator==
+// _TODO: operator==
 /*static void ScriptFunction_opEquals_Generic(asIScriptGeneric *gen)
 {
 	asCScriptFunction *funcSelf = (asCScriptFunction*)gen->GetObject();
@@ -133,7 +133,7 @@ void RegisterScriptFunction(asCScriptEngine *engine)
 	r = engine->RegisterBehaviourToObjectType(&engine->functionBehaviours, asBEHAVE_GETGCFLAG, "bool f()", asMETHOD(asCScriptFunction,GetFlag), asCALL_THISCALL, 0); asASSERT( r >= 0 );
 	r = engine->RegisterBehaviourToObjectType(&engine->functionBehaviours, asBEHAVE_ENUMREFS, "void f(int&in)", asMETHOD(asCScriptFunction,EnumReferences), asCALL_THISCALL, 0); asASSERT( r >= 0 );
 	r = engine->RegisterBehaviourToObjectType(&engine->functionBehaviours, asBEHAVE_RELEASEREFS, "void f(int&in)", asMETHOD(asCScriptFunction,ReleaseAllHandles), asCALL_THISCALL, 0); asASSERT( r >= 0 );
-	// TODO: Need some way to allow the arg type to adapt when the funcdefs are instantiated
+	// _TODO: Need some way to allow the arg type to adapt when the funcdefs are instantiated
 //	r = engine->RegisterMethodToObjectType(&engine->functionBehaviours, "bool opEquals(const int &in)", asMETHOD(asCScriptFunction,operator==), asCALL_THISCALL); asASSERT( r >= 0 );
 #else
 	r = engine->RegisterBehaviourToObjectType(&engine->functionBehaviours, asBEHAVE_ADDREF, "void f()", asFUNCTION(ScriptFunction_AddRef_Generic), asCALL_GENERIC, 0); asASSERT( r >= 0 );
@@ -171,7 +171,7 @@ asCScriptFunction *CreateDelegate(asCScriptFunction *func, void *obj)
 {
 	if( func == 0 || obj == 0 )
 	{
-		// TODO: delegate: Should set script exception
+		// _TODO: delegate: Should set script exception
 		return 0;
 	}
 
@@ -195,7 +195,7 @@ void asCScriptFunction::MakeDelegate(asCScriptFunction *func, void *obj)
 	objForDelegate = obj;
 
 	// The return type and parameters are copied from the delegated method to this object
-	// TODO: optimize: Do we really need to copy? Whenever requested the delegate can simply return the delegated methods' info directly
+	// _TODO: optimize: Do we really need to copy? Whenever requested the delegate can simply return the delegated methods' info directly
 	parameterTypes = func->parameterTypes;
 	returnType     = func->returnType;
 	inOutFlags     = func->inOutFlags;
@@ -226,7 +226,7 @@ asIScriptFunction *asCScriptFunction::GetDelegateFunction() const
 	return funcForDelegate;
 }
 
-// TODO: operator==
+// _TODO: operator==
 /*
 // internal
 bool asCScriptFunction::operator==(const asCScriptFunction &other) const
@@ -281,7 +281,7 @@ int asCScriptFunction::ParseListPattern(asSListPatternNode *&target, const char 
 			}
 			else if( token == "repeat_same" )
 			{
-				// TODO: list: Should make sure this is a sub-list
+				// _TODO: list: Should make sure this is a sub-list
 				node->next = asNEW(asSListPatternNode)(asLPT_REPEAT_SAME);
 				node = node->next;
 			}
@@ -671,7 +671,7 @@ asCString asCScriptFunction::GetDeclarationStr(bool includeObjectName, bool incl
 {
 	asCString str;
 
-	// TODO: default arg: Make the declaration with the default args an option
+	// _TODO: default arg: Make the declaration with the default args an option
 
 	// Don't add the return type for constructors and destructors
 	if( !(returnType.GetTokenType() == ttVoid &&
@@ -834,7 +834,7 @@ int asCScriptFunction::FindNextLineWithCode(int line) const
 		if( line > lineNbrs[lineNbrs.GetLength()-1] ) return -1;
 
 		// Find the line with code on or right after the input line
-		// TODO: optimize: Do binary search
+		// _TODO: optimize: Do binary search
 		for( asUINT n = 0; n < lineNbrs.GetLength(); n++ )
 			if( line <= lineNbrs[n] )
 				return lineNbrs[n];
@@ -846,7 +846,7 @@ int asCScriptFunction::FindNextLineWithCode(int line) const
 		if( line > (scriptData->lineNumbers[scriptData->lineNumbers.GetLength()-1]&0xFFFFF) ) return -1;
 
 		// Find the line with code on or right after the input line
-		// TODO: optimize: Do binary search instead
+		// _TODO: optimize: Do binary search instead
 		for( asUINT n = 1; n < scriptData->lineNumbers.GetLength(); n += 2 )
 		{
 			if( line <= (scriptData->lineNumbers[n]&0xFFFFF) )
@@ -1257,7 +1257,7 @@ void asCScriptFunction::ReleaseReferences()
 						// and this may will make it impossible to find the function by id anymore.
 						// This should only happen if the engine is released while the application
 						// is still keeping functions alive.
-						// TODO: Fix this possible memory leak
+						// _TODO: Fix this possible memory leak
 					}
 				}
 				break;
@@ -1321,7 +1321,7 @@ void asCScriptFunction::ReleaseReferences()
 						// and this may will make it impossible to find the function by id anymore.
 						// This should only happen if the engine is released while the application
 						// is still keeping functions alive.
-						// TODO: Fix this possible memory leak
+						// _TODO: Fix this possible memory leak
 					}
 				}
 				break;
@@ -1590,7 +1590,7 @@ void *asCScriptFunction::GetUserData(asPWORD type) const
 }
 
 // internal
-// TODO: cleanup: This method should probably be a member of the engine
+// _TODO: cleanup: This method should probably be a member of the engine
 asCGlobalProperty *asCScriptFunction::GetPropertyByGlobalVarPtr(void *gvarPtr)
 {
 	asSMapNode<void*, asCGlobalProperty*> *node;

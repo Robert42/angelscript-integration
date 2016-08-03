@@ -49,7 +49,7 @@
 
 BEGIN_AS_NAMESPACE
 
-// TODO: memory: Need to minimize used memory here, because not all types use all properties of the class
+// _TODO: memory: Need to minimize used memory here, because not all types use all properties of the class
 
 
 struct asSTypeBehaviour

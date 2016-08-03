@@ -438,7 +438,7 @@ int asCContext::Prepare(asIScriptFunction *func)
 		m_initialFunction->AddRef();
 		m_currentFunction = m_initialFunction;
 
-		// TODO: runtime optimize: GetSpaceNeededForArguments() should be precomputed
+		// _TODO: runtime optimize: GetSpaceNeededForArguments() should be precomputed
 		m_argumentsSize = m_currentFunction->GetSpaceNeededForArguments() + (m_currentFunction->objectType ? AS_PTR_SIZE : 0);
 
 		// Reserve space for the arguments and return value
@@ -710,7 +710,7 @@ int asCContext::SetObject(void *obj)
 
 	*(asPWORD*)&m_regs.stackFramePointer[0] = (asPWORD)obj;
 
-	// TODO: This should be optional by having a flag where the application can chose whether it should be done or not
+	// _TODO: This should be optional by having a flag where the application can chose whether it should be done or not
 	//       The flag could be named something like takeOwnership and have default value of true
 	if( obj && (m_initialFunction->objectType->flags & asOBJ_SCRIPT_OBJECT) )
 		reinterpret_cast<asCScriptObject*>(obj)->AddRef();
@@ -1105,7 +1105,7 @@ int asCContext::SetArgVarType(asUINT arg, void *ptr, int typeId)
 	return 0;
 }
 
-// TODO: Instead of GetAddressOfArg, maybe we need a SetArgValue(int arg, void *value, bool takeOwnership) instead.
+// _TODO: Instead of GetAddressOfArg, maybe we need a SetArgValue(int arg, void *value, bool takeOwnership) instead.
 
 // interface
 void *asCContext::GetAddressOfArg(asUINT arg)
@@ -1140,7 +1140,7 @@ int asCContext::Abort()
 {
 	if( m_engine == 0 ) return asERROR;
 
-	// TODO: multithread: Make thread safe. There is a chance that the status
+	// _TODO: multithread: Make thread safe. There is a chance that the status
 	//                    changes to something else after being set to ABORTED here.
 	if( m_status == asEXECUTION_SUSPENDED )
 		m_status = asEXECUTION_ABORTED;
@@ -1349,11 +1349,11 @@ int asCContext::Execute()
 int asCContext::PushState()
 {
 	// Only allow the state to be pushed when active
-	// TODO: Can we support a suspended state too? So the reuse of
+	// _TODO: Can we support a suspended state too? So the reuse of
 	//       the context can be done outside the Execute() call?
 	if( m_status != asEXECUTION_ACTIVE )
 	{
-		// TODO: Write message. Wrong usage
+		// _TODO: Write message. Wrong usage
 		return asERROR;
 	}
 
@@ -1758,7 +1758,7 @@ void asCContext::CallInterfaceMethod(asCScriptFunction *func)
 		bool found = false;
 		asCObjectType *findInterface = func->objectType;
 
-		// TODO: runtime optimize: The list of interfaces should be ordered by the address
+		// _TODO: runtime optimize: The list of interfaces should be ordered by the address
 		//                         Then a binary search pattern can be used.
 		asUINT intfCount = asUINT(objType->interfaces.GetLength());
 		for( asUINT n = 0; n < intfCount; n++ )
@@ -2538,7 +2538,7 @@ void asCContext::ExecuteNext()
 
 	case asBC_CALLBND:
 		{
-			// TODO: Clean-up: This code is very similar to asBC_CallPtr. Create a shared method for them
+			// _TODO: Clean-up: This code is very similar to asBC_CallPtr. Create a shared method for them
 			// Get the function ID from the stack
 			int i = asBC_INTARG(l_bc);
 
@@ -2590,7 +2590,7 @@ void asCContext::ExecuteNext()
 					{
 						m_regs.programPointer += 2;
 
-						// TODO: run-time optimize: The true method could be figured out when creating the delegate
+						// _TODO: run-time optimize: The true method could be figured out when creating the delegate
 						CallInterfaceMethod(func->funcForDelegate);
 					}
 				}
@@ -2895,7 +2895,7 @@ void asCContext::ExecuteNext()
 		break;
 
 	case asBC_ClrVPtr:
-		// TODO: runtime optimize: Is this instruction really necessary?
+		// _TODO: runtime optimize: Is this instruction really necessary?
 		//                         CallScriptFunction() can clear the null handles upon entry, just as is done for
 		//                         all other object variables
 		// Clear pointer variable
@@ -3058,7 +3058,7 @@ void asCContext::ExecuteNext()
 
 	case asBC_CmpPtr:
 		{
-			// TODO: runtime optimize: This instruction should really just be an equals, and return true or false.
+			// _TODO: runtime optimize: This instruction should really just be an equals, and return true or false.
 			//                         The instruction is only used for is and !is tests anyway.
 			asPWORD p1 = *(asPWORD*)(l_fp - asBC_SWORDARG0(l_bc));
 			asPWORD p2 = *(asPWORD*)(l_fp - asBC_SWORDARG1(l_bc));
@@ -3478,7 +3478,7 @@ void asCContext::ExecuteNext()
 		break;
 
 	case asBC_SetV1:
-		// TODO: This is exactly the same as SetV4. This is a left over from the time
+		// _TODO: This is exactly the same as SetV4. This is a left over from the time
 		//       when the bytecode instructions were more tightly packed. It can now
 		//       be removed. When removing it, make sure the value is correctly converted
 		//       on big-endian CPUs.
@@ -3489,7 +3489,7 @@ void asCContext::ExecuteNext()
 		break;
 
 	case asBC_SetV2:
-		// TODO: This is exactly the same as SetV4. This is a left over from the time
+		// _TODO: This is exactly the same as SetV4. This is a left over from the time
 		//       when the bytecode instructions were more tightly packed. It can now
 		//       be removed. When removing it, make sure the value is correctly converted
 		//       on big-endian CPUs.
@@ -3855,7 +3855,7 @@ void asCContext::ExecuteNext()
 				// Tell the exception handler to clean up the arguments to this method
 				m_needToCleanupArgs = true;
 
-				// TODO: funcdef: Should we have a different exception string?
+				// _TODO: funcdef: Should we have a different exception string?
 				SetInternalException(TXT_UNBOUND_FUNCTION);
 				return;
 			}
@@ -3887,7 +3887,7 @@ void asCContext::ExecuteNext()
 					{
 						m_regs.programPointer++;
 
-						// TODO: run-time optimize: The true method could be figured out when creating the delegate
+						// _TODO: run-time optimize: The true method could be figured out when creating the delegate
 						CallInterfaceMethod(func->funcForDelegate);
 					}
 				}
@@ -4123,7 +4123,7 @@ void asCContext::ExecuteNext()
 	case asBC_AllocMem:
 		// Allocate a buffer and store the pointer in the local variable
 		{
-			// TODO: runtime optimize: As the list buffers are going to be short lived, it may be interesting
+			// _TODO: runtime optimize: As the list buffers are going to be short lived, it may be interesting
 			//                         to use a memory pool to avoid reallocating the memory all the time
 
 			asUINT size = asBC_DWORDARG(l_bc);
@@ -4688,7 +4688,7 @@ void asCContext::DetermineLiveObjects(asCArray<int> &liveObjects, asUINT stackLe
 				{
 				case asOBJ_UNINIT: // Object was destroyed
 					{
-						// TODO: optimize: This should have been done by the compiler already
+						// _TODO: optimize: This should have been done by the compiler already
 						// Which variable is this?
 						asUINT var = 0;
 						for( asUINT v = 0; v < func->scriptData->objVariablePos.GetLength(); v++ )
@@ -5352,7 +5352,7 @@ void *asCContext::GetThisPointer(asUINT stackLevel)
 		return 0;
 	}
 
-	// NOTE: this returns the pointer to the 'this' while the GetVarPointer functions return
+  // _NOTE: this returns the pointer to the 'this' while the GetVarPointer functions return
 	// a pointer to a pointer. I can't imagine someone would want to change the 'this'
 	return thisPointer;
 }
@@ -5363,7 +5363,7 @@ void *asCContext::GetThisPointer(asUINT stackLevel)
 
 
 
-// TODO: Move these to as_utils.cpp
+// _TODO: Move these to as_utils.cpp
 
 struct POW_INFO
 {

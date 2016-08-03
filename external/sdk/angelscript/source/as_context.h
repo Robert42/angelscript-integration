@@ -211,7 +211,7 @@ public:
 	asSVMRegisters m_regs;
 };
 
-// TODO: Move these to as_utils.h
+// _TODO: Move these to as_utils.h
 int     as_powi(int base, int exponent, bool& isOverflow);
 asDWORD as_powu(asDWORD base, asDWORD exponent, bool& isOverflow);
 asINT64 as_powi64(asINT64 base, asINT64 exponent, bool& isOverflow);

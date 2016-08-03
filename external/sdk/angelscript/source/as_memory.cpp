@@ -51,7 +51,7 @@ BEGIN_AS_NAMESPACE
 
 #ifdef WIP_16BYTE_ALIGN
 
-// TODO: Add support for 16byte aligned application types (e.g. __m128). The following is a list of things that needs to be implemented:
+// _TODO: Add support for 16byte aligned application types (e.g. __m128). The following is a list of things that needs to be implemented:
 //
 //  ok  - The script context must make sure to always allocate the local stack memory buffer on 16byte aligned boundaries (asCContext::ReserveStackSpace)
 //  ok  - The engine must make sure to always allocate the memory for the script objects on 16byte aligned boundaries (asCScriptEngine::CallAlloc)
@@ -69,7 +69,7 @@ BEGIN_AS_NAMESPACE
 // http://www.gamedev.net/topic/650555-alignment-requirements/
 
 
-// TODO: Allow user to register its own aligned memory routines
+// _TODO: Allow user to register its own aligned memory routines
 // Wrappers for aligned allocations
 void *debugAlignedMalloc(size_t size, size_t align, const char *file, int line)
 {

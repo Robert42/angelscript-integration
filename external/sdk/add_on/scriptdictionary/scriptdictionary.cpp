@@ -217,7 +217,7 @@ bool CScriptDictionary::GetGCFlag()
 
 void CScriptDictionary::EnumReferences(asIScriptEngine *engine)
 {
-	// TODO: If garbage collection can be done from a separate thread, then this method must be
+	// _TODO: If garbage collection can be done from a separate thread, then this method must be
 	//       protected so that it doesn't get lost during the iteration if the dictionary is modified
 
 	// Call the gc enum callback for each of the objects
@@ -738,7 +738,7 @@ bool CScriptDictValue::Get(asIScriptEngine *engine, void *value, int typeId) con
 			else
 			{
 				// The stored type is an object
-				// TODO: Check if the object has a conversion operator to a primitive value
+				// _TODO: Check if the object has a conversion operator to a primitive value
 				*(double*)value = 0;
 			}
 			return true;
@@ -754,7 +754,7 @@ bool CScriptDictValue::Get(asIScriptEngine *engine, void *value, int typeId) con
 			else
 			{
 				// The stored type is an object
-				// TODO: Check if the object has a conversion operator to a primitive value
+				// _TODO: Check if the object has a conversion operator to a primitive value
 				*(asINT64*)value = 0;
 			}
 			return true;
@@ -773,7 +773,7 @@ bool CScriptDictValue::Get(asIScriptEngine *engine, void *value, int typeId) con
 			else
 			{
 				// The stored type is an object
-				// TODO: Check if the object has a conversion operator to a primitive value
+				// _TODO: Check if the object has a conversion operator to a primitive value
 				*(int*)value = 0;
 			}
 		}
@@ -783,7 +783,7 @@ bool CScriptDictValue::Get(asIScriptEngine *engine, void *value, int typeId) con
 				*(bool*)value = m_valueObj ? true : false;
 			else if( m_typeId & asTYPEID_MASK_OBJECT )
 			{
-				// TODO: Check if the object has a conversion operator to a primitive value
+				// _TODO: Check if the object has a conversion operator to a primitive value
 				*(bool*)value = true;
 			}
 			else

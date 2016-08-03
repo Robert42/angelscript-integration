@@ -239,7 +239,7 @@ void asCBuilder::EvaluateTemplateInstances(asUINT startIdx, bool keepSilent)
 		engine->SetMessageCallback(asMETHOD(asCOutputBuffer, Callback), &outBuffer, asCALL_THISCALL);
 
 	// Evaluate each of the template instances that have been created since the start of the build
-	// TODO: This is not exactly correct, since another thread may have created template instances in parallel
+  // _TODO: This is not exactly correct, since another thread may have created template instances in parallel
 	for( asUINT n = startIdx; n < engine->templateInstanceTypes.GetLength(); n++ )
 	{
 		bool dontGarbageCollect = false;
@@ -281,7 +281,7 @@ int asCBuilder::Build()
 	// The template callbacks must only be called after the subtypes have a known structure,
 	// otherwise the callback may think it is not possible to create the template instance, 
 	// even though it is.
-	// TODO: This flag shouldn't be set globally in the engine, as it would mean that another 
+  // _TODO: This flag shouldn't be set globally in the engine, as it would mean that another
 	//       thread requesting a template instance in parallel to the compilation wouldn't 
 	//       evaluate the template instance. 
 	engine->deferValidationOfTemplateTypes = true;
@@ -305,7 +305,7 @@ int asCBuilder::Build()
 	// Finally the global functions and class methods
 	CompileFunctions();
 
-	// TODO: Attempt to reorder the initialization of global variables so that
+  // _TODO: Attempt to reorder the initialization of global variables so that
 	//       they do not access other uninitialized global variables out-of-order
 	//       The builder needs to check for each of the global variable, what functions
 	//       that are accessed, and what global variables are access by these functions.
@@ -429,7 +429,7 @@ int asCBuilder::ValidateDefaultArgs(asCScriptCode *script, asCScriptNode *node, 
 // identical function arguments that are not default args, e.g: foo(int) and foo(int, int=0)
 int asCBuilder::CheckForConflictsDueToDefaultArgs(asCScriptCode *script, asCScriptNode *node, asCScriptFunction *func, asCObjectType *objType)
 {
-	// TODO: Implement for global functions too
+  // _TODO: Implement for global functions too
 	if( func->objectType == 0 || objType == 0 ) return 0;
 
 	asCArray<int> funcs;
@@ -976,7 +976,7 @@ int asCBuilder::ParseTemplateDecl(const char *decl, asCString *name, asCArray<as
 		subtypeNames.PushLast(subtypeName);
 	}
 
-	// TODO: template: check for name conflicts
+  // _TODO: template: check for name conflicts
 
 	if( numErrors > 0 )
 		return asINVALID_DECLARATION;
@@ -1054,7 +1054,7 @@ asCObjectProperty *asCBuilder::GetObjectProperty(asCDataType &obj, const char *p
 {
 	asASSERT(obj.GetObjectType() != 0);
 
-	// TODO: optimize: Improve linear search
+  // _TODO: optimize: Improve linear search
 	asCArray<asCObjectProperty *> &props = obj.GetObjectType()->properties;
 	for( asUINT n = 0; n < props.GetLength(); n++ )
 	{
@@ -1149,7 +1149,7 @@ int asCBuilder::ParseFunctionDeclaration(asCObjectType *objType, const char *dec
 {
 	asASSERT( objType || ns );
 
-	// TODO: Can't we use GetParsedFunctionDetails to do most of what is done in this function?
+  // _TODO: Can't we use GetParsedFunctionDetails to do most of what is done in this function?
 
 	Reset();
 
@@ -1351,7 +1351,7 @@ int asCBuilder::CheckNameConflictMember(asCObjectType *t, const char *name, asCS
 {
 	// It's not necessary to check against object types
 
-	// TODO: optimize: Improve linear search
+  // _TODO: optimize: Improve linear search
 	asCArray<asCObjectProperty *> &props = t->properties;
 	for( asUINT n = 0; n < props.GetLength(); n++ )
 	{
@@ -1394,7 +1394,7 @@ int asCBuilder::CheckNameConflictMember(asCObjectType *t, const char *name, asCS
 int asCBuilder::CheckNameConflict(const char *name, asCScriptNode *node, asCScriptCode *code, asSNameSpace *ns)
 {
 	// Check against registered object types
-	// TODO: Must check against registered funcdefs too
+  // _TODO: Must check against registered funcdefs too
 	if( engine->GetRegisteredObjectType(name, ns) != 0 )
 	{
 		if( code )
@@ -1420,7 +1420,7 @@ int asCBuilder::CheckNameConflict(const char *name, asCScriptNode *node, asCScri
 		return -1;
 	}
 
-	// TODO: Property names must be checked against function names
+  // _TODO: Property names must be checked against function names
 
 #ifndef AS_NO_COMPILER
 	// Check against class types
@@ -1505,7 +1505,7 @@ sMixinClass *asCBuilder::GetMixinClass(const char *name, asSNameSpace *ns)
 
 int asCBuilder::RegisterFuncDef(asCScriptNode *node, asCScriptCode *file, asSNameSpace *ns)
 {
-	// TODO: redesign: Allow funcdefs to be explicitly declared as 'shared'. In this case
+  // _TODO: redesign: Allow funcdefs to be explicitly declared as 'shared'. In this case
 	//                 an error should be given if any of the arguments/return type is not
 	//                 shared.
 
@@ -1563,7 +1563,7 @@ void asCBuilder::CompleteFuncDef(sFuncDef *funcDef)
 	asCScriptFunction *func = module->funcDefs[funcDef->idx];
 	asASSERT( func );
 
-	// TODO: It should be possible to declare funcdef as shared. In this case a compiler error will be given if any of the types it uses are not shared
+  // _TODO: It should be possible to declare funcdef as shared. In this case a compiler error will be given if any of the types it uses are not shared
 	GetParsedFunctionDetails(funcDef->node, funcDef->script, 0, funcDef->name, func->returnType, func->parameterNames, func->parameterTypes, func->inOutFlags, defaultArgs, isConstMethod, isConstructor, isDestructor, isPrivate, isProtected, isOverride, isFinal, isShared, func->nameSpace);
 
 	// There should not be any defaultArgs, but if there are any we need to delete them to avoid leaks
@@ -1633,7 +1633,7 @@ int asCBuilder::RegisterGlobalVar(asCScriptNode *node, asCScriptCode *file, asSN
 		else if( type.IsInterface() )
 			str.Format(TXT_INTERFACE_s_CANNOT_BE_INSTANTIATED, type.Format(ns).AddressOf());
 		else
-			// TODO: Improve error message to explain why
+      // _TODO: Improve error message to explain why
 			str.Format(TXT_DATA_TYPE_CANT_BE_s, type.Format(ns).AddressOf());
 
 		WriteError(str, file, node);
@@ -1662,7 +1662,7 @@ int asCBuilder::RegisterGlobalVar(asCScriptNode *node, asCScriptCode *file, asSN
 		gvar->isEnumValue = false;
 		gvar->ns          = ns;
 
-		// TODO: Give error message if wrong
+    // _TODO: Give error message if wrong
 		asASSERT(!gvar->datatype.IsReference());
 
 		// Allocation is done when the variable is compiled, to allow for autos
@@ -1887,7 +1887,7 @@ int asCBuilder::RegisterClass(asCScriptNode *node, asCScriptCode *file, asSNameS
 	// Use the default script class behaviours
 	st->beh = engine->scriptTypeBehaviours.beh;
 
-	// TODO: Move this to asCObjectType so that the asCRestore can reuse it
+  // _TODO: Move this to asCObjectType so that the asCRestore can reuse it
 	engine->scriptFunctions[st->beh.addref]->AddRefInternal();
 	engine->scriptFunctions[st->beh.release]->AddRefInternal();
 	engine->scriptFunctions[st->beh.gcEnumReferences]->AddRefInternal();
@@ -1898,7 +1898,7 @@ int asCBuilder::RegisterClass(asCScriptNode *node, asCScriptCode *file, asSNameS
 	engine->scriptFunctions[st->beh.copy]->AddRefInternal();
 	engine->scriptFunctions[st->beh.factory]->AddRefInternal();
 	engine->scriptFunctions[st->beh.construct]->AddRefInternal();
-	// TODO: weak: Should not do this if the class has been declared with noweak
+  // _TODO: weak: Should not do this if the class has been declared with noweak
 	engine->scriptFunctions[st->beh.getWeakRefFlag]->AddRefInternal();
 
 	return 0;
@@ -2531,7 +2531,7 @@ void asCBuilder::CompileInterfaces()
 		sClassDeclaration *intfDecl = interfaceDeclarations[n];
 		asCObjectType *intfType = intfDecl->objType;
 
-		// TODO: Is this really at the correct place? Hasn't the vfTableIdx already been set here?
+    // _TODO: Is this really at the correct place? Hasn't the vfTableIdx already been set here?
 		// Co-opt the vfTableIdx value in our own methods to indicate the
 		// index the function should have in the table chunk for this interface.
 		for( asUINT d = 0; d < intfType->methods.GetLength(); d++ )
@@ -2785,7 +2785,7 @@ void asCBuilder::CompileClasses(asUINT numTempl)
 					decl->objType->interfaces.PushLast(baseType->interfaces[n]);
 			}
 
-			// TODO: Need to check for name conflict with new class methods
+      // _TODO: Need to check for name conflict with new class methods
 
 			// Copy properties from base class to derived class
 			for( asUINT p = 0; p < baseType->properties.GetLength(); p++ )
@@ -3034,10 +3034,10 @@ void asCBuilder::CompileClasses(asUINT numTempl)
 		asASSERT( decl->objType->interfaces.GetLength() == decl->objType->interfaceVFTOffsets.GetLength() );
 	}
 
-	// TODO: Warn if a method overrides a base method without marking it as 'override'.
+  // _TODO: Warn if a method overrides a base method without marking it as 'override'.
 	//       It must be possible to turn off this warning through engine property.
 
-	// TODO: A base class should be able to mark a method as 'abstract'. This will
+  // _TODO: A base class should be able to mark a method as 'abstract'. This will
 	//       allow a base class to provide a partial implementation, but still force
 	//       derived classes to implement specific methods.
 
@@ -3105,12 +3105,12 @@ void asCBuilder::CompileClasses(asUINT numTempl)
 				asCObjectProperty *prop = decl->objType->properties[n];
 				asCDataType dt = prop->type;
 
-				// TODO: Add this check again, once solving the issues commented below
+        // _TODO: Add this check again, once solving the issues commented below
 				/* 
 				if( dt.IsTemplate() )
 				{
-					// TODO: This must verify all sub types, not just the first one
-					// TODO: Just because the subtype is not a handle doesn't mean the template will actually instance the object
+          // _TODO: This must verify all sub types, not just the first one
+          // _TODO: Just because the subtype is not a handle doesn't mean the template will actually instance the object
 					//       this it shouldn't automatically raise an error for this, e.g. weakref<Object> should be legal as member
 					//       of the Object class
 					asCDataType sub = dt;
@@ -3183,7 +3183,7 @@ void asCBuilder::CompileClasses(asUINT numTempl)
 	// This must be done in the correct order, so that a class that contains another class isn't needlessly marked
 	// as garbage collected, just because the contained class was evaluated afterwards.
 
-	// TODO: runtime optimize: This algorithm can be further improved by checking the types that inherits from
+  // _TODO: runtime optimize: This algorithm can be further improved by checking the types that inherits from
 	//                         a base class. If the base class is not shared all the classes that derive from it
 	//                         are known at compile time, and can thus be checked for potential circular references too.
 	//
@@ -3291,7 +3291,7 @@ void asCBuilder::CompileClasses(asUINT numTempl)
 								{
 									if( sdt.IsObjectHandle() )
 									{
-										// TODO: runtime optimize: If the handle is again to a final class, then we can recursively check if the circular reference can occur
+                    // _TODO: runtime optimize: If the handle is again to a final class, then we can recursively check if the circular reference can occur
 										if( sdt.GetObjectType()->flags & (asOBJ_SCRIPT_OBJECT | asOBJ_GC) )
 										{
 											gc = true;
@@ -3300,7 +3300,7 @@ void asCBuilder::CompileClasses(asUINT numTempl)
 									}
 									else if( sdt.GetObjectType()->flags & asOBJ_GC )
 									{
-										// TODO: runtime optimize: Just because the member type is a potential circle doesn't mean that this one is.
+                    // _TODO: runtime optimize: Just because the member type is a potential circle doesn't mean that this one is.
 										//                         Only if the object is of a type that can reference this type, either directly or indirectly
 										gc = true;
 										break;
@@ -3321,7 +3321,7 @@ void asCBuilder::CompileClasses(asUINT numTempl)
 					else if( prop->flags & asOBJ_GC )
 					{
 						// If a type is not a script object, adopt its GC flag
-						// TODO: runtime optimize: Just because an application registered class is garbage collected, doesn't mean it 
+            // _TODO: runtime optimize: Just because an application registered class is garbage collected, doesn't mean it
 						//                         can form a circular reference with this script class. Perhaps need a flag to tell
 						//                         if the script classes that contains the type should be garbage collected or not.
 						gc = true;
@@ -3330,7 +3330,7 @@ void asCBuilder::CompileClasses(asUINT numTempl)
 				}
 				else if( dt.GetObjectType()->flags & asOBJ_GC )
 				{
-					// TODO: runtime optimize: Just because the member type is a potential circle doesn't mean that this one is.
+          // _TODO: runtime optimize: Just because the member type is a potential circle doesn't mean that this one is.
 					//                         Only if the object is of a type that can reference this type, either directly or indirectly
 					gc = true;
 					break;
@@ -3420,7 +3420,7 @@ void asCBuilder::IncludeMethodsFromMixins(sClassDeclaration *decl)
 				}
 				else if( n->nodeType == snVirtualProperty )
 				{
-					// TODO: mixin: Support virtual properties too
+          // _TODO: mixin: Support virtual properties too
 					WriteError("The virtual property syntax is currently not supported for mixin classes", mixin->script, n);
 					//RegisterVirtualProperty(node, decl->script, decl->objType, false, false);
 				}
@@ -3627,7 +3627,7 @@ asCObjectProperty *asCBuilder::AddPropertyToClass(sClassDeclaration *decl, const
 				else if( dt.IsInterface() )
 					str.Format(TXT_INTERFACE_s_CANNOT_BE_INSTANTIATED, dt.Format(decl->objType->nameSpace).AddressOf());
 				else
-					// TODO: Improve error message to explain why
+          // _TODO: Improve error message to explain why
 					str.Format(TXT_DATA_TYPE_CANT_BE_s, dt.Format(decl->objType->nameSpace).AddressOf());
 				WriteError(str, file, node);
 			}
@@ -3691,7 +3691,7 @@ void asCBuilder::AddDefaultConstructor(asCObjectType *objType, asCScriptCode *fi
 	asCArray<asCString> parameterNames;
 
 	// Add the script function
-	// TODO: declaredAt should be set to where the class has been declared
+  // _TODO: declaredAt should be set to where the class has been declared
 	module->AddScriptFunction(file->idx, 0, funcId, objType->name, returnType, parameterTypes, parameterNames, inOutFlags, defaultArgs, false, objType);
 
 	// Set it as default constructor
@@ -3726,7 +3726,7 @@ void asCBuilder::AddDefaultConstructor(asCObjectType *objType, asCScriptCode *fi
 	objType->beh.factory = funcId;
 	objType->beh.factories[0] = funcId;
 	returnType = asCDataType::CreateObjectHandle(objType, false);
-	// TODO: should be the same as the constructor
+  // _TODO: should be the same as the constructor
 	module->AddScriptFunction(file->idx, 0, funcId, objType->name, returnType, parameterTypes, parameterNames, inOutFlags, defaultArgs, false);
 	functions.PushLast(0);
 	asCCompiler compiler(engine);
@@ -4239,7 +4239,7 @@ int asCBuilder::RegisterScriptFunction(asCScriptNode *node, asCScriptCode *file,
 		bool found = false;
 		if( isConstructor || isDestructor )
 		{
-			// TODO: shared: Should check the existance of these too
+      // _TODO: shared: Should check the existance of these too
 			found = true;
 		}
 		else
@@ -4406,7 +4406,7 @@ int asCBuilder::RegisterScriptFunction(asCScriptNode *node, asCScriptCode *file,
 			asCScriptFunction *func = GetFunctionDescription(funcs[n]);
 			if( func->IsSignatureExceptNameEqual(returnType, parameterTypes, inOutFlags, objType, isConstMethod) )
 			{
-				// TODO: clean up: Reuse the same error handling for both opConv and normal methods
+        // _TODO: clean up: Reuse the same error handling for both opConv and normal methods
 				if( isMixin )
 				{
 					// Clean up the memory, as the function will not be registered
@@ -4468,7 +4468,7 @@ int asCBuilder::RegisterScriptFunction(asCScriptNode *node, asCScriptCode *file,
 		asCScriptFunction *f = engine->scriptFunctions[funcId];
 		module->AddScriptFunction(f);
 
-		// TODO: clean up: This should be done by AddScriptFunction() itself
+    // _TODO: clean up: This should be done by AddScriptFunction() itself
 		module->globalFunctions.Put(f);
 	}
 	else
@@ -4618,8 +4618,8 @@ int asCBuilder::RegisterVirtualProperty(asCScriptNode *node, asCScriptCode *file
 		asCArray<asCString*>       defaultArgs;
 		asCString                  name;
 
-		// TODO: getset: Allow private for individual property accessors
-		// TODO: getset: If the accessor uses its own name, then the property should be automatically declared
+    // _TODO: getset: Allow private for individual property accessors
+    // _TODO: getset: If the accessor uses its own name, then the property should be automatically declared
 
 		if( node->firstChild->nodeType == snIdentifier && file->TokenEquals(node->firstChild->tokenPos, node->firstChild->tokenLength, GET_TOKEN) )
 		{
@@ -4646,7 +4646,7 @@ int asCBuilder::RegisterVirtualProperty(asCScriptNode *node, asCScriptCode *file
 
 			if( funcNode == 0 && (objType == 0 || !objType->IsInterface()) )
 			{
-				// TODO: getset: If no implementation is supplied the builder should provide an automatically generated implementation
+        // _TODO: getset: If no implementation is supplied the builder should provide an automatically generated implementation
 				//               The compiler needs to be able to handle the different types, primitive, value type, and handle
 				//               The code is also different for global property accessors
 				WriteError(TXT_PROPERTY_ACCESSOR_MUST_BE_IMPLEMENTED, file, node);
@@ -4779,7 +4779,7 @@ int asCBuilder::RegisterImportedFunction(int importID, asCScriptNode *node, asCS
 
 asCScriptFunction *asCBuilder::GetFunctionDescription(int id)
 {
-	// TODO: import: This should be improved when the imported functions are removed
+  // _TODO: import: This should be improved when the imported functions are removed
 	// Get the description from the engine
 	if( (id & FUNC_IMPORTED) == 0 )
 		return engine->scriptFunctions[id];
@@ -4801,7 +4801,7 @@ void asCBuilder::GetFunctionDescriptions(const char *name, asCArray<int> &funcs,
 	}
 
 	// Add the imported functions
-	// TODO: optimize: Linear search: This is probably not that critial. Also bindInformation will probably be removed in near future
+  // _TODO: optimize: Linear search: This is probably not that critial. Also bindInformation will probably be removed in near future
 	for( n = 0; n < module->bindInformations.GetLength(); n++ )
 	{
 		if( module->bindInformations[n]->importedFunctionSignature->name == name &&
@@ -4849,7 +4849,7 @@ void asCBuilder::GetObjectMethodDescriptions(const char *name, asCObjectType *ob
 			return;
 	}
 
-	// TODO: optimize: Improve linear search
+  // _TODO: optimize: Improve linear search
 	if( objIsConst )
 	{
 		// Only add const methods to the list
@@ -4874,7 +4874,7 @@ void asCBuilder::GetObjectMethodDescriptions(const char *name, asCObjectType *ob
 	}
 	else
 	{
-		// TODO: Prefer non-const over const
+    // _TODO: Prefer non-const over const
 		for( asUINT n = 0; n < objectType->methods.GetLength(); n++ )
 		{
 			asCScriptFunction *func = engine->scriptFunctions[objectType->methods[n]];
@@ -5084,7 +5084,7 @@ asCDataType asCBuilder::CreateDataTypeFromNode(asCScriptNode *node, asCScriptCod
 				{
 					if( asOBJ_TYPEDEF == (ot->flags & asOBJ_TYPEDEF) )
 					{
-						// TODO: typedef: A typedef should be considered different from the original type (though with implicit conversions between the two)
+            // _TODO: typedef: A typedef should be considered different from the original type (though with implicit conversions between the two)
 						// Create primitive data type based on object flags
 						dt = ot->templateSubTypes[0];
 						dt.MakeReadOnly(isConst);
@@ -5253,7 +5253,7 @@ asCDataType asCBuilder::CreateDataTypeFromNode(asCScriptNode *node, asCScriptCod
 				else if( dt.IsInterface() )
 					str.Format(TXT_INTERFACE_s_CANNOT_BE_INSTANTIATED, dt.Format(ns).AddressOf());
 				else
-					// TODO: Improve error message to explain why
+          // _TODO: Improve error message to explain why
 					str.Format(TXT_DATA_TYPE_CANT_BE_s, dt.Format(ns).AddressOf());
 
 				WriteError(str, file, n);
@@ -5464,7 +5464,7 @@ asCObjectType *asCBuilder::GetObjectTypeFromTypesKnownByObject(const char *type,
 asCScriptFunction *asCBuilder::GetFuncDef(const char *type)
 {
 	for( asUINT n = 0; n < engine->registeredFuncDefs.GetLength(); n++ )
-		// TODO: access: Only return the definitions that the module has access to
+    // _TODO: access: Only return the definitions that the module has access to
 		if( engine->registeredFuncDefs[n]->name == type )
 			return engine->registeredFuncDefs[n];
 

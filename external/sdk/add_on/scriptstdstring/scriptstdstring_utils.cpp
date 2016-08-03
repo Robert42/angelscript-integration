@@ -26,8 +26,8 @@ static CScriptArray *StringSplit(const string &delim, const string &str)
 	asIScriptContext *ctx = asGetActiveContext();
 	asIScriptEngine *engine = ctx->GetEngine();
 
-	// TODO: This should only be done once
-	// TODO: This assumes that CScriptArray was already registered
+	// _TODO: This should only be done once
+	// _TODO: This assumes that CScriptArray was already registered
 	asIObjectType *arrayType = engine->GetObjectTypeByDecl("array<string>");
 
 	// Create the array object

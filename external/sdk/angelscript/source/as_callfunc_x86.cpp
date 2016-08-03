@@ -64,7 +64,7 @@ BEGIN_AS_NAMESPACE
 // By default I use fninit as it seems to be what works for most people,
 // but some may find it necessary to define this as emms instead.
 //
-// TODO: Figure out when one or the other must be used, and a way to
+// _TODO: Figure out when one or the other must be used, and a way to
 //       configure this automatically in as_config.h
 //
 #ifndef CLEAR_FPU_STACK
@@ -135,7 +135,7 @@ asQWORD CallSystemFunctionNative(asCContext *context, asCScriptFunction *descr, 
 #endif
 				{
 					// Copy the object's memory to the buffer
-					// TODO: bug: Must call the object's copy constructor instead of doing a memcpy, 
+					// _TODO: bug: Must call the object's copy constructor instead of doing a memcpy, 
 					//            as the object may hold a pointer to itself. It's not enough to 
 					//            change only this memcpy as the assembler routine also makes a copy
 					//            of paramBuffer to the final stack location. To avoid the second 

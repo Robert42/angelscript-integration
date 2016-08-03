@@ -97,7 +97,7 @@ int asCGarbageCollector::AddScriptObjectToGC(void *obj, asCObjectType *objType)
 			{
 				isProcessing = true;
 
-				// TODO: The number of iterations should be dynamic, and increase 
+				// _TODO: The number of iterations should be dynamic, and increase 
 				//       if the number of objects in the garbage collector grows high
 
 				// Run one step of DetectGarbage
@@ -156,7 +156,7 @@ int asCGarbageCollector::GetObjectInGC(asUINT idx, asUINT *seqNbr, void **obj, a
 	return asSUCCESS;
 }
 
-// TODO: Should have a flag to tell the garbage collector to automatically determine how many iterations are needed
+// _TODO: Should have a flag to tell the garbage collector to automatically determine how many iterations are needed
 //       It should then gather statistics such as how many objects has been created since last run, and how many objects
 //       are destroyed per iteration, and how many objects are detected as cyclic garbage per iteration.
 //       It should try to reach a stable number of objects, i.e. so that on average the number of objects added to 
@@ -249,7 +249,7 @@ int asCGarbageCollector::GarbageCollect(asDWORD flags, asUINT iterations)
 	return 1;
 }
 
-// TODO: Additional statistics to gather
+// _TODO: Additional statistics to gather
 //
 //       - How many objects are added on average between each destroyed object
 //       - How many objects are added on average between each detected object
@@ -429,7 +429,7 @@ int asCGarbageCollector::DestroyNewGarbage()
 				}
 				// Check if this object has been inspected 3 times already, and if so move it to the 
 				// set of old objects that are less likely to become garbage in a short time
-				// TODO: Is 3 really a good value? Should the number of times be dynamic? 
+				// _TODO: Is 3 really a good value? Should the number of times be dynamic? 
 				else if( gcObj.seqNbr < seqAtSweepStart[0] )
 				{
 					// We've already verified this object multiple times. It is likely

@@ -172,7 +172,7 @@ int CScriptBuilder::LoadScriptSection(const char *filename)
 		string msg = "Failed to open script file '" + GetAbsolutePath(scriptFile) + "'";
 		engine->WriteMessage(filename, 0, 0, asMSGTYPE_ERROR, msg.c_str());
 
-		// TODO: Write the file where this one was included from
+		// _TODO: Write the file where this one was included from
 
 		return -1;
 	}
@@ -1010,7 +1010,7 @@ string GetCurrentDir()
 	// XBox 360 doesn't support the getcwd function, just use the root folder
 	return "game:/";
 	#elif defined(_M_ARM)
-	// TODO: How to determine current working dir on Windows Phone?
+	// _TODO: How to determine current working dir on Windows Phone?
 	return "";
 	#else
 	return _getcwd(buffer, (int)1024);
